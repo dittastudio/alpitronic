@@ -1,0 +1,12 @@
+/* Do not set width, height, or position here */
+#container {
+  text-align: center;
+}
+#heading {
+  color: #333;
+  font-family: inherit;
+}
+p {
+  font-family: inherit;
+  color: #ffcccb;
+}
