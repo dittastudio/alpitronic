@@ -1,4 +1,5 @@
 import { fn } from 'storybook/test';
+import '../css/app.css';
 import './Button.css';
 import template from './Button.html?raw';
 
@@ -9,23 +10,31 @@ export default {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
-    const btn = wrapper.querySelector('.storybook-button') || wrapper.querySelector('button');
-    if (!btn) return wrapper;
+    const btn = wrapper.querySelector('button');
 
-    if (label != null) btn.textContent = label;
+    if (!btn) {
+      return wrapper;
+    }
 
-    const sizeClasses = ['storybook-button--small', 'storybook-button--medium', 'storybook-button--large'];
-    btn.classList.remove('storybook-button--primary', 'storybook-button--secondary', ...sizeClasses);
-    const modeClass = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-    btn.classList.add(`storybook-button--${size}`, modeClass);
+    if (label != null) {
+      btn.textContent = label;
+    }
 
-    if (backgroundColor) btn.style.backgroundColor = backgroundColor;
+    const sizeClasses = ['button--small', 'button--medium', 'button--large'];
+    btn.classList.remove('button--primary', 'button--secondary', ...sizeClasses);
+
+    const modeClass = primary ? 'button--primary' : 'button--secondary';
+    btn.classList.add(`button--${size}`, modeClass);
+
+    if (backgroundColor) {
+      btn.style.backgroundColor = backgroundColor;
+    }
 
     if (typeof onClick === 'function') {
       btn.addEventListener('click', onClick);
     }
 
-    return btn;
+    return wrapper.firstChild;
   },
   argTypes: {
     backgroundColor: { control: 'color' },
