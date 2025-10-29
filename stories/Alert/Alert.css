@@ -11,56 +11,114 @@
   text-align: center;
   font: var(--type-48-fluid);
   width: 100%;
-  height: 100%;
   color: var(--color-white);
   background-color: var(--color-dark-gray);
   border-radius: 22px;
-  padding: 20% 10%;
-}
-
-.alert__icon,
-.alert__label {
-  display: none;
-  transition: opacity 1s ease-out;
-
-  @starting-style {
-    opacity: 0;
-  }
+  padding: 1em;
+  aspect-ratio: 16 / 9;
 }
 
 .alert__label {
   max-width: 9em;
+  opacity: 0;
+  animation: fade-in 1s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
 }
 
 .alert__icon {
   width: 1.41em;
   height: 1.41em;
-  fill: var(--color-white);
+  flex-shrink: 0;
+  fill: none;
   border-radius: 50%;
 }
 
-.alert__icon--success {
-  background-color: var(--color-green);
+.alert__icon-tick {
+  stroke: var(--color-white);
+  stroke-width: 5.7;
+  stroke-dashoffset: 42;
+  stroke-dasharray: 42;
+  opacity: 0;
+  animation: draw 0.5s cubic-bezier(0.87, 0, 0.13, 1) 0.2s forwards;
 }
 
-.alert__icon--error {
-  background-color: var(--color-red);
+.alert--error .alert__icon-tick {
+  display: none;
 }
 
-.alert--success .alert__icon--success,
-.alert--success .alert__label--success {
-  display: block;
+.alert__icon-cross-1,
+.alert__icon-cross-2 {
+  stroke: var(--color-white);
+  stroke-width: 5.7;
+  stroke-dashoffset: 30;
+  stroke-dasharray: 30;
+  opacity: 0;
 }
 
-.alert--error .alert__icon--error,
-.alert--error .alert__label--error {
-  display: block;
+.alert__icon-cross-1 {
+  animation: draw 0.5s cubic-bezier(0.87, 0, 0.13, 1) 0.2s forwards;
 }
 
+.alert__icon-cross-2 {
+  animation: draw 0.5s cubic-bezier(0.87, 0, 0.13, 1) 0.3s forwards;
+}
 
+.alert--success .alert__icon-cross-1,
+.alert--success .alert__icon-cross-2 {
+  display: none;
+}
 
-/* @container alert (min-width: 700px) {
+@keyframes draw {
+  to {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
 
-} */
+.alert__icon-circle {
+  stroke: var(--color-white);
+  stroke-width: 5.7;
+  opacity: 0;
+  scale: 0.8;
+  transform-origin: center;
+  animation: scale-in 0.5s cubic-bezier(0.0, 0.0, 0.2, 1) 0.1s forwards;
+}
 
+@keyframes scale-in {
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.alert--success .alert__icon-disc {
+  fill: var(--color-green);
+  opacity: 0;
+  scale: 0.8;
+  transform-origin: center;
+  animation: scale-in 0.5s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+}
+
+.alert--error .alert__icon-disc {
+  fill: var(--color-red);
+  opacity: 0;
+  scale: 0.8;
+  transform-origin: center;
+  animation: scale-in 0.5s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+}
+
+.alert--error .alert__label--success {
+  display: none;
+  opacity: 0;
+}
+
+.alert--success .alert__label--error {
+  display: none;
+  opacity: 0;
+}
 
