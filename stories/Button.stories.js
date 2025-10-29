@@ -1,15 +1,31 @@
 import { fn } from 'storybook/test';
+import './Button.css';
+import template from './Button.html?raw';
 
-import { createButton } from './Button';
-
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {
   title: 'Alpitronic/Button',
   tags: ['autodocs'],
-  render: ({ label, ...args }) => {
-    // You can either use a function to create DOM elements or use a plain html string!
-    // return `<div>${label}</div>`;
-    return createButton({ label, ...args });
+  render: ({ label, primary, size = 'medium', backgroundColor, onClick }) => {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = template;
+
+    const btn = wrapper.querySelector('.storybook-button') || wrapper.querySelector('button');
+    if (!btn) return wrapper;
+
+    if (label != null) btn.textContent = label;
+
+    const sizeClasses = ['storybook-button--small', 'storybook-button--medium', 'storybook-button--large'];
+    btn.classList.remove('storybook-button--primary', 'storybook-button--secondary', ...sizeClasses);
+    const modeClass = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+    btn.classList.add(`storybook-button--${size}`, modeClass);
+
+    if (backgroundColor) btn.style.backgroundColor = backgroundColor;
+
+    if (typeof onClick === 'function') {
+      btn.addEventListener('click', onClick);
+    }
+
+    return btn;
   },
   argTypes: {
     backgroundColor: { control: 'color' },
