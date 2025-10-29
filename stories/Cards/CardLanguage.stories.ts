@@ -9,12 +9,14 @@ export default {
   render: ({
     textNative,
     textLocal,
+    isActive = false,
     fullWidth = false,
     flag,
     onClick = () => {},
   }: {
     textNative?: string;
     textLocal?: string;
+    isActive?: boolean;
     fullWidth?: boolean;
     flag?: string;
     onClick?: () => void;
@@ -43,6 +45,10 @@ export default {
       main.classList.add('card-language--no-local');
     }
 
+    if (isActive) {
+      main.classList.add('card-language--is-active');
+    }
+
     if (fullWidth) {
       main.classList.add('card-language--full');
     }
@@ -63,8 +69,7 @@ export default {
   argTypes: {
     textNative: { control: 'text' },
     textLocal: { control: 'text' },
-    // textColor: { control: 'color' },
-    // backgroundColor: { control: 'color' },
+    isActive: { control: 'boolean' },
     fullWidth: { control: 'boolean' },
     flag: {
       control: 'select',

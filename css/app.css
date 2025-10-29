@@ -43,6 +43,9 @@
   --cq-5xl: 64rem;
   --cq-6xl: 72rem;
   --cq-7xl: 80rem;
+
+  --transition-duration: 0.25s;
+  --transition-easing: ease;
 }
 
 *,

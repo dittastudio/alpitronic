@@ -15,6 +15,19 @@
   color: var(--color-white);
   background-color: var(--color-black);
   aspect-ratio: 14 / 9;
+  outline: 3px solid rgba(255, 255, 255, 0);
+  transition: outline-color var(--transition-duration) var(--transition-easing);
+}
+
+.card-language:hover,
+.card-language:focus,
+.card-language:active {
+  cursor: pointer;
+  outline-color: var(--color-white);
+}
+
+.card-language--is-active {
+  outline-color: var(--color-white);
 }
 
 .card-language--no-native .card-language__label-native {
@@ -45,7 +58,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   font: var(--type-22);
-  margin-top: auto;
+  margin: auto 0 -4px 0;
 }
 
 .card-language__label-native,
