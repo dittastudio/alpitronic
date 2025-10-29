@@ -15,6 +15,13 @@ const alpitronicViewports = {
 
 const preview = {
   parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#333' },
+        { name: 'light', value: '#F8F8F8' },
+      ],
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -26,6 +33,11 @@ const preview = {
         ...alpitronicViewports,
         ...INITIAL_VIEWPORTS,
       },
+    },
+  },
+  initialGlobals: {
+    backgrounds: {
+      value: 'dark',
     },
   },
 };
