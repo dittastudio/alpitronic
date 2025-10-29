@@ -3,40 +3,48 @@
 }
 
 .button {
-  font: var(--type-52);
-  background-color: palevioletred;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font: var(--type-22);
   border: none;
-  padding: 5px 20px;
+  padding: 16px 48px;
+  min-height: 74px;
+  color: var(--color-white);
+  background-color: var(--color-dark-gray);
 }
 
-@container button (min-width: 700px) {
-  .button {
-    background-color: palegreen;
-  }
+.button svg {
+  display: none;
 }
 
-/* .button--primary {
-  background-color: #555ab9;
-  color: white;
+.button--reversed {
+  flex-direction: row-reverse;
 }
 
-.button--secondary {
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
-  background-color: transparent;
-  color: #333;
+.button--stacked {
+  flex-direction: column;
 }
 
-.button--small {
-  padding: 10px 16px;
-  font-size: 12px;
+.button--full {
+  width: 100%;
 }
 
-.button--medium {
-  padding: 11px 20px;
-  font-size: 14px;
+.button--rounded-small {
+  border-radius: 22px;
 }
 
-.button--large {
-  padding: 12px 24px;
-  font-size: 16px;
+.button--rounded-large {
+  border-radius: 42px;
+}
+
+.button--icon svg {
+  display: block;
+}
+
+/* @container button (min-width: 700px) {
+
 } */
+
+

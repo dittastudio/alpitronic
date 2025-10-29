@@ -6,28 +6,57 @@ import template from './Button.html?raw';
 export default {
   title: 'Alpitronic/Button',
   tags: ['autodocs'],
-  render: ({ label, primary, size = 'medium', backgroundColor, onClick }) => {
+  render: ({
+      label = 'Button',
+      fullWidth = false,
+      rounded = 'small',
+      backgroundColor,
+      textColor,
+      icon = false,
+      reversed = false,
+      stacked = false,
+      onClick
+    }) => {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
     const btn = wrapper.querySelector('button');
+    const btnLabel = btn.querySelector('.button__label');
 
     if (!btn) {
       return wrapper;
     }
 
-    if (label != null) {
-      btn.textContent = label;
+    if (btnLabel && label) {
+      btnLabel.textContent = label;
     }
 
-    const sizeClasses = ['button--small', 'button--medium', 'button--large'];
-    btn.classList.remove('button--primary', 'button--secondary', ...sizeClasses);
-
-    const modeClass = primary ? 'button--primary' : 'button--secondary';
-    btn.classList.add(`button--${size}`, modeClass);
+    if (fullWidth) {
+      btn.classList.add('button--full');
+    }
 
     if (backgroundColor) {
       btn.style.backgroundColor = backgroundColor;
+    }
+
+    if (textColor) {
+      btn.style.color = textColor;
+    }
+
+    if (rounded) {
+      btn.classList.add(`button--rounded-${rounded}`);
+    }
+
+    if (reversed) {
+      btn.classList.add('button--reversed');
+    }
+
+    if (stacked) {
+      btn.classList.add('button--stacked');
+    }
+
+    if (icon) {
+      btn.classList.add('button--icon');
     }
 
     if (typeof onClick === 'function') {
@@ -37,27 +66,24 @@ export default {
     return wrapper.firstChild;
   },
   argTypes: {
-    backgroundColor: { control: 'color' },
     label: { control: 'text' },
-    onClick: { action: 'onClick' },
-    primary: { control: 'boolean' },
-    size: {
-      control: { type: 'select' },
-      options: ['small', 'medium', 'large'],
+    textColor: { control: 'color' },
+    backgroundColor: { control: 'color' },
+    fullWidth: { control: 'boolean' },
+
+    rounded: {
+      control: { type: 'radio' },
+      options: ['small', 'large'],
     },
+    icon: { control: 'boolean' },
+    reversed: { control: 'boolean' },
+    stacked: { control: 'boolean' },
+    onClick: { action: 'onClick' },
   },
   args: { onClick: fn() },
 };
 
 export const Primary = {
   args: {
-    primary: true,
-    label: 'Button',
-  },
-};
-
-export const Secondary = {
-  args: {
-    label: 'Button',
   },
 };
