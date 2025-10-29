@@ -1,5 +1,5 @@
 import { fn } from 'storybook/test';
-import '../css/app.css';
+import '../../css/app.css';
 import './Button.css';
 import template from './Button.html?raw';
 
