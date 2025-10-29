@@ -19,13 +19,14 @@
 
   --font-sans: 'PP Neue Montreal', 'Helvetica Neue', sans-serif;
 
-  --type-18: clamp(14px, 1.2vw, 18px) / 1.5 var(--font-sans);
+  --type-18: 18px / 1.5 var(--font-sans);
   --type-22: 22px / 1.2 var(--font-sans);
-  --type-36: clamp(28px, 2.5vw, 36px) / 1.5 var(--font-sans);
-  --type-48: clamp(36px, 3.5vw, 48px) / 1.5 var(--font-sans);
-  --type-52: clamp(40px, 4vw, 52px) / 1.5 var(--font-sans);
+  --type-36: 28px / 1.5 var(--font-sans);
+  --type-48: 48px / 1.5 var(--font-sans);
+  --type-52: 52px / 1.5 var(--font-sans);
 
   --type-22-fluid: clamp(22px, 10px + 3.75cqi, 28px) / 1.5 var(--font-sans);
+  --type-48-fluid: clamp(22px, -30px + 16.25cqi, 48px) / 1 var(--font-sans);
 
   --container-name: default;
 
@@ -48,6 +49,10 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+* {
+  margin: 0;
 }
 
 .container {
