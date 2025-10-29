@@ -1,0 +1,62 @@
+.container {
+  --container-name: card-language;
+}
+
+.card-language {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  border: none;
+  border-radius: 14px;
+  padding: 28px 30px;
+  min-height: 170px;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  aspect-ratio: 14 / 9;
+}
+
+.card-language--no-native .card-language__label-native {
+  display: none;
+}
+
+.card-language--no-local .card-language__label-local {
+  display: none;
+}
+
+.card-language--no-flag .card-language__flag {
+  display: none;
+}
+
+.card-language--full {
+  width: 100%;
+}
+
+.card-language__flag {
+  display: block;
+  width: 48px;
+  height: 36px;
+}
+
+.card-language__label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font: var(--type-22);
+  margin-top: auto;
+}
+
+.card-language__label-native,
+.card-language__label-local {
+  display: block;
+}
+
+.card-language__label-native {
+  color: var(--color-white);
+}
+
+.card-language__label-local {
+  color: var(--color-light-gray);
+}
