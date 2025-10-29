@@ -27,6 +27,11 @@
   flex-direction: column;
 }
 
+.button--stacked.button--reversed {
+  flex-direction: column-reverse;
+}
+
+
 .button--full {
   width: 100%;
 }

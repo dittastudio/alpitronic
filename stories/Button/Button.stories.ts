@@ -20,12 +20,13 @@ export default {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
-    const btn = wrapper.querySelector('button');
-    const btnLabel = btn.querySelector('.button__label');
+    const btn: HTMLElement | null = wrapper.querySelector('.button');
 
     if (!btn) {
       return wrapper;
     }
+
+    const btnLabel = btn.querySelector('.button__label');
 
     if (btnLabel && label) {
       btnLabel.textContent = label;
