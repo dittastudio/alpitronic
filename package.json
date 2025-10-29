@@ -1,0 +1,16 @@
+{
+  "name": "hyperdesign",
+  "version": "1.0.1",
+  "description": "Widgets for the Hyperdesign system.",
+  "license": "ISC",
+  "author": "Made by Many",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.0.0",
+    "@storybook/html-vite": "^10.0.0",
+    "storybook": "^10.0.0"
+  }
+}
