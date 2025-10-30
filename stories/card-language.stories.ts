@@ -1,10 +1,10 @@
 import { fn } from 'storybook/test';
-import '../../css/app.css';
-import './CardLanguage.css';
-import template from './CardLanguage.html?raw';
+import '@/css/app.css';
+import '@/components/card-language/card-language.css';
+import template from '@/components/card-language/card-language.html?raw';
 
 export default {
-  title: 'Alpitronic/CardLanguage',
+  title: 'Alpitronic/card-language',
   tags: ['autodocs'],
   render: ({
     textNative,
@@ -55,7 +55,7 @@ export default {
 
     if (flag) {
       const flagImg = main.querySelector('.card-language__flag');
-      flagImg?.setAttribute('src', `../assets/flags/${flag}.svg`);
+      flagImg?.setAttribute('src', `../src/assets/flags/${flag}.svg`);
     } else {
       main.classList.add('card-language--no-flag');
     }

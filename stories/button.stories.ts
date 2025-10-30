@@ -1,13 +1,13 @@
 import { fn } from 'storybook/test';
-import '../../css/app.css';
-import './Button.css';
-import template from './Button.html?raw';
+import '@/css/app.css';
+import '@/components/button/button.css';
+import template from '@/components/button/button.html?raw';
 
 export default {
-  title: 'Alpitronic/Button',
+  title: 'Alpitronic/button',
   tags: ['autodocs'],
   render: ({
-    label = 'Button',
+    label = 'button',
     fullWidth = false,
     rounded = 'small',
     backgroundColor,

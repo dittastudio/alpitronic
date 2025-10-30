@@ -1,9 +1,9 @@
-import '../../css/app.css';
-import './Alert.css';
-import template from './Alert.html?raw';
+import '@/css/app.css';
+import '@/components/alert/alert.css';
+import template from '@/components/alert/alert.html?raw';
 
 export default {
-  title: 'Alpitronic/Alert',
+  title: 'Alpitronic/alert',
   tags: ['autodocs'],
   render: ({ type = 'success' }: { type?: 'success' | 'error' }) => {
     const wrapper = document.createElement('div');
