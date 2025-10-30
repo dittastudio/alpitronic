@@ -144,6 +144,8 @@
 .alert__description {
   font: var(--type-36-fluid);
   color: var(--color-light-gray);
+  opacity: 0;
+  animation: fade-in 1s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
 }
 
 .alert--success .alert__description {
