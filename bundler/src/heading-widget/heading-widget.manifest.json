@@ -1,0 +1,16 @@
+{
+  "name": "heading-widget",
+  "version": "1.0.0",
+  "description": "Hero/heading component with title, subtitle, and CTA buttons",
+  "main": "heading-widget.js",
+  "style": "heading-widget.css",
+  "template": "heading-widget.html",
+  "setup": "heading-widget.setup.js",
+  "state": "heading-widget.state.js",
+  "preview": "preview.png",
+  "author": "Made by Many",
+  "license": "ISC",
+  "tags": ["heading", "hero", "cta"],
+  "category": "content"
+}
+

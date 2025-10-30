@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors from your design system */
+  --color-green: #00d300;
+  --color-blue: #0066ff;
+  --color-error: #ff0000;
+  --color-success: #00d300;
+
+  /* Typography */
+  --font-montreal: "PP Neue Montreal", sans-serif;
+
+  /* You can customize Tailwind's theme here */
+  --font-family-sans: "PP Neue Montreal", system-ui, sans-serif;
+}
+
+/* Global CSS variables that aren't Tailwind theme */
+:root {
+  --border-radius-default: 8px;
+  --transition-default: 200ms ease;
+  --shadow-default: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Any global utility classes you want in every widget */
+.widget-container {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+

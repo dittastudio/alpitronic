@@ -1,0 +1,25 @@
+@import "../global.css";
+@source "./alert-widget.html";
+@source "./alert-widget.js";
+
+/* Component-specific styles */
+.alert-widget {
+  transition: var(--transition-default);
+}
+
+.alert-widget__icon {
+  transition: transform 0.3s ease;
+}
+
+.alert-widget__icon:hover {
+  transform: scale(1.1);
+}
+
+.alert-widget--success {
+  /* Success-specific styles */
+}
+
+.alert-widget--error {
+  /* Error-specific styles */
+}
+

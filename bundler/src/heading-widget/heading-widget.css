@@ -1,0 +1,21 @@
+@import "../global.css";
+@source "./heading-widget.html";
+@source "./heading-widget.js";
+
+/* Component-specific styles */
+.heading-widget {
+  transition: var(--transition-default);
+}
+
+.heading-widget__title {
+  line-height: 1.2;
+}
+
+.heading-widget__subtitle {
+  line-height: 1.5;
+}
+
+.heading-widget--centered {
+  text-align: center;
+}
+

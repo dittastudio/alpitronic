@@ -1,0 +1,16 @@
+{
+  "name": "alert-widget",
+  "version": "1.0.0",
+  "description": "Alert component with success/error states",
+  "main": "alert-widget.js",
+  "style": "alert-widget.css",
+  "template": "alert-widget.html",
+  "setup": "alert-widget.setup.js",
+  "state": "alert-widget.state.js",
+  "preview": "preview.png",
+  "author": "Made by Many",
+  "license": "ISC",
+  "tags": ["alert", "notification", "feedback"],
+  "category": "feedback"
+}
+
