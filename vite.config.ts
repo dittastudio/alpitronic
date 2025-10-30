@@ -62,7 +62,7 @@ function componentBuilderPlugin() {
           const srcFile = join(srcComponentDir, file);
           const distFile = join(distComponentDir, file);
 
-          if (existsSync(srcFile)) {
+          if (existsSync(srcFile) && existsSync(distFile)) {
             copyFileSync(srcFile, distFile);
           }
         });
