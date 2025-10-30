@@ -1,14 +1,10 @@
-.container {
+@source "Alert.html";
+
+.main {
   --container-name: alert;
 }
 
 .alert {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  text-align: center;
   font: var(--type-48-fluid);
   width: 100%;
   color: var(--color-white);

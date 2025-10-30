@@ -1,4 +1,4 @@
-
+import tailwindcss from '@tailwindcss/vite'
 
 /** @type { import('@storybook/html-vite').StorybookConfig } */
 const config = {
@@ -12,6 +12,10 @@ const config = {
   "framework": {
     "name": "@storybook/html-vite",
     "options": {}
+  },
+  async viteFinal(config) {
+    config.plugins.push(tailwindcss());
+    return config;
   }
 };
 export default config;
