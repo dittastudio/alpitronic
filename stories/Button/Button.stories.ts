@@ -7,16 +7,26 @@ export default {
   title: 'Alpitronic/Button',
   tags: ['autodocs'],
   render: ({
-      label = 'Button',
-      fullWidth = false,
-      rounded = 'small',
-      backgroundColor,
-      textColor,
-      icon = false,
-      reversed = false,
-      stacked = false,
-      onClick
-    }) => {
+    label = 'Button',
+    fullWidth = false,
+    rounded = 'small',
+    backgroundColor,
+    textColor,
+    icon = false,
+    reversed = false,
+    stacked = false,
+    onClick,
+  }: {
+    label?: string;
+    fullWidth?: boolean;
+    rounded?: 'small' | 'large';
+    backgroundColor?: string;
+    textColor?: string;
+    icon?: boolean;
+    reversed?: boolean;
+    stacked?: boolean;
+    onClick?: () => void;
+  }) => {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
@@ -85,6 +95,5 @@ export default {
 };
 
 export const Primary = {
-  args: {
-  },
+  args: {},
 };

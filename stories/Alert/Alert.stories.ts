@@ -1,4 +1,3 @@
-import { fn } from 'storybook/test';
 import '../../css/app.css';
 import './Alert.css';
 import template from './Alert.html?raw';
@@ -6,9 +5,7 @@ import template from './Alert.html?raw';
 export default {
   title: 'Alpitronic/Alert',
   tags: ['autodocs'],
-  render: ({
-      type = 'success',
-    }) => {
+  render: ({ type = 'success' }: { type?: 'success' | 'error' }) => {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
@@ -32,6 +29,5 @@ export default {
 };
 
 export const Default = {
-  args: {
-  },
+  args: {},
 };
