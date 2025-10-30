@@ -27,7 +27,7 @@ function componentBuilderPlugin() {
         const jsPath = join(srcComponentDir, `${component}.js`);
         const cssPath = join(distComponentDir, `${component}.css`);
 
-        if (existsSync(cssPath)) {
+        if (existsSync(htmlPath) && existsSync(jsPath) && existsSync(cssPath)) {
           const css = readFileSync(cssPath, 'utf-8');
 
           const result = await postcss([
