@@ -1,3 +1,7 @@
+@import '../../css/app.css';
+@source "./button.html";
+@source "./button.js";
+
 .container {
   --container-name: button;
 }
@@ -31,7 +35,6 @@
   flex-direction: column-reverse;
 }
 
-
 .button--full {
   width: 100%;
 }
@@ -47,9 +50,3 @@
 .button--icon svg {
   display: block;
 }
-
-/* @container button (min-width: 700px) {
-
-} */
-
-
