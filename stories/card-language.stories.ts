@@ -55,7 +55,7 @@ export default {
 
     if (flag) {
       const flagImg = main.querySelector('.card-language__flag');
-      flagImg?.setAttribute('src', `../src/assets/flags/${flag}.svg`);
+      flagImg?.setAttribute('src', `flags/${flag}.svg`);
     } else {
       main.classList.add('card-language--no-flag');
     }
