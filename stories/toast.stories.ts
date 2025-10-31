@@ -29,12 +29,15 @@ const DEFAULT_CONFIG: Required<ToastConfig> = {
  * Creates and manages toast notifications with stacking animations
  */
 function initToaster(
+  containerElement: HTMLElement,
   config: ToastConfig = {}
 ): { cleanup: () => void; addToast: (options?: ToastConfig) => HTMLDivElement | null } {
   const options = { ...DEFAULT_CONFIG, ...config };
-  const toaster = document.getElementById('toaster');
-  const addToastBtn = document.getElementById('addToastBtn');
-  const toastTemplate = document.getElementById('toastTemplate') as HTMLTemplateElement;
+
+  // Query elements within the container, not the whole document
+  const toaster = containerElement.querySelector('#toaster') as HTMLElement;
+  const addToastBtn = containerElement.querySelector('#addToastBtn') as HTMLButtonElement;
+  const toastTemplate = containerElement.querySelector('#toastTemplate') as HTMLTemplateElement;
   let toastCounter = 0; // Counter for cycling modifier classes
 
   if (!toaster) {
@@ -161,8 +164,8 @@ function initToaster(
     if (addToastBtn) {
       addToastBtn.removeEventListener('click', clickHandler);
     }
-    // Clean up any remaining toasts
-    const remainingToasts = toaster!.querySelectorAll('.toast');
+    // Clean up any remaining toasts from this specific instance
+    const remainingToasts = toaster.querySelectorAll('.toast');
     remainingToasts.forEach(toast => toast.remove());
   };
 
@@ -179,39 +182,17 @@ const meta: Meta<ToastConfig> = {
   render: (args) => {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
-
-    // Store cleanup function reference
-    let cleanupFn: (() => void) | null = null;
+    const element = wrapper.firstChild as HTMLElement;
 
     // Initialize the toaster functionality after rendering
     setTimeout(() => {
-      const { cleanup } = initToaster(args);
-      cleanupFn = cleanup;
+      // Pass the element as the first argument so queries are scoped to this instance
+      const { cleanup, addToast } = initToaster(element, args);
 
-      // Store cleanup function for Storybook hot reload
-      if (wrapper.firstChild) {
-        (wrapper.firstChild as any).__cleanup = cleanup;
-      }
+      // Store cleanup and addToast functions for Storybook lifecycle management
+      (element as any).__cleanup = cleanup;
+      (element as any).__addToast = addToast;
     }, 0);
-
-    // Enhanced cleanup on unmount
-    const element = wrapper.firstChild as HTMLElement;
-    if (element) {
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.removedNodes.forEach((node) => {
-            if (node === element && cleanupFn) {
-              cleanupFn();
-              observer.disconnect();
-            }
-          });
-        });
-      });
-
-      if (element.parentNode) {
-        observer.observe(element.parentNode, { childList: true });
-      }
-    }
 
     return element;
   },
@@ -264,7 +245,8 @@ export default meta;
 type Story = StoryObj<ToastConfig>;
 
 /**
- * Default toast configuration with manual dismiss
+ * Default toast configuration with manual dismiss.
+ * Click the "Add toast" button to see toasts with different visual variants (default, dark, alert).
  */
 export const Default: Story = {
   args: {
@@ -273,10 +255,18 @@ export const Default: Story = {
     dismissDelay: 5000,
     maxToasts: 3,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'The default toast configuration. Toasts stack vertically and must be manually dismissed. Each toast cycles through three visual variants: default (white), dark, and alert (red).',
+      },
+    },
+  },
 };
 
 /**
- * Toast with auto-dismiss enabled
+ * Toast with auto-dismiss enabled.
+ * Toasts will automatically disappear after 3 seconds.
  */
 export const AutoDismiss: Story = {
   args: {
@@ -285,10 +275,18 @@ export const AutoDismiss: Story = {
     dismissDelay: 3000,
     maxToasts: 3,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates auto-dismiss behavior. Click "Add toast" and watch it automatically disappear after 3 seconds.',
+      },
+    },
+  },
 };
 
 /**
- * Limited stack with only 2 toasts visible at once
+ * Limited stack with only 2 toasts visible at once.
+ * When a third toast is added, the oldest one is removed automatically.
  */
 export const LimitedStack: Story = {
   args: {
@@ -297,10 +295,18 @@ export const LimitedStack: Story = {
     dismissDelay: 5000,
     maxToasts: 2,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Limits the stack to only 2 toasts. Try adding more than 2 toasts - the oldest will be automatically removed.',
+      },
+    },
+  },
 };
 
 /**
- * Quick dismissal with short delay
+ * Quick dismissal with short delay.
+ * Perfect for brief notifications.
  */
 export const QuickDismiss: Story = {
   args: {
@@ -308,5 +314,12 @@ export const QuickDismiss: Story = {
     autoDismiss: true,
     dismissDelay: 2000,
     maxToasts: 3,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Fast auto-dismiss for brief notifications. Toasts disappear after just 2 seconds.',
+      },
+    },
   },
 };
