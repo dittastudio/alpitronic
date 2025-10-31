@@ -35,18 +35,6 @@ function drawLabelsX(container: HTMLElement) {
   });
 }
 
-// function onResize(element: HTMLElement, callback: () => void) {
-//   if (!('ResizeObserver' in window) || !element || typeof callback !== 'function') {
-//     return;
-//   }
-
-//   const resizeObserver = new ResizeObserver(() => {
-//     callback();
-//   });
-
-//   resizeObserver.observe(element);
-// }
-
 function init() {
   const chart = document.querySelector('.chart-bar') as HTMLElement;
 
@@ -60,7 +48,6 @@ function init() {
 
   drawBars(bars, numBars);
   drawLabelsX(labelsX);
-  // onResize(chart, () => drawBars(bars, numBars));
 }
 
 document.addEventListener('DOMContentLoaded', init);
