@@ -14,6 +14,7 @@
   position: absolute;
   bottom: 0;
   display: flex;
+  align-items: center;
   gap: 10px;
   padding: calc(20 / 22 * 1em);
   font: var(--type-22-fluid);
@@ -60,6 +61,12 @@
   transform: translateY(calc(var(--index) * 10px * -1));
   scale:  calc(1 + var(--index) * -0.05);
   opacity: 0;
+}
+
+.toast__icon {
+  width: calc(32 / 22 * 1em);
+  height: calc(32 / 22 * 1em);
+  flex-shrink: 0;
 }
 
 .toast__button {
