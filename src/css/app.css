@@ -11,10 +11,10 @@
 @theme {
   --color-*: initial;
   --color-black: #000000;
-  --color-dark-gray: #1E1E1E;
-  --color-medium-gray: #2C2C2C;
-  --color-light-gray: #B3B3B3;
-  --color-green: #54E300;
+  --color-dark-gray: #1e1e1e;
+  --color-medium-gray: #2c2c2c;
+  --color-light-gray: #b3b3b3;
+  --color-green: #54e300;
   --color-white: #ffffff;
   --color-red: #ff0000;
   --color-orange: #ff3700;
@@ -26,7 +26,7 @@
 }
 
 :root {
-  --type-18: 18px / 1.5 var(--font-sans);
+  --type-18: 18px / 1.2 var(--font-sans);
   --type-22: 22px / 1.2 var(--font-sans);
   --type-36: 28px / 1.5 var(--font-sans);
   --type-48: 48px / 1.5 var(--font-sans);
@@ -59,4 +59,14 @@
 @utility container-settings {
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
+}
+
+@utility bg-chart-x {
+  background-image: repeating-linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) 2px,
+    transparent 2px,
+    transparent 10px
+  );
 }
