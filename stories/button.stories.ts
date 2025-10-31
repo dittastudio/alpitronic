@@ -4,7 +4,7 @@ import '@/components/button/button.css';
 import template from '@/components/button/button.html?raw';
 
 export default {
-  title: 'Alpitronic/button',
+  title: 'Alpitronic/Button',
   tags: ['autodocs'],
   render: ({
     label = 'button',
