@@ -39,7 +39,6 @@ function init() {
   const chart = document.querySelector('.chart-bar') as HTMLElement;
 
   if (!chart) {
-    console.error('Chart bar element not found');
     return;
   }
 
