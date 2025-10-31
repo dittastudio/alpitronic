@@ -2,7 +2,7 @@
 @source "./button.html";
 @source "./button.js";
 
-.container {
+.box {
   --container-name: button;
 }
 

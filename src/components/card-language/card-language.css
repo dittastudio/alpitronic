@@ -2,7 +2,7 @@
 @source "./card-language.html";
 @source "./card-language.js";
 
-.container {
+.box {
   --container-name: card-language;
 }
 
@@ -20,7 +20,7 @@
   background-color: var(--color-black);
   aspect-ratio: 14 / 9;
   outline: 3px solid rgba(255, 255, 255, 0);
-  transition: outline-color var(--transition-duration) var(--transition-easing);
+  transition: outline-color 0.3s var(--ease-out);
 }
 
 .card-language:hover,

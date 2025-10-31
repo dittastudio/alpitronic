@@ -2,7 +2,7 @@
 @source "./toast.html";
 @source "./toast.js";
 
-.container__content {
+.box__content {
   flex-grow: 1;
 }
 
@@ -40,7 +40,7 @@
   scale: calc(1 + var(--index) * -0.05);
   transform: translateY(calc(var(--index) * 10px * -1));
 
-  .container__content:hover & {
+  .box__content:hover & {
     opacity: 1;
     scale: 1;
     transform: translateY(calc(var(--index) * (100% + var(--gap)) * -1));
