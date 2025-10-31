@@ -34,6 +34,7 @@ function initToaster(
   const options = { ...DEFAULT_CONFIG, ...config };
   const toaster = document.getElementById('toaster');
   const addToastBtn = document.getElementById('addToastBtn');
+  const toastTemplate = document.getElementById('toastTemplate') as HTMLTemplateElement;
   let toastCounter = 0; // Counter for cycling modifier classes
 
   if (!toaster) {
@@ -44,22 +45,32 @@ function initToaster(
     };
   }
 
+  if (!toastTemplate) {
+    console.warn('Toast template not found');
+    return {
+      cleanup: () => {},
+      addToast: () => null,
+    };
+  }
+
   /**
-   * Creates a toast element with animation
+   * Creates a toast element from template
    */
   function createToastElement({ label, modifierClass = '' }: ToastOptions): HTMLDivElement {
-    const toast = document.createElement('div');
-    toast.className = modifierClass ? `toast ${modifierClass}` : 'toast';
-    toast.setAttribute('data-mounted', 'false');
+    // Clone the template content
+    const toastFragment = toastTemplate.content.cloneNode(true) as DocumentFragment;
+    const toast = toastFragment.querySelector('.toast') as HTMLDivElement;
 
-    toast.innerHTML = `
-      <svg class="toast__icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.0003 5.33341C10.1093 5.33341 5.33366 10.109 5.33366 16.0001C5.33366 21.8911 10.1093 26.6667 16.0003 26.6667C21.8914 26.6667 26.667 21.8911 26.667 16.0001C26.667 10.109 21.8914 5.33341 16.0003 5.33341ZM2.66699 16.0001C2.66699 8.63628 8.63653 2.66675 16.0003 2.66675C23.3641 2.66675 29.3337 8.63628 29.3337 16.0001C29.3337 23.3638 23.3641 29.3334 16.0003 29.3334C8.63653 29.3334 2.66699 23.3638 2.66699 16.0001Z" />
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.3337 9.33325V18.6666H14.667V9.33325H17.3337Z" />
-        <path d="M14.667 20H17.3337V22.6667H14.667V20Z" />
-      </svg>
-      <span class="toast__label">${label}</span>
-    `;
+    // Add modifier class if provided
+    if (modifierClass) {
+      toast.classList.add(modifierClass);
+    }
+
+    // Update the label text
+    const labelElement = toast.querySelector('.toast__label');
+    if (labelElement) {
+      labelElement.textContent = label || '';
+    }
 
     return toast;
   }
