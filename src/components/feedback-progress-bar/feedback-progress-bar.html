@@ -10,7 +10,7 @@
   <div
     class="
       grid
-      text-[20cqmin]
+      text-[min(40cqmin,160px)]
       size-full
       bg-black
       rounded-xl
@@ -37,7 +37,9 @@
           flex
           items-baseline
           gap-2
-          text-red
+          text-black
+          -mx-[0.035em]
+          -my-[0.12em]
         "
       >
         <span id="progress-percentage-value">56</span>
@@ -80,6 +82,8 @@
               items-baseline
               gap-2
               text-white
+              -mx-[0.035em]
+              -my-[0.12em]
             "
           >
             <span id="progress-percentage-overlay">56</span>
@@ -90,16 +94,20 @@
         <div
           class="
             w-[20%]
+            h-full
+            flex
+            items-end
+            @portrait:w-full
             @portrait:h-[20%]
             text-[0.4em]
             font-medium
             text-white
-            @portrait:flex
-            @portrait:items-end
           "
         >
           <div class="">
-            80%
+            <div class="-mx-[0.035em] -my-[0.37em]">
+              80%
+            </div>
           </div>
         </div>
       </div>
