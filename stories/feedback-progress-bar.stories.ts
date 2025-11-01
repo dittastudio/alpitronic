@@ -2,29 +2,45 @@ import '@/css/app.css';
 import '@/components/feedback-progress-bar/feedback-progress-bar.css';
 import template from '@/components/feedback-progress-bar/feedback-progress-bar.html?raw';
 
+// Cache the element outside the render function
+let cachedElement: HTMLElement | null = null;
+
 export default {
   title: 'Alpitronic/feedback-progress-bar',
   tags: ['autodocs'],
-  render: ({ type = 'success' }: { type?: 'success' | 'error' }) => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = template;
-
-    const alert: HTMLElement | null = wrapper.querySelector('.alert');
-
-    if (!alert) {
-      return wrapper;
+  render: ({ percentage = 56 }: { percentage?: number }) => {
+    // Create element only once
+    if (!cachedElement) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = template;
+      cachedElement = wrapper.firstChild as HTMLElement;
     }
 
-    if (type === 'success') {
-      alert.classList.add('alert--success');
-    } else {
-      alert.classList.add('alert--error');
+    // Only update the values that changed
+    const progressBar = cachedElement?.querySelector('.progress-bar__percentage');
+    if (progressBar) {
+      (progressBar as HTMLElement).style.setProperty('--percentage', `${percentage}%`);
     }
 
-    return wrapper.firstChild;
+    // Update the percentage values using IDs
+    const percentageValue = cachedElement?.querySelector('#progress-percentage-value');
+    const percentageOverlay = cachedElement?.querySelector('#progress-percentage-overlay');
+
+    if (percentageValue) {
+      percentageValue.textContent = `${percentage}`;
+    }
+
+    if (percentageOverlay) {
+      percentageOverlay.textContent = `${percentage}`;
+    }
+
+    return cachedElement;
   },
   argTypes: {
-    type: { control: 'radio', options: ['success', 'error'] },
+    percentage: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+      description: 'Progress percentage from 0 to 100'
+    },
   },
 };
 

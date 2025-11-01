@@ -47,16 +47,6 @@
   --container-name: default;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-* {
-  margin: 0;
-}
-
 .box {
   container-name: var(--container-name, default);
   container-type: inline-size;
@@ -67,4 +57,16 @@
 @utility container-settings {
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
+}
+
+@custom-variant @portrait {
+  @container (orientation: portrait) {
+    @slot;
+  }
+}
+
+@custom-variant @landscape {
+  @container (orientation: landscape) {
+    @slot;
+  }
 }

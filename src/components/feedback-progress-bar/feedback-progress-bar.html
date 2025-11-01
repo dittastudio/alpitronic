@@ -1,15 +1,17 @@
 <div
   class="
-    @container
+    @container-[size]
     container-settings
-    p-5
+    resize
+    overflow-auto
+    h-100
   "
 >
   <div
     class="
       grid
-      text-[20cqi]
-      h-[40cqi]
+      text-[20cqmin]
+      size-full
       bg-black
       rounded-xl
       overflow-hidden
@@ -27,22 +29,18 @@
         flex-col
         justify-end
       "
-      style="--percentage: 20%;"
     >
       <div
         class="
-          px-7
-          py-1
-          text-[20cqi]
           tracking-[-0.04em]
           leading-none
           flex
           items-baseline
           gap-2
-          text-black
+          text-red
         "
       >
-        56
+        <span id="progress-percentage-value">56</span>
         <small class="text-[60%] font-medium">%</small>
       </div>
     </div>
@@ -56,15 +54,26 @@
         flex
         flex-col
         justify-end
+        @portrait:justify-startx
       "
     >
-      <div class="flex items-baseline">
-        <div class="grow">
+      <div
+        class="
+          flex
+          items-baseline
+          @portrait:flex-col-reverse
+          @portrait:h-full
+        "
+      >
+        <div
+          class="
+            grow
+            @portrait:flex
+            @portrait:items-end
+          "
+        >
           <div
             class="
-              px-7
-              py-1
-              text-[20cqi]
               tracking-[-0.04em]
               leading-none
               flex
@@ -73,36 +82,27 @@
               text-white
             "
           >
-            56
+            <span id="progress-percentage-overlay">56</span>
             <small class="text-[60%] font-medium">%</small>
           </div>
         </div>
 
-        <div class="w-[20%] text-[4cqi] font-medium text-white">
-          <div class="px-[4cqi] py-1">
+        <div
+          class="
+            w-[20%]
+            @portrait:h-[20%]
+            text-[0.4em]
+            font-medium
+            text-white
+            @portrait:flex
+            @portrait:items-end
+          "
+        >
+          <div class="">
             80%
           </div>
         </div>
       </div>
     </div>
-<!--
-    <div
-      class="
-        col-span-full
-        row-span-full
-        w-[20%]
-        justify-self-end
-        bg-orange
-        z-2
-        text-[36px]
-        font-medium
-        flex
-        flex-col
-        justify-end
-        p-5
-      "
-    >
-      80%
-    </div> -->
   </div>
 </div>
