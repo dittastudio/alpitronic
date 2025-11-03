@@ -1,52 +1,107 @@
-const numBars = 80;
-const labels = ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%'];
+interface Options {
+  data?: number[];
+  xLabel?: string[];
+  yLabel?: string[];
+  selector?: string;
+}
 
-function drawBars(container: HTMLElement, count: number) {
-  container.innerHTML = '';
+class ChartBar {
+  private data: number[];
+  private xLabel: string[];
+  private yLabel: string[];
+  private chart: HTMLElement | null = null;
+  private barsContainer: HTMLElement | null = null;
+  private xLabelContainer: HTMLElement | null = null;
+  private yLabelContainer: HTMLElement | null = null;
 
-  for (let i = 0; i < count; i++) {
-    const value = Math.random() * container.clientHeight;
-    const bar = document.createElement('li');
-    const width = 100 / count / 2;
-    const height = (value / container.clientHeight) * 100;
-    const colour = height <= 25 ? 'bg-red' : 'bg-green';
+  constructor(options: Options = {}) {
+    const { data = [], xLabel = [], yLabel = [], selector = '.chart-bar' } = options;
 
-    bar.className = `${colour} rounded`;
-    bar.style.width = `${width}%`;
-    bar.style.height = `${height}%`;
+    this.data = data;
+    this.xLabel = xLabel;
+    this.yLabel = yLabel;
+    this.chart = document.querySelector(selector);
 
-    const content = document.createElement('span');
-    content.textContent = `${Math.round(height)}%`;
-    content.className = 'sr-only';
+    if (!this.chart) {
+      console.warn(`Chart element with selector "${selector}" not found`);
+      return;
+    }
 
-    bar.appendChild(content);
-    container.appendChild(bar);
+    this.barsContainer = this.chart.querySelector('.chart-bar__bars');
+    this.xLabelContainer = this.chart.querySelector('.chart-bar__x-label');
+    this.yLabelContainer = this.chart.querySelector('.chart-bar__y-label');
+
+    this.init();
+  }
+
+  private drawBars(container: HTMLElement): void {
+    container.innerHTML = '';
+
+    if (!Array.isArray(this.data) || !this.data.length) {
+      return;
+    }
+
+    this.data.forEach(data => {
+      const value = data * container.clientHeight;
+      const bar = document.createElement('li');
+      const width = 100 / this.data.length / 2;
+      const height = (value / container.clientHeight) * 100;
+      const colour = height <= 25 ? 'bg-red' : 'bg-green';
+
+      bar.className = `${colour} rounded`;
+      bar.style.width = `${width}%`;
+      bar.style.height = `${height}%`;
+
+      const content = document.createElement('span');
+      content.textContent = `${Math.round(height)}%`;
+      content.className = 'sr-only';
+
+      bar.appendChild(content);
+      container.appendChild(bar);
+    });
+  }
+
+  private drawXLabel(container: HTMLElement): void {
+    container.innerHTML = '';
+
+    if (!Array.isArray(this.xLabel) || !this.xLabel.length) {
+      return;
+    }
+
+    this.xLabel.forEach(label => {
+      const li = document.createElement('li');
+      li.textContent = label;
+      container.appendChild(li);
+    });
+  }
+
+  private drawYLabel(container: HTMLElement): void {
+    container.innerHTML = '';
+
+    if (!Array.isArray(this.yLabel) || !this.yLabel.length) {
+      return;
+    }
+
+    this.yLabel.forEach(label => {
+      const li = document.createElement('li');
+      li.textContent = label;
+      container.appendChild(li);
+    });
+  }
+
+  private init(): void {
+    if (this.barsContainer) {
+      this.drawBars(this.barsContainer);
+    }
+
+    if (this.xLabelContainer) {
+      this.drawXLabel(this.xLabelContainer);
+    }
+
+    if (this.yLabelContainer) {
+      this.drawYLabel(this.yLabelContainer);
+    }
   }
 }
 
-function drawLabelsX(container: HTMLElement) {
-  container.innerHTML = '';
-
-  labels.forEach(label => {
-    const li = document.createElement('li');
-
-    li.textContent = label;
-    container.appendChild(li);
-  });
-}
-
-function init() {
-  const chart = document.querySelector('.chart-bar') as HTMLElement;
-
-  if (!chart) {
-    return;
-  }
-
-  const bars = chart.querySelector('.chart-bar__bars') as HTMLElement;
-  const labelsX = chart.querySelector('.chart-bar__labels-x') as HTMLElement;
-
-  drawBars(bars, numBars);
-  drawLabelsX(labelsX);
-}
-
-document.addEventListener('DOMContentLoaded', init);
+export default ChartBar;
