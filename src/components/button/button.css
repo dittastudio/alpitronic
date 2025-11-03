@@ -12,6 +12,7 @@
   align-items: center;
   gap: 12px;
   font: var(--type-22);
+  font-weight: 500;
   border: none;
   padding: 16px 48px;
   min-height: 74px;

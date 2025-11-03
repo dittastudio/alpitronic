@@ -8,6 +8,10 @@
   @container (orientation: portrait) {
     clip-path: polygon(0 calc(100% - var(--percentage)), 100% calc(100% - var(--percentage)), 100% 100%, 0 100%);
   }
+
+  &.progress-bar__percentage--animating {
+    transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 .progress-bar__lines {
