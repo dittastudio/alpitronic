@@ -10,7 +10,7 @@
   }
 
   &.progress-bar__percentage--animating {
-    transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
   }
 }
 
