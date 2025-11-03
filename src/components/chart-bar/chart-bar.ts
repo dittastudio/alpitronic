@@ -41,16 +41,17 @@ class ChartBar {
       return;
     }
 
-    this.data.forEach(data => {
+    this.data.forEach((data, index) => {
       const value = data * container.clientHeight;
       const bar = document.createElement('li');
       const width = 100 / this.data.length / 2;
       const height = (value / container.clientHeight) * 100;
       const colour = height <= 25 ? 'bg-red' : 'bg-green';
 
-      bar.className = `${colour} rounded`;
+      bar.className = `${colour} rounded transition-[height] duration-700 ease-out`;
       bar.style.width = `${width}%`;
-      bar.style.height = `${height}%`;
+      bar.style.height = '0%';
+      bar.style.transitionDelay = `${index * 30}ms`;
 
       const content = document.createElement('span');
       content.textContent = `${Math.round(height)}%`;
@@ -58,6 +59,10 @@ class ChartBar {
 
       bar.appendChild(content);
       container.appendChild(bar);
+
+      requestAnimationFrame(() => {
+        bar.style.height = `${height}%`;
+      });
     });
   }
 
@@ -68,10 +73,18 @@ class ChartBar {
       return;
     }
 
-    this.xLabel.forEach(label => {
+    this.xLabel.forEach((label, index) => {
       const li = document.createElement('li');
+
       li.textContent = label;
+      li.className = `opacity-0 translate-y-2 transition-[opacity,translate] duration-700 ease-out`;
+      li.style.transitionDelay = `${index * this.xLabel.length * 25}ms`;
+
       container.appendChild(li);
+
+      requestAnimationFrame(() => {
+        li.classList.remove('opacity-0', 'translate-y-2');
+      });
     });
   }
 
@@ -82,10 +95,18 @@ class ChartBar {
       return;
     }
 
-    this.yLabel.forEach(label => {
+    this.yLabel.forEach((label, index) => {
       const li = document.createElement('li');
+
       li.textContent = label;
+      li.className = `opacity-0 translate-y-2 transition-[opacity,translate] duration-700 ease-out`;
+      li.style.transitionDelay = `${index * this.xLabel.length * 25}ms`;
+
       container.appendChild(li);
+
+      requestAnimationFrame(() => {
+        li.classList.remove('opacity-0', 'translate-y-2');
+      });
     });
   }
 
