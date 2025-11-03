@@ -1,0 +1,7 @@
+@import '@/css/app.css';
+@source "./chart-bar.html";
+@source "./chart-bar.ts";
+
+.box {
+  --container-name: chart-bar;
+}

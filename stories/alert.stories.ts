@@ -3,7 +3,7 @@ import '@/components/alert/alert.css';
 import template from '@/components/alert/alert.html?raw';
 
 export default {
-  title: 'Alpitronic/alert',
+  title: 'Alpitronic/Alert',
   tags: ['autodocs'],
   render: ({ type = 'success' }: { type?: 'success' | 'error' }) => {
     const wrapper = document.createElement('div');
