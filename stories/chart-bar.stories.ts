@@ -2,7 +2,7 @@ import '@/css/app.css';
 import '@/components/chart-bar/chart-bar.css';
 import template from '@/components/chart-bar/chart-bar.html?raw';
 import ChartBar from '@/components/chart-bar/chart-bar';
-import { PerlinNoise, randomRange } from '@/utils/helpers';
+import { PerlinNoise, randomRange } from '@/utils/storybook';
 
 const perlin = new PerlinNoise(50);
 
@@ -38,8 +38,8 @@ export default {
       options: ['perlin', 'range', 'random'],
       mapping: {
         perlin: Array.from({ length: 60 }, (_, i) => (perlin.noise(i * 0.1) + 1) / 2),
-        range: Array.from({ length: 60 }, (_, i) => randomRange(randomRange(0.1, 0.5), randomRange(0.5, 0.9))),
         random: Array.from({ length: 60 }, (_, i) => Math.random()),
+        range: Array.from({ length: 60 }, (_, i) => (i % 10 ? randomRange(0.7, 0.9) : randomRange(0.1, 0.6))),
       },
     },
     xLabel: {

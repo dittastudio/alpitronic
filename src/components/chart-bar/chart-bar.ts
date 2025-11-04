@@ -41,6 +41,8 @@ class ChartBar {
       return;
     }
 
+    const items: { element: HTMLElement; height: number }[] = [];
+
     this.data.forEach((data, index) => {
       const value = data * container.clientHeight;
       const bar = document.createElement('li');
@@ -59,9 +61,12 @@ class ChartBar {
 
       bar.appendChild(content);
       container.appendChild(bar);
+      items.push({ element: bar, height });
+    });
 
-      requestAnimationFrame(() => {
-        bar.style.height = `${height}%`;
+    requestAnimationFrame(() => {
+      items.forEach(({ element, height }) => {
+        element.style.height = `${height}%`;
       });
     });
   }
@@ -73,6 +78,8 @@ class ChartBar {
       return;
     }
 
+    const items: HTMLElement[] = [];
+
     this.xLabel.forEach((label, index) => {
       const li = document.createElement('li');
 
@@ -81,8 +88,11 @@ class ChartBar {
       li.style.transitionDelay = `${index * this.xLabel.length * 25}ms`;
 
       container.appendChild(li);
+      items.push(li);
+    });
 
-      requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      items.forEach(li => {
         li.classList.remove('opacity-0', 'translate-y-2');
       });
     });
@@ -95,6 +105,8 @@ class ChartBar {
       return;
     }
 
+    const items: HTMLElement[] = [];
+
     this.yLabel.forEach((label, index) => {
       const li = document.createElement('li');
 
@@ -103,8 +115,11 @@ class ChartBar {
       li.style.transitionDelay = `${index * this.xLabel.length * 25}ms`;
 
       container.appendChild(li);
+      items.push(li);
+    });
 
-      requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      items.forEach(li => {
         li.classList.remove('opacity-0', 'translate-y-2');
       });
     });
