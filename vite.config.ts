@@ -17,13 +17,12 @@ function getComponentEntries() {
       const stat = statSync(fullPath);
 
       if (stat.isDirectory()) {
-        // const htmlFile = resolve(fullPath, `${item}.html`);
-        const htmlFile = resolve(fullPath, `index.ts`);
+        const entry = resolve(fullPath, `index.ts`);
 
         try {
-          statSync(htmlFile);
+          statSync(entry);
           const entryName = basePath ? `${basePath}/${item}` : item;
-          entries[entryName] = htmlFile;
+          entries[entryName] = entry;
         } catch {
           scanDirectory(fullPath, basePath ? `${basePath}/${item}` : item);
         }
