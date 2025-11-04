@@ -25,46 +25,57 @@ export default {
   },
 }
 
+const renderProgressBar = ({ percentage = 56, backgroundColor = '#54e300', darkText = true }: { percentage?: number; backgroundColor?: string; darkText?: boolean }) => {
+  if (!cachedElement) {
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = template
+    cachedElement = wrapper.firstChild as HTMLElement
+    initProgressBar(cachedElement, 0)
+
+    const container = cachedElement.querySelector('.container-settings')
+    const resizeIndicator = cachedElement.querySelector('[data-resize-indicator]')
+
+    if (container && resizeIndicator) {
+      const updateResizeIndicatorPosition = () => {
+        const { width, height } = container.getBoundingClientRect();
+        (resizeIndicator as HTMLElement).style.left = `${width}px`;
+        (resizeIndicator as HTMLElement).style.top = `${height}px`
+      }
+
+      updateResizeIndicatorPosition()
+
+      const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
+      resizeObserver.observe(container)
+    }
+
+    setTimeout(() => {
+      updateProgress(cachedElement!, percentage, true)
+      setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
+      setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
+    }, 100)
+  } else {
+    updateProgress(cachedElement, percentage, true)
+    setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
+    setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
+  }
+
+  return cachedElement
+}
+
 export const Primary = {
   args: {
     percentage: 56,
     backgroundColor: '#54e300',
     darkText: true,
   },
-  render: ({ percentage = 56, backgroundColor = '#54e300', darkText = true }: { percentage?: number; backgroundColor?: string; darkText?: boolean }) => {
-    if (!cachedElement) {
-      const wrapper = document.createElement('div')
-      wrapper.innerHTML = template
-      cachedElement = wrapper.firstChild as HTMLElement
-      initProgressBar(cachedElement, 0)
+  render: renderProgressBar,
+}
 
-      const container = cachedElement.querySelector('.container-settings')
-      const resizeIndicator = cachedElement.querySelector('[data-resize-indicator]')
-
-      if (container && resizeIndicator) {
-        const updateResizeIndicatorPosition = () => {
-          const { width, height } = container.getBoundingClientRect();
-          (resizeIndicator as HTMLElement).style.left = `${width}px`;
-          (resizeIndicator as HTMLElement).style.top = `${height}px`
-        }
-
-        updateResizeIndicatorPosition()
-
-        const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
-        resizeObserver.observe(container)
-      }
-
-      setTimeout(() => {
-        updateProgress(cachedElement!, percentage, true)
-        setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-        setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
-      }, 100)
-    } else {
-      updateProgress(cachedElement, percentage, true)
-      setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-      setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
-    }
-
-    return cachedElement
+export const Secondary = {
+  args: {
+    percentage: 80,
+    backgroundColor: '#2C2C2C',
+    darkText: false,
   },
+  render: renderProgressBar,
 }
