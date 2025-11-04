@@ -46,7 +46,7 @@ export default {
       control: 'select',
       options: ['sample1', 'sample2', 'sample3'],
       mapping: {
-        sample1: ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%'],
+        sample1: ['1:00', '1:10', '1:20', '1:30', '1:40', '1:50', '2:00', '2:10', '2:20'],
         sample2: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
         sample3: ['1min', '2min', '3min', '4min', '5min', '6min', '7min', '8min', '9min'],
       },
