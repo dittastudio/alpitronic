@@ -70,6 +70,7 @@
     @slot;
   }
 }
+
 @utility bg-chart-x {
   background-image: repeating-linear-gradient(
     to top,
