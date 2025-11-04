@@ -17,7 +17,8 @@ function getComponentEntries() {
       const stat = statSync(fullPath);
 
       if (stat.isDirectory()) {
-        const htmlFile = resolve(fullPath, `${item}.html`);
+        // const htmlFile = resolve(fullPath, `${item}.html`);
+        const htmlFile = resolve(fullPath, `index.ts`);
 
         try {
           statSync(htmlFile);
@@ -38,10 +39,7 @@ function getComponentEntries() {
 }
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    // componentBuilderPlugin()
-  ],
+  plugins: [tailwindcss()],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -55,35 +53,18 @@ export default defineConfig({
       treeshake: false,
       input: getComponentEntries(),
       output: {
-        entryFileNames: chunkInfo => {
-          if (chunkInfo.name === 'index') {
-            return 'assets/[name]-[hash].js';
-          }
-          return `${chunkInfo.name}/[name]-[hash].js`;
-        },
-        chunkFileNames: chunkInfo => {
-          const facadeModuleId = chunkInfo.facadeModuleId || '';
-          for (const entry in getComponentEntries()) {
-            if (entry !== 'index' && facadeModuleId.includes(`/${entry}/`)) {
-              return `${entry}/[name]-[hash].js`;
-            }
-          }
-          return 'assets/[name]-[hash].js';
-        },
+        entryFileNames: chunkInfo => `${chunkInfo.name}/[name]-[hash].js`,
+        chunkFileNames: _chunkInfo => 'assets/[name]-[hash].js',
         assetFileNames: assetInfo => {
           const name = assetInfo.names[0] || '';
 
-          for (const entry in getComponentEntries()) {
-            if (entry !== 'index' && name.includes(`/${entry}/`)) {
-              return `${entry}/[name]-[hash][extname]`;
-            }
-          }
+          console.log('assetInfo:', assetInfo.names);
 
           const fileParts = name.split('.');
           const fileName = fileParts.at(0);
           const fileExt = fileParts.at(-1);
 
-          if (fileName && fileExt && fileExt === 'css') {
+          if (fileName && fileExt && ['css', 'html'].includes(fileExt)) {
             return `${fileName}/[name]-[hash][extname]`;
           }
 

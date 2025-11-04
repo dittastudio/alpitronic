@@ -1,9 +1,3 @@
-import './chart-bar.css';
-
-const chart = () => console.log('Chart');
-
-chart();
-
 interface Options {
   data?: number[];
   xLabel?: string[];
