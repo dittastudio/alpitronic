@@ -1,0 +1,100 @@
+<div class="relative mt-8 mx-8 pb-8">
+  <div
+    class="
+      @container
+      container-settings
+      resize-x
+      overflow-auto
+      flex
+      flex-col
+      gap-3
+    "
+  >
+    <div
+      class="
+        flex
+        items-baseline
+        text-[min(35cqmin,160px)]
+      "
+    >
+      <div
+        class="
+          grow
+        "
+      >
+        <div
+          class="
+            tracking-[-0.04em]
+            leading-none
+            flex
+            items-baseline
+            gap-2
+            text-white
+            -mx-[0.035em]
+            -my-[0.12em]
+          "
+        >
+          <span data-js-percentage-number>56</span>
+          <small class="text-[60%] font-medium">%</small>
+        </div>
+      </div>
+
+      <div
+        class="
+          w-[20%]
+          h-full
+          flex
+          items-end
+          text-[min(3cqi,32px)]
+          font-medium
+          text-white
+        "
+      >
+        <div class="-mx-[0.035em] -my-[0.37em]">
+          80%
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="
+        relative
+        h-10
+        bg-black
+        rounded-full
+        overflow-hidden
+        flex
+        items-center
+        after:content-['']
+        after:absolute
+        after:z-1
+        after:left-[80%]
+        after:size-2
+        after:bg-white
+        after:rounded-[inherit]
+        after:-translate-x-1/2
+      "
+    >
+      <div
+        data-js-percentage-bar
+        class="
+          progress-bar
+          absolute
+          inset-0
+          bg-green
+          rounded-[inherit]
+          -translate-x-[20%]
+        "
+      ></div>
+    </div>
+  </div>
+
+  <div
+    data-resize-indicator
+    class="absolute text-light-gray top-full left-full text-sm -translate-x-full translate-y-full whitespace-nowrap pointer-events-none"
+  >
+    Resize here
+
+    <span class="relative -top-2.5 inline-block -rotate-6">&#x2934;</span>
+  </div>
+</div>
