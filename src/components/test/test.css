@@ -1,7 +1,0 @@
-@import '@/css/app.css';
-@source "./test.html";
-@source "./test.ts";
-
-.test {
-  color: red;
-}
