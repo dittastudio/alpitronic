@@ -1,5 +1,5 @@
 const INITIAL_DURATION = 1500
-const DEFAULT_DURATION = 300
+const DEFAULT_DURATION = 200
 let currentPercentage = 56
 
 const animateCounter = (
