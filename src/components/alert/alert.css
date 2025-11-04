@@ -8,6 +8,7 @@
 
 .alert {
   font: var(--type-48-fluid);
+  font-weight: 500;
   width: 100%;
   color: var(--color-white);
   background-color: var(--color-dark-gray);
@@ -158,6 +159,7 @@
   text-align: left;
   gap: 14px;
   font: var(--type-22-fluid);
+  font-weight: 500;
   color: var(--color-light-gray);
   background-color: var(--color-medium-gray);
   padding: 0.9em;

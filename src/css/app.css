@@ -2,8 +2,16 @@
 
 @font-face {
   font-family: 'PP Neue Montreal';
-  src: url('../assets/fonts/PPNeueMontreal-Medium.woff2') format('woff2');
+  src: url('../assets/fonts/PPNeueMontreal-Regular.woff2') format('woff2');
   font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../assets/fonts/PPNeueMontreal-Medium.woff2') format('woff2');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -39,16 +47,6 @@
   --container-name: default;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-* {
-  margin: 0;
-}
-
 .box {
   container-name: var(--container-name, default);
   container-type: inline-size;
@@ -61,6 +59,17 @@
   font-size: 16px;
 }
 
+@custom-variant @portrait {
+  @container (orientation: portrait) {
+    @slot;
+  }
+}
+
+@custom-variant @landscape {
+  @container (orientation: landscape) {
+    @slot;
+  }
+}
 @utility bg-chart-x {
   background-image: repeating-linear-gradient(
     to top,

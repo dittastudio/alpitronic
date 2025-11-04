@@ -18,6 +18,7 @@
   gap: 10px;
   padding: calc(20 / 22 * 1em);
   font: var(--type-22-fluid);
+  font-weight: 500;
   border-radius: 14px;
   background-color: var(--color-white);
   color: var(--color-dark-gray);
@@ -67,8 +68,4 @@
   width: calc(32 / 22 * 1em);
   height: calc(32 / 22 * 1em);
   flex-shrink: 0;
-}
-
-.toast__button {
-  font: var(--type-18);
 }
