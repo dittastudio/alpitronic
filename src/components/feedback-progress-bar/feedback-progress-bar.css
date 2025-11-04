@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./feedback-progress-bar.html";
-@source "./feedback-progress-bar.js";
+@source "./feedback-progress-bar.ts";
 
 .progress-bar__percentage {
   clip-path: polygon(0 0, var(--percentage) 0, var(--percentage) 100%, 0 100%);

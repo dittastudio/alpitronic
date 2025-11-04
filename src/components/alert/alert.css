@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./alert.html";
-@source "./alert.js";
+@source "./alert.ts";
 
 .main {
   --container-name: alert;
