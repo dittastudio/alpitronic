@@ -57,7 +57,7 @@ export default defineConfig({
         assetFileNames: assetInfo => {
           const name = assetInfo.names[0] || '';
 
-          console.log('assetInfo:', assetInfo.names);
+          // console.log('assetInfo:', assetInfo.names);
 
           const fileParts = name.split('.');
           const fileName = fileParts.at(0);
