@@ -1,4 +1,5 @@
-let currentPercentage = 56;
+const DEFAULT_DURATION = 1500
+let currentPercentage = 56
 
 const animateCounter = (
   element,
@@ -6,64 +7,78 @@ const animateCounter = (
   end,
   duration
 ) => {
-  const startTime = performance.now();
-  const difference = end - start;
+  const startTime = performance.now()
+  const difference = end - start
 
   const updateCounter = (currentTime) => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
 
-    // Use easing function to match CSS animation
-    const easeInOutQuart = (t) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
-    const easedProgress = easeInOutQuart(progress);
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4)
+    const easedProgress = easeOutQuart(progress)
 
-    const currentValue = Math.round(start + difference * easedProgress);
-    element.textContent = `${currentValue}`;
+    const currentValue = Math.round(start + difference * easedProgress)
+    element.textContent = `${currentValue}`
 
     if (progress < 1) {
-      requestAnimationFrame(updateCounter);
+      requestAnimationFrame(updateCounter)
     }
-  };
-
-  requestAnimationFrame(updateCounter);
-};
-
-export const updateProgress = (element, percentage, animated = false) => {
-  const progressBar = element?.querySelector('.progress-bar__percentage');
-  const percentageElements = element?.querySelectorAll('[data-js-percentage]');
-
-  if (progressBar) {
-    const progressBarElement = progressBar;
-
-    if (animated) {
-      progressBarElement.classList.add('progress-bar__percentage--animating');
-
-      // Animate the counter values
-      percentageElements?.forEach((el) => {
-        animateCounter(el, currentPercentage, percentage, 1500);
-      });
-
-      // Remove animation class after animation completes
-      setTimeout(() => {
-        progressBarElement.classList.remove('progress-bar__percentage--animating');
-      }, 1500);
-    } else {
-      // Instant update for non-animated changes
-      percentageElements?.forEach((el) => {
-        el.textContent = `${percentage}`;
-      });
-    }
-
-    progressBarElement.style.setProperty('--percentage', `${percentage}%`);
   }
 
-  currentPercentage = percentage;
-};
+  requestAnimationFrame(updateCounter)
+}
+
+export const updateProgress = (element, percentage, animated = false) => {
+  const progressBar = element?.querySelector('[data-js-percentage-bar]')
+  const percentageElements = element?.querySelectorAll('[data-js-percentage-number]')
+
+  if (progressBar) {
+    const progressBarElement = progressBar
+
+    if (animated) {
+      const duration = parseFloat(
+        getComputedStyle(progressBarElement).getPropertyValue('--progress-duration')
+      )
+
+      progressBarElement.classList.add('is-animating')
+
+      percentageElements?.forEach((el) => {
+        animateCounter(el, currentPercentage, percentage, duration)
+      })
+
+      setTimeout(() => {
+        progressBarElement.classList.remove('is-animating')
+      }, duration)
+    } else {
+      percentageElements?.forEach((el) => {
+        el.textContent = `${percentage}`
+      })
+    }
+
+    progressBarElement.style.setProperty('--percentage', `${percentage}%`)
+  }
+
+  currentPercentage = percentage
+}
 
 export const initProgressBar = (element, initialPercentage = 56) => {
-  currentPercentage = initialPercentage;
-  updateProgress(element, initialPercentage, false);
-};
+  const progressBar = element?.querySelector('[data-js-percentage-bar]')
 
-export const getCurrentPercentage = () => currentPercentage;
+  // Set that sweet CSS variable
+  if (progressBar) {
+    progressBar.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`)
+  }
+
+  currentPercentage = initialPercentage
+  updateProgress(element, initialPercentage, false)
+
+  // what is this FILTH?!
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      element?.classList.add('is-ready')
+    })
+  })
+}
+
+export const getCurrentPercentage = () => currentPercentage
 

@@ -9,14 +9,17 @@
     clip-path: polygon(0 calc(100% - var(--percentage)), 100% calc(100% - var(--percentage)), 100% 100%, 0 100%);
   }
 
-  &.progress-bar__percentage--animating {
-    transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+  &.is-animating {
+    transition: clip-path var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
 
 .progress-bar__lines {
   --lines-count: 80;
   --line-color: var(--color-medium-gray);
+
+  opacity: 0;
+  transition: opacity 1s var(--ease-out) 0.1s;
 
   background-image:
     repeating-linear-gradient(
@@ -41,5 +44,9 @@
     background-size: 100% calc(var(--lines-count) * 1%);
     background-position: bottom;
     background-repeat: no-repeat;
+  }
+
+  .is-ready & {
+    opacity: 1;
   }
 }
