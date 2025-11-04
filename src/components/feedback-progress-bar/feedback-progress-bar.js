@@ -1,4 +1,5 @@
-const DEFAULT_DURATION = 1500
+const INITIAL_DURATION = 1500
+const DEFAULT_DURATION = 300
 let currentPercentage = 56
 
 const animateCounter = (
@@ -36,9 +37,11 @@ export const updateProgress = (element, percentage, animated = false) => {
     const progressBarElement = progressBar
 
     if (animated) {
-      const duration = parseFloat(
-        getComputedStyle(progressBarElement).getPropertyValue('--progress-duration')
-      )
+      // Read the current duration (either 1500ms initially or 300ms after)
+      const durationStr = getComputedStyle(progressBarElement)
+        .getPropertyValue('--progress-duration')
+        .trim()
+      const duration = parseFloat(durationStr) || DEFAULT_DURATION
 
       progressBarElement.classList.add('is-animating')
 
@@ -64,17 +67,24 @@ export const updateProgress = (element, percentage, animated = false) => {
 export const initProgressBar = (element, initialPercentage = 56) => {
   const progressBar = element?.querySelector('[data-js-percentage-bar]')
 
-  // Set that sweet CSS variable
-  if (progressBar) {
-    progressBar.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`)
-  }
-
   currentPercentage = initialPercentage
   updateProgress(element, initialPercentage, false)
 
-  // what is this FILTH?!
+  // Double RAF to ensure DOM is ready for transitions
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
+      if (progressBar) {
+        // Set initial duration and add is-animating for reveal
+        progressBar.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`)
+        progressBar.classList.add('is-animating')
+
+        // After initial animation, remove is-animating and set default duration
+        setTimeout(() => {
+          progressBar.classList.remove('is-animating')
+          progressBar.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`)
+        }, INITIAL_DURATION)
+      }
+
       element?.classList.add('is-ready')
     })
   })
