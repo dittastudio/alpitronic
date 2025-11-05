@@ -1,10 +1,12 @@
+import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
 import '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt.css'
 import template from '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt.html?raw'
 import { initProgressBar, updateProgress, setBackgroundColor } from '@/components/feedback-progress-bar/feedback-progress-bar'
 
-// Cache the element for the Storybook demo purposes only lolz
-let cachedElement: HTMLElement | null = null
+// Store for maintaining element state across re-renders
+const storyElements = new Map<string, HTMLElement>()
+const storyInitialized = new Map<string, boolean>()
 
 export default {
   title: 'Alpitronic/Feedback Progress Bar Alt',
@@ -13,6 +15,53 @@ export default {
     backgrounds: {
       default: 'dark',
     },
+  },
+  render: (args: any, context: StoryContext) => {
+    const { percentage = 56, backgroundColor = '#54e300' } = args
+    const storyId = context.id
+    let element = storyElements.get(storyId)
+    const isInitialized = storyInitialized.get(storyId)
+
+    if (!element) {
+      const wrapper = document.createElement('div')
+      wrapper.innerHTML = template
+      element = wrapper.firstChild as HTMLElement
+      storyElements.set(storyId, element)
+
+      const container = element.querySelector('.container-settings')
+      const resizeIndicator = element.querySelector('[data-resize-indicator]')
+
+      if (container && resizeIndicator) {
+        const updateResizeIndicatorPosition = () => {
+          const { width, height } = container.getBoundingClientRect();
+          (resizeIndicator as HTMLElement).style.left = `${width}px`;
+          (resizeIndicator as HTMLElement).style.top = `${height}px`
+        }
+
+        const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
+        resizeObserver.observe(container)
+
+        // Initial position update
+        requestAnimationFrame(() => {
+          updateResizeIndicatorPosition()
+        })
+      }
+
+      initProgressBar(element, 0)
+
+      // Delay initial update
+      setTimeout(() => {
+        updateProgress(element!, percentage, true)
+        setBackgroundColor(element!.querySelector('[data-js-percentage-bar]'), backgroundColor)
+        storyInitialized.set(storyId, true)
+      }, 100)
+    } else if (isInitialized) {
+      // Update existing element
+      updateProgress(element, percentage, true)
+      setBackgroundColor(element.querySelector('[data-js-percentage-bar]'), backgroundColor)
+    }
+
+    return element
   },
   argTypes: {
     percentage: {
@@ -26,47 +75,11 @@ export default {
   },
 }
 
-const renderProgressBar = ({ percentage = 56, backgroundColor = '#54e300' }: { percentage?: number; backgroundColor?: string }) => {
-  if (!cachedElement) {
-    const wrapper = document.createElement('div')
-    wrapper.innerHTML = template
-    cachedElement = wrapper.firstChild as HTMLElement
-    initProgressBar(cachedElement, 0)
-
-    const container = cachedElement.querySelector('.container-settings')
-    const resizeIndicator = cachedElement.querySelector('[data-resize-indicator]')
-
-    if (container && resizeIndicator) {
-      const updateResizeIndicatorPosition = () => {
-        const { width, height } = container.getBoundingClientRect();
-        (resizeIndicator as HTMLElement).style.left = `${width}px`;
-        (resizeIndicator as HTMLElement).style.top = `${height}px`
-      }
-
-      updateResizeIndicatorPosition()
-
-      const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
-      resizeObserver.observe(container)
-    }
-
-    setTimeout(() => {
-      updateProgress(cachedElement!, percentage, true)
-      setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-    }, 100)
-  } else {
-    updateProgress(cachedElement, percentage, true)
-    setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-  }
-
-  return cachedElement
-}
-
 export const Primary = {
   args: {
     percentage: 56,
     backgroundColor: '#54e300',
   },
-  render: renderProgressBar,
 }
 
 export const Secondary = {
@@ -74,5 +87,4 @@ export const Secondary = {
     percentage: 42,
     backgroundColor: '#371E0A',
   },
-  render: renderProgressBar,
 }
