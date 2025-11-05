@@ -1,0 +1,83 @@
+<div class="
+  relative
+  mt-8
+  mx-8
+  pb-8
+">
+  <div
+    class="
+      @container-[size]
+      container-settings
+      resize
+      overflow-auto
+      flex
+      flex-col
+      justify-end
+      gap-3
+      h-100
+    "
+  >
+    <svg
+      class="
+        progress-ring
+        size-100
+        -rotate-90
+      "
+      width="400"
+      height="400"
+      viewBox="0 0 400 400"
+      fill="none"
+    >
+      <!-- grey background ring -->
+      <circle
+        class="
+          fill-none
+          stroke-medium-gray
+          stroke-29
+        "
+        cx="200"
+        cy="200"
+        r="180"
+      />
+
+      <!-- animated progress ring -->
+      <circle
+        data-js-progress-ring
+        class="
+          fill-none
+          stroke-green
+          stroke-29
+        "
+        stroke-linecap="round"
+        cx="200"
+        cy="200"
+        r="180"
+      />
+    </svg>
+  </div>
+
+  <div
+    data-resize-indicator
+    class="
+      absolute
+      text-light-gray
+      top-full
+      left-full
+      text-sm
+      -translate-x-full
+      translate-y-full
+      whitespace-nowrap
+      pointer-events-none
+    "
+  >
+    Resize here
+
+    <span class="
+      relative
+      -top-2.5
+      inline-block
+      -rotate-6
+    ">&#x2934;</span>
+  </div>
+</div>
+

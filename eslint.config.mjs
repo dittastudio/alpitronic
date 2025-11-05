@@ -23,7 +23,7 @@ export default [
         preferSingleLine: true, // allow multiline when long (true forces single-line where possible)
       }],
       'better-tailwindcss/enforce-consistent-class-order': 'off',
-      // 'better-tailwindcss/no-unregistered-classes': 'off', // Allow custom CSS classes
+      'better-tailwindcss/no-unregistered-classes': 'off', // Allow custom CSS classes
     },
     settings: {
       'better-tailwindcss': {

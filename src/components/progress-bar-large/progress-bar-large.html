@@ -22,7 +22,7 @@
       <div
         data-js-percentage-mask
         class="
-          progress-bar__mask
+          progress-bar-large__mask
           col-span-full
           row-span-full
           z-1
@@ -64,8 +64,9 @@
 
       <!-- Progress bar lines -->
       <div
+        data-js-percentage-lines
         class="
-          progress-bar__lines
+          progress-bar-large__lines
           col-span-full
           row-span-full
           flex
@@ -82,7 +83,7 @@
         >
           <div
             class="
-              grow
+              w-[calc(var(--lines-count)*1%)]
               @portrait:flex
               @portrait:items-end
               p-[min(10cqmin,30px)]
@@ -110,7 +111,7 @@
 
           <div
             class="
-              w-[20%]
+              grow
               h-full
               flex
               items-end
@@ -131,10 +132,14 @@
                 ease-out
               "
             >
-              <div class="
-                -mx-[0.035em]
-                -my-[0.37em]
-              ">80%</div>
+              <div
+                class="
+                  -mx-[0.035em]
+                  -my-[0.37em]
+                "
+              >
+                <span data-js-percentage-limit-number>80</span>%
+              </div>
             </div>
           </div>
         </div>
@@ -166,3 +171,4 @@
     ">&#x2934;</span>
   </div>
 </div>
+
