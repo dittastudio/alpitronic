@@ -10,13 +10,12 @@
   }
 
   &.is-animating {
-    transition:
-      clip-path var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: clip-path var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
 
 .progress-bar-large__lines {
-  --line-color: var(--color-medium-gray);
+  --line-color: var(--color-grey-800);
 
   opacity: 0;
   transition: opacity 1s var(--ease-out) 0.1s;
@@ -49,4 +48,3 @@
     opacity: 1;
   }
 }
-

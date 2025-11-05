@@ -48,7 +48,7 @@ class ChartBar {
       const bar = document.createElement('li');
       const width = 100 / this.data.length / 2;
       const height = (value / container.clientHeight) * 100;
-      const colour = height <= 25 ? 'bg-red' : 'bg-green';
+      const colour = height <= 25 ? 'bg-danger' : 'bg-success';
 
       bar.className = `${colour} rounded transition-[height] duration-700 ease-out`;
       bar.style.width = `${width}%`;

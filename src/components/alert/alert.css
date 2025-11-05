@@ -11,7 +11,7 @@
   font-weight: 500;
   width: 100%;
   color: var(--color-white);
-  background-color: var(--color-dark-gray);
+  background-color: var(--color-grey-900);
   border-radius: 22px;
   padding: 1em;
   aspect-ratio: 16 / 9;
@@ -46,12 +46,12 @@
 }
 
 .alert--success .alert__icon-disc {
-  fill: var(--color-green);
+  fill: var(--color-accent);
   animation: scale-in 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 .alert--error .alert__icon-disc {
-  fill: var(--color-orange);
+  fill: var(--color-warning);
   animation: scale-in 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
@@ -142,7 +142,7 @@
 
 .alert__description {
   font: var(--type-36-fluid);
-  color: var(--color-light-gray);
+  color: var(--color-grey-400);
   opacity: 0;
   animation: fade-in 1s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
@@ -160,8 +160,8 @@
   gap: 14px;
   font: var(--type-22-fluid);
   font-weight: 500;
-  color: var(--color-light-gray);
-  background-color: var(--color-medium-gray);
+  color: var(--color-grey-400);
+  background-color: var(--color-grey-800);
   padding: 0.9em;
   border-radius: 14px;
   margin-top: 2em;

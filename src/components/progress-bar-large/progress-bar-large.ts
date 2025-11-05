@@ -5,12 +5,7 @@ let currentLinesCount = 80;
 
 const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
 
-const animateCounter = (
-  element: HTMLElement,
-  start: number,
-  end: number,
-  duration: number
-): void => {
+const animateCounter = (element: HTMLElement, start: number, end: number, duration: number): void => {
   const startTime = performance.now();
   const difference = end - start;
 
@@ -31,11 +26,7 @@ const animateCounter = (
   requestAnimationFrame(updateCounter);
 };
 
-export const updateProgress = (
-  element: HTMLElement | null,
-  percentage: number,
-  animated: boolean = false
-): void => {
+export const updateProgress = (element: HTMLElement | null, percentage: number, animated: boolean = false): void => {
   const percentageMask = element?.querySelector<HTMLElement>('[data-js-percentage-mask]');
   const percentageBar = percentageMask?.querySelector<HTMLElement>('[data-js-percentage-bar]');
   const percentageNumbers = element?.querySelectorAll<HTMLElement>('[data-js-percentage-number]');
@@ -43,14 +34,12 @@ export const updateProgress = (
 
   if (percentageMask) {
     if (animated) {
-      const durationStr = getComputedStyle(percentageMask)
-        .getPropertyValue('--progress-duration')
-        .trim();
+      const durationStr = getComputedStyle(percentageMask).getPropertyValue('--progress-duration').trim();
       const duration = parseFloat(durationStr) || DEFAULT_DURATION;
 
       percentageMask.classList.add('is-animating');
 
-      percentageNumbers?.forEach((el) => {
+      percentageNumbers?.forEach(el => {
         animateCounter(el, currentPercentage, percentage, duration);
       });
 
@@ -58,7 +47,7 @@ export const updateProgress = (
         percentageMask.classList.remove('is-animating');
       }, duration);
     } else {
-      percentageNumbers?.forEach((el) => {
+      percentageNumbers?.forEach(el => {
         el.textContent = `${percentage}`;
       });
     }
@@ -80,10 +69,10 @@ export const updateProgress = (
   // Change progress bar background to medium gray when reaching lines count threshold or higher
   if (percentageBar) {
     if (percentage >= currentLinesCount) {
-      percentageBar.classList.add('!bg-medium-gray');
+      percentageBar.classList.add('!bg-grey-800');
       percentageBar.classList.add('!text-white');
     } else {
-      percentageBar.classList.remove('!bg-medium-gray');
+      percentageBar.classList.remove('!bg-grey-800');
       percentageBar.classList.remove('!text-white');
     }
   }
@@ -91,10 +80,7 @@ export const updateProgress = (
   currentPercentage = percentage;
 };
 
-export const initProgressBar = (
-  element: HTMLElement | null,
-  initialPercentage: number = 56
-): void => {
+export const initProgressBar = (element: HTMLElement | null, initialPercentage: number = 56): void => {
   const percentageMask = element?.querySelector<HTMLElement>('[data-js-percentage-mask]');
 
   currentPercentage = initialPercentage;
@@ -146,10 +132,7 @@ export const setLinesCount = (element: HTMLElement | null, count: number): void 
   currentLinesCount = count;
 };
 
-export const setCircleProgress = (
-  ring: SVGCircleElement | null,
-  percentage: number
-): void => {
+export const setCircleProgress = (ring: SVGCircleElement | null, percentage: number): void => {
   if (!ring) return;
 
   const radius = parseFloat(ring.getAttribute('r') || '180');
