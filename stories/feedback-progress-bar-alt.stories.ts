@@ -9,6 +9,11 @@ let cachedElement: HTMLElement | null = null
 export default {
   title: 'Alpitronic/Feedback Progress Bar Alt',
   tags: ['autodocs'],
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+    },
+  },
   argTypes: {
     percentage: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
@@ -46,11 +51,11 @@ const renderProgressBar = ({ percentage = 56, backgroundColor = '#54e300' }: { p
 
     setTimeout(() => {
       updateProgress(cachedElement!, percentage, true)
-      setBackgroundColor(cachedElement?.querySelector('.progress-bar')!, backgroundColor)
+      setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
     }, 100)
   } else {
     updateProgress(cachedElement, percentage, true)
-    setBackgroundColor(cachedElement?.querySelector('.progress-bar')!, backgroundColor)
+    setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
   }
 
   return cachedElement
@@ -66,8 +71,8 @@ export const Primary = {
 
 export const Secondary = {
   args: {
-    percentage: 80,
-    backgroundColor: '#2C2C2C',
+    percentage: 42,
+    backgroundColor: '#371E0A',
   },
   render: renderProgressBar,
 }

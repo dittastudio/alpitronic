@@ -73,8 +73,8 @@ export const Primary = {
 
 export const Secondary = {
   args: {
-    percentage: 80,
-    backgroundColor: '#2C2C2C',
+    percentage: 42,
+    backgroundColor: '#371E0A',
     darkText: false,
   },
   render: renderProgressBar,
