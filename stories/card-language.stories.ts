@@ -1,5 +1,4 @@
 import { fn } from 'storybook/test';
-import '@/css/app.css';
 import '@/components/card-language/card-language.css';
 import template from '@/components/card-language/card-language.html?raw';
 
@@ -7,18 +6,18 @@ export default {
   title: 'Alpitronic/Card Language',
   tags: ['autodocs'],
   render: ({
-    textNative,
-    textLocal,
-    isActive = false,
-    fullWidth = false,
     flag,
+    textPrimary,
+    textSecondary,
+    isActive,
+    fullWidth,
     onClick = () => {},
   }: {
-    textNative?: string;
-    textLocal?: string;
+    flag?: string;
+    textPrimary?: string;
+    textSecondary?: string;
     isActive?: boolean;
     fullWidth?: boolean;
-    flag?: string;
     onClick?: () => void;
   }) => {
     const wrapper = document.createElement('div');
@@ -30,32 +29,41 @@ export default {
       return wrapper;
     }
 
-    const labelNative = main.querySelector('.card-language__label-native');
-    const labelLocal = main.querySelector('.card-language__label-local');
+    const primary = main.querySelector('[data-primary]');
+    const secondary = main.querySelector('[data-secondary]');
 
-    if (labelNative && textNative) {
-      labelNative.textContent = textNative;
-    } else {
-      main.classList.add('card-language--no-native');
+    if (primary && textPrimary) {
+      primary.textContent = textPrimary;
+    } else if (primary) {
+      primary.classList.remove('block');
+      primary.classList.add('hidden');
     }
 
-    if (labelLocal && textLocal) {
-      labelLocal.textContent = textLocal;
-    } else {
-      main.classList.add('card-language--no-local');
+    if (secondary && textSecondary) {
+      secondary.textContent = textSecondary;
+    } else if (secondary) {
+      secondary.classList.remove('block');
+      secondary.classList.add('hidden');
     }
 
     if (isActive) {
-      main.classList.add('card-language--is-active');
+      main.classList.remove('outline-transparent');
+      main.classList.add('outline-white');
     }
 
     if (fullWidth) {
-      main.classList.add('card-language--full');
+      main.classList.add('w-full');
     }
 
     if (flag) {
-      const flagImg = main.querySelector('.card-language__flag');
-      flagImg?.setAttribute('src', `flags/${flag}.svg`);
+      const flagImg = main.querySelector('img');
+
+      if (flagImg && flag === 'None') {
+        flagImg.classList.remove('block');
+        flagImg.classList.add('hidden');
+      } else if (flagImg) {
+        flagImg.setAttribute('src', `flags/${flag}.svg`);
+      }
     } else {
       main.classList.add('card-language--no-flag');
     }
@@ -67,13 +75,14 @@ export default {
     return wrapper.firstChild;
   },
   argTypes: {
-    textNative: { control: 'text' },
-    textLocal: { control: 'text' },
+    textPrimary: { control: 'text' },
+    textSecondary: { control: 'text' },
     isActive: { control: 'boolean' },
     fullWidth: { control: 'boolean' },
     flag: {
       control: 'select',
       options: [
+        'None',
         'ad',
         'ae',
         'af',
@@ -349,27 +358,16 @@ export default {
     },
     onClick: { action: 'onClick' },
   },
-  args: { onClick: fn() },
-};
-
-export const All = {
   args: {
-    textNative: 'Italiano',
-    textLocal: 'Italian',
     flag: 'it',
+    textPrimary: 'Italiano',
+    textSecondary: 'Italian',
+    isActive: false,
+    fullWidth: false,
+    onClick: fn(),
   },
 };
 
-export const NoFlag = {
-  args: {
-    textNative: 'Italiano',
-    textLocal: 'Italian',
-  },
-};
-
-export const NoLocal = {
-  args: {
-    textNative: 'Italiano',
-    flag: 'it',
-  },
+export const Default = {
+  args: {},
 };
