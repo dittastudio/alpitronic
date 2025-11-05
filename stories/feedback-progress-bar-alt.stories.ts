@@ -1,13 +1,13 @@
 import '@/css/app.css'
-import '@/components/feedback-progress-bar/feedback-progress-bar.css'
-import template from '@/components/feedback-progress-bar/feedback-progress-bar.html?raw'
-import { initProgressBar, updateProgress, setBackgroundColor, setTextColor } from '@/components/feedback-progress-bar/feedback-progress-bar'
+import '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt.css'
+import template from '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt.html?raw'
+import { initProgressBar, updateProgress, setBackgroundColor } from '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt'
 
 // Cache the element for the Storybook demo purposes only lolz
 let cachedElement: HTMLElement | null = null
 
 export default {
-  title: 'Alpitronic/Feedback Progress Bar',
+  title: 'Alpitronic/Feedback Progress Bar Alt',
   tags: ['autodocs'],
   argTypes: {
     percentage: {
@@ -18,14 +18,10 @@ export default {
       control: { type: 'color' },
       description: 'Background color of the progress bar'
     },
-    darkText: {
-      control: { type: 'boolean' },
-      description: 'Toggle between dark (true) and light (false) text color'
-    },
   },
 }
 
-const renderProgressBar = ({ percentage = 56, backgroundColor = '#54e300', darkText = true }: { percentage?: number; backgroundColor?: string; darkText?: boolean }) => {
+const renderProgressBar = ({ percentage = 56, backgroundColor = '#54e300' }: { percentage?: number; backgroundColor?: string }) => {
   if (!cachedElement) {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template
@@ -50,13 +46,11 @@ const renderProgressBar = ({ percentage = 56, backgroundColor = '#54e300', darkT
 
     setTimeout(() => {
       updateProgress(cachedElement!, percentage, true)
-      setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-      setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
+      setBackgroundColor(cachedElement?.querySelector('.progress-bar')!, backgroundColor)
     }, 100)
   } else {
     updateProgress(cachedElement, percentage, true)
-    setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-    setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
+    setBackgroundColor(cachedElement?.querySelector('.progress-bar')!, backgroundColor)
   }
 
   return cachedElement
@@ -66,7 +60,6 @@ export const Primary = {
   args: {
     percentage: 56,
     backgroundColor: '#54e300',
-    darkText: true,
   },
   render: renderProgressBar,
 }
@@ -75,7 +68,6 @@ export const Secondary = {
   args: {
     percentage: 80,
     backgroundColor: '#2C2C2C',
-    darkText: false,
   },
   render: renderProgressBar,
 }

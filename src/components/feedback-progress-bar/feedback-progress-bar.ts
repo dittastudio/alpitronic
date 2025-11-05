@@ -1,8 +1,13 @@
-const INITIAL_DURATION: number = 1500;
-const DEFAULT_DURATION: number = 300;
-let currentPercentage: number = 56;
+const INITIAL_DURATION = 1500;
+const DEFAULT_DURATION = 200;
+let currentPercentage = 56;
 
-const animateCounter = (element: HTMLElement, start: number, end: number, duration: number): void => {
+const animateCounter = (
+  element: HTMLElement,
+  start: number,
+  end: number,
+  duration: number
+): void => {
   const startTime = performance.now();
   const difference = end - start;
 
@@ -10,7 +15,7 @@ const animateCounter = (element: HTMLElement, start: number, end: number, durati
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
 
-    const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
+    const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
     const easedProgress = easeOutQuart(progress);
 
     const currentValue = Math.round(start + difference * easedProgress);
@@ -24,23 +29,27 @@ const animateCounter = (element: HTMLElement, start: number, end: number, durati
   requestAnimationFrame(updateCounter);
 };
 
-export const updateProgress = (element: HTMLElement | null, percentage: number, animated = false): void => {
-  const progressBar = element?.querySelector('[data-js-percentage-bar]') as HTMLElement | null;
-  const percentageElements = element?.querySelectorAll('[data-js-percentage-number]') as
-    | NodeListOf<HTMLElement>
-    | undefined;
+export const updateProgress = (
+  element: HTMLElement | null,
+  percentage: number,
+  animated: boolean = false
+): void => {
+  const progressBar = element?.querySelector<HTMLElement>('[data-js-percentage-bar]');
+  const percentageElements = element?.querySelectorAll<HTMLElement>('[data-js-percentage-number]');
 
   if (progressBar) {
     const progressBarElement = progressBar;
 
     if (animated) {
       // Read the current duration (either 1500ms initially or 300ms after)
-      const durationStr = getComputedStyle(progressBarElement).getPropertyValue('--progress-duration').trim();
+      const durationStr = getComputedStyle(progressBarElement)
+        .getPropertyValue('--progress-duration')
+        .trim();
       const duration = parseFloat(durationStr) || DEFAULT_DURATION;
 
       progressBarElement.classList.add('is-animating');
 
-      percentageElements?.forEach((el: HTMLElement) => {
+      percentageElements?.forEach((el) => {
         animateCounter(el, currentPercentage, percentage, duration);
       });
 
@@ -48,7 +57,7 @@ export const updateProgress = (element: HTMLElement | null, percentage: number, 
         progressBarElement.classList.remove('is-animating');
       }, duration);
     } else {
-      percentageElements?.forEach((el: HTMLElement) => {
+      percentageElements?.forEach((el) => {
         el.textContent = `${percentage}`;
       });
     }
@@ -59,8 +68,11 @@ export const updateProgress = (element: HTMLElement | null, percentage: number, 
   currentPercentage = percentage;
 };
 
-export const initProgressBar = (element: HTMLElement | null, initialPercentage = 56): void => {
-  const progressBar = element?.querySelector('[data-js-percentage-bar]') as HTMLElement | null;
+export const initProgressBar = (
+  element: HTMLElement | null,
+  initialPercentage: number = 56
+): void => {
+  const progressBar = element?.querySelector<HTMLElement>('[data-js-percentage-bar]');
 
   currentPercentage = initialPercentage;
   updateProgress(element, initialPercentage, false);
@@ -86,3 +98,14 @@ export const initProgressBar = (element: HTMLElement | null, initialPercentage =
 };
 
 export const getCurrentPercentage = (): number => currentPercentage;
+
+export const setBackgroundColor = (element: HTMLElement | null, color: string): void => {
+  if (!element) return;
+  element.style.backgroundColor = color;
+};
+
+export const setTextColor = (element: HTMLElement | null, isDark: boolean = false): void => {
+  if (!element) return;
+  element.classList.toggle('text-white', !isDark);
+  element.classList.toggle('text-black', isDark);
+};

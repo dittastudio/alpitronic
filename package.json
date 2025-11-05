@@ -14,10 +14,14 @@
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^7.0.2",
+    "@html-eslint/eslint-plugin": "^0.47.1",
+    "@html-eslint/parser": "^0.47.1",
     "@storybook/addon-docs": "^10.0.2",
     "@storybook/html-vite": "^10.0.2",
     "@tailwindcss/vite": "^4.1.16",
     "@types/node": "^24.9.2",
+    "eslint": "^9.39.1",
+    "eslint-plugin-better-tailwindcss": "^3.7.10",
     "storybook": "^10.0.2",
     "tailwindcss": "^4.1.16",
     "vite": "^7.1.12"
