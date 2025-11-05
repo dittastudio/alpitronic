@@ -2,7 +2,7 @@
 @source "./feedback-progress-bar-alt.html";
 @source "./feedback-progress-bar-alt.ts";
 
-.progress-bar {
+.progress-bar__mask {
   translate: calc(var(--percentage) - (100% - 0px)) 0 0;
 
   &.is-animating {

@@ -1,7 +1,7 @@
 import '@/css/app.css'
 import '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt.css'
 import template from '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt.html?raw'
-import { initProgressBar, updateProgress, setBackgroundColor } from '@/components/feedback-progress-bar-alt/feedback-progress-bar-alt'
+import { initProgressBar, updateProgress, setBackgroundColor } from '@/components/feedback-progress-bar/feedback-progress-bar'
 
 // Cache the element for the Storybook demo purposes only lolz
 let cachedElement: HTMLElement | null = null

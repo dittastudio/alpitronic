@@ -61,10 +61,15 @@
           text-white
         "
       >
-        <div class="
-          -mx-[0.035em]
-          -my-[0.37em]
-        ">
+        <div
+          data-js-percentage-limit
+          class="
+            -mx-[0.035em]
+            -my-[0.37em]
+            transition-[opacity,scale]
+            duration-200
+            ease-out
+          ">
           80%
         </div>
       </div>
@@ -91,16 +96,27 @@
       "
     >
       <div
-        data-js-percentage-bar
+        data-js-percentage-mask
         class="
-          progress-bar
+          progress-bar__mask
           absolute
           inset-0
-          bg-green
           rounded-[inherit]
           -translate-x-[20%]
         "
-      ></div>
+      >
+        <div
+          data-js-percentage-bar
+          class="
+            size-full
+            bg-green
+            rounded-[inherit]
+            transition-colors
+            duration-200
+            ease-out
+          "
+        ></div>
+      </div>
     </div>
   </div>
 
