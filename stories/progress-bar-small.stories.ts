@@ -1,18 +1,23 @@
 import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
-import '@/components/feedback-progress-bar/feedback-progress-bar.css'
-import template from '@/components/feedback-progress-bar/feedback-progress-bar.html?raw'
-import { initProgressBar, updateProgress, setBackgroundColor, setTextColor } from '@/components/feedback-progress-bar/feedback-progress-bar'
+import '@/components/progress-bar-small/progress-bar-small.css'
+import template from '@/components/progress-bar-small/progress-bar-small.html?raw'
+import { initProgressBar, updateProgress, setBackgroundColor } from '@/components/progress-bar-large/progress-bar-large'
 
 // Store for maintaining element state across re-renders
 const storyElements = new Map<string, HTMLElement>()
 const storyInitialized = new Map<string, boolean>()
 
 export default {
-  title: 'Alpitronic/Feedback Progress Bar',
+  title: 'Alpitronic/Progress Bar Small',
   tags: ['autodocs'],
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+    },
+  },
   render: (args: any, context: StoryContext) => {
-    const { percentage = 56, backgroundColor = '#54e300', darkText = true } = args
+    const { percentage = 56, backgroundColor = '#54e300' } = args
     const storyId = context.id
     let element = storyElements.get(storyId)
     const isInitialized = storyInitialized.get(storyId)
@@ -48,14 +53,12 @@ export default {
       setTimeout(() => {
         updateProgress(element!, percentage, true)
         setBackgroundColor(element!.querySelector('[data-js-percentage-bar]'), backgroundColor)
-        setTextColor(element!.querySelector('[data-js-percentage-bar]'), darkText)
         storyInitialized.set(storyId, true)
       }, 100)
     } else if (isInitialized) {
       // Update existing element
       updateProgress(element, percentage, true)
       setBackgroundColor(element.querySelector('[data-js-percentage-bar]'), backgroundColor)
-      setTextColor(element.querySelector('[data-js-percentage-bar]'), darkText)
     }
 
     return element
@@ -69,10 +72,6 @@ export default {
       control: { type: 'color' },
       description: 'Background color of the progress bar'
     },
-    darkText: {
-      control: { type: 'boolean' },
-      description: 'Toggle between dark (true) and light (false) text color'
-    },
   },
 }
 
@@ -80,7 +79,6 @@ export const Primary = {
   args: {
     percentage: 56,
     backgroundColor: '#54e300',
-    darkText: true,
   },
 }
 
@@ -88,6 +86,5 @@ export const Secondary = {
   args: {
     percentage: 42,
     backgroundColor: '#371E0A',
-    darkText: false,
   },
 }

@@ -1,11 +1,12 @@
 @import '@/css/app.css';
-@source "./feedback-progress-bar-alt.html";
-@source "./feedback-progress-bar-alt.ts";
+@source "./progress-bar-small.html";
+@source "../progress-bar-large/progress-bar-large.ts";
 
-.progress-bar-alt__mask {
+.progress-bar-small__mask {
   translate: calc(var(--percentage) - (100% - 0px)) 0 0;
 
   &.is-animating {
     transition: translate var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
+

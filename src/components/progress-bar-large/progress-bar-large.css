@@ -1,8 +1,8 @@
 @import '@/css/app.css';
-@source "./feedback-progress-bar.html";
-@source "./feedback-progress-bar.ts";
+@source "./progress-bar-large.html";
+@source "./progress-bar-large.ts";
 
-.progress-bar__mask {
+.progress-bar-large__mask {
   clip-path: polygon(0 0, var(--percentage) 0, var(--percentage) 100%, 0 100%);
 
   @container (orientation: portrait) {
@@ -15,7 +15,7 @@
   }
 }
 
-.progress-bar__lines {
+.progress-bar-large__lines {
   --lines-count: 80;
   --line-color: var(--color-medium-gray);
 
@@ -50,3 +50,4 @@
     opacity: 1;
   }
 }
+

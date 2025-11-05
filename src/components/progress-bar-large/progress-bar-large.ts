@@ -130,3 +130,4 @@ export const setTextColor = (element: HTMLElement | null, isDark: boolean = fals
   element.classList.toggle('text-white', !isDark);
   element.classList.toggle('text-black', isDark);
 };
+
