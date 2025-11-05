@@ -43,7 +43,9 @@
   --color-accent: var(--color-green);
 
   --radius-\*: initial;
+  --radius-none: none;
   --radius-0: 0;
+  --radius-14: 14px;
   --radius-22: 22px;
   --radius-42: 42px;
   --radius-full: 100%;
