@@ -1,5 +1,3 @@
-import { fn } from 'storybook/test';
-import '@/css/app.css';
 import '@/components/button/button.css';
 import template from '@/components/button/button.html?raw';
 
@@ -7,15 +5,14 @@ export default {
   title: 'Alpitronic/Button',
   tags: ['autodocs'],
   render: ({
-    label = 'button',
-    fullWidth = false,
-    rounded = 'small',
+    label,
+    fullWidth,
+    rounded,
     backgroundColor,
     textColor,
-    icon = false,
-    reversed = false,
-    stacked = false,
-    onClick,
+    icon,
+    reversed,
+    stacked,
   }: {
     label?: string;
     fullWidth?: boolean;
@@ -25,25 +22,24 @@ export default {
     icon?: boolean;
     reversed?: boolean;
     stacked?: boolean;
-    onClick?: () => void;
   }) => {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
-    const btn: HTMLElement | null = wrapper.querySelector('.button');
+    const btn: HTMLElement | null = wrapper.querySelector('button');
 
     if (!btn) {
       return wrapper;
     }
 
-    const btnLabel = btn.querySelector('.button__label');
+    const btnLabel = btn.querySelector('span');
 
     if (btnLabel && label) {
       btnLabel.textContent = label;
     }
 
     if (fullWidth) {
-      btn.classList.add('button--full');
+      btn.classList.add('w-full');
     }
 
     if (backgroundColor) {
@@ -54,24 +50,25 @@ export default {
       btn.style.color = textColor;
     }
 
-    if (rounded) {
-      btn.classList.add(`button--rounded-${rounded}`);
+    if (rounded === 'large') {
+      btn.classList.remove('rounded-22');
+      btn.classList.add('rounded-42');
     }
 
-    if (reversed) {
-      btn.classList.add('button--reversed');
+    if (stacked && reversed) {
+      btn.classList.remove('flex-row-reverse');
+      btn.classList.add('flex-col');
+      btn.classList.add('flex-col-reverse');
+    } else if (reversed) {
+      btn.classList.add('flex-row-reverse');
+    } else if (stacked) {
+      btn.classList.add('flex-col');
     }
 
-    if (stacked) {
-      btn.classList.add('button--stacked');
-    }
+    const svg = btn.querySelector('svg');
 
-    if (icon) {
-      btn.classList.add('button--icon');
-    }
-
-    if (typeof onClick === 'function') {
-      btn.addEventListener('click', onClick);
+    if (svg && icon) {
+      svg.classList.remove('hidden');
     }
 
     return wrapper.firstChild;
@@ -81,7 +78,6 @@ export default {
     textColor: { control: 'color' },
     backgroundColor: { control: 'color' },
     fullWidth: { control: 'boolean' },
-
     rounded: {
       control: { type: 'radio' },
       options: ['small', 'large'],
@@ -89,11 +85,17 @@ export default {
     icon: { control: 'boolean' },
     reversed: { control: 'boolean' },
     stacked: { control: 'boolean' },
-    onClick: { action: 'onClick' },
   },
-  args: { onClick: fn() },
+  args: {
+    label: 'Hello World',
+    fullWidth: false,
+    rounded: 'small',
+    icon: true,
+    reversed: false,
+    stacked: false,
+  },
 };
 
-export const Primary = {
+export const Default = {
   args: {},
 };
