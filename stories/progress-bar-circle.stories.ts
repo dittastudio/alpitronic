@@ -1,7 +1,7 @@
 import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
-import '@/components/progress-bar-small/progress-bar-small.css'
-import template from '@/components/progress-bar-small/progress-bar-small.html?raw'
+import '@/components/progress-bar-circle/progress-bar-circle.css'
+import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
 import { initProgressBar, updateProgress, setBackgroundColor, setLinesCount } from '@/components/progress-bar-large/progress-bar-large'
 
 // Store for maintaining element state across re-renders
@@ -9,7 +9,7 @@ const storyElements = new Map<string, HTMLElement>()
 const storyInitialized = new Map<string, boolean>()
 
 export default {
-  title: 'Alpitronic/Progress Bar Small',
+  title: 'Alpitronic/Progress Bar Circle',
   tags: ['autodocs'],
   render: (args: any, context: StoryContext) => {
     const { percentage = 56, backgroundColor = '#54e300', linesCount = 80 } = args

@@ -1,0 +1,26 @@
+@import '@/css/app.css';
+@source "./progress-bar-small.html";
+@source "../progress-bar-large/progress-bar-large.ts";
+
+.progress-bar-small__limiter {
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    left: calc(var(--lines-count) * 1% - 20px);
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: white;
+    border-radius: inherit;
+    translate: -50% 0;
+  }
+}
+
+.progress-bar-small__mask {
+  translate: calc(var(--percentage) - (100% - 0px)) 0 0;
+
+  &.is-animating {
+    transition: translate var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+}
+
