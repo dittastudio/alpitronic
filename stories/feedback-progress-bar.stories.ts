@@ -51,12 +51,12 @@ const renderProgressBar = ({ percentage = 56, backgroundColor = '#54e300', darkT
     setTimeout(() => {
       updateProgress(cachedElement!, percentage, true)
       setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-      setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
+      setTextColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, darkText)
     }, 100)
   } else {
     updateProgress(cachedElement, percentage, true)
     setBackgroundColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, backgroundColor)
-    setTextColor(cachedElement?.querySelector('[data-js-percentage-text]')!, darkText)
+    setTextColor(cachedElement?.querySelector('[data-js-percentage-bar]')!, darkText)
   }
 
   return cachedElement

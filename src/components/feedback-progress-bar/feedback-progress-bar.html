@@ -20,37 +20,45 @@
     ">
       <!-- Progress bar -->
       <div
-        data-js-percentage-bar
+        data-js-percentage-mask
         class="
-          progress-bar__percentage
+          progress-bar__mask
           col-span-full
           row-span-full
-          bg-green
           z-1
-          flex
-          flex-col
-          justify-end
-          p-[min(10cqmin,30px)]
         "
       >
         <div
-          data-js-percentage-text
+          data-js-percentage-bar
           class="
-            tracking-[-0.04em]
-            leading-none
+            size-full
+            p-[min(10cqmin,30px)]
             flex
-            items-baseline
-            gap-2
+            flex-col
+            justify-end
+            bg-green
             text-black
-            -mx-[0.035em]
-            -my-[0.12em]
-          "
-        >
-          <span data-js-percentage-number>56</span>
-          <small class="
-            text-[60%]
-            font-medium
-          ">%</small>
+            transition-colors
+            duration-200
+            ease-out
+          ">
+          <div
+            class="
+              tracking-[-0.04em]
+              leading-none
+              flex
+              items-baseline
+              gap-2
+              -mx-[0.035em]
+              -my-[0.12em]
+            "
+          >
+            <span data-js-percentage-number>56</span>
+            <small class="
+              text-[60%]
+              font-medium
+            ">%</small>
+          </div>
         </div>
       </div>
 
@@ -114,9 +122,15 @@
               text-white
             "
           >
-            <div class="
-              p-[min(10cqmin,30px)]
-            ">
+            <div
+              data-js-percentage-limit
+              class="
+                p-[min(10cqmin,30px)]
+                transition-[opacity,scale]
+                duration-200
+                ease-out
+              "
+            >
               <div class="
                 -mx-[0.035em]
                 -my-[0.37em]

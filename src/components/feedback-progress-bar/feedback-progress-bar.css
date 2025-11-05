@@ -2,7 +2,7 @@
 @source "./feedback-progress-bar.html";
 @source "./feedback-progress-bar.ts";
 
-.progress-bar__percentage {
+.progress-bar__mask {
   clip-path: polygon(0 0, var(--percentage) 0, var(--percentage) 100%, 0 100%);
 
   @container (orientation: portrait) {
@@ -10,7 +10,8 @@
   }
 
   &.is-animating {
-    transition: clip-path var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition:
+      clip-path var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
 

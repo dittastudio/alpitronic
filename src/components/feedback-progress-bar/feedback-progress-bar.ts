@@ -34,27 +34,26 @@ export const updateProgress = (
   percentage: number,
   animated: boolean = false
 ): void => {
-  const progressBar = element?.querySelector<HTMLElement>('[data-js-percentage-bar]');
+  const progressMask = element?.querySelector<HTMLElement>('[data-js-percentage-mask]');
+  const progressBar = progressMask?.querySelector<HTMLElement>('[data-js-percentage-bar]');
   const percentageElements = element?.querySelectorAll<HTMLElement>('[data-js-percentage-number]');
+  const percentageLimit = element?.querySelector<HTMLElement>('[data-js-percentage-limit]');
 
-  if (progressBar) {
-    const progressBarElement = progressBar;
-
+  if (progressMask) {
     if (animated) {
-      // Read the current duration (either 1500ms initially or 300ms after)
-      const durationStr = getComputedStyle(progressBarElement)
+      const durationStr = getComputedStyle(progressMask)
         .getPropertyValue('--progress-duration')
         .trim();
       const duration = parseFloat(durationStr) || DEFAULT_DURATION;
 
-      progressBarElement.classList.add('is-animating');
+      progressMask.classList.add('is-animating');
 
       percentageElements?.forEach((el) => {
         animateCounter(el, currentPercentage, percentage, duration);
       });
 
       setTimeout(() => {
-        progressBarElement.classList.remove('is-animating');
+        progressMask.classList.remove('is-animating');
       }, duration);
     } else {
       percentageElements?.forEach((el) => {
@@ -62,7 +61,29 @@ export const updateProgress = (
       });
     }
 
-    progressBarElement.style.setProperty('--percentage', `${percentage}%`);
+    progressMask.style.setProperty('--percentage', `${percentage}%`);
+  }
+
+  // Hide percentage limit when reaching 80% or higher
+  if (percentageLimit) {
+    if (percentage >= 80) {
+      percentageLimit.classList.add('opacity-0');
+      percentageLimit.classList.add('scale-95');
+    } else {
+      percentageLimit.classList.remove('opacity-0');
+      percentageLimit.classList.remove('scale-95');
+    }
+  }
+
+  // Change progress bar background to medium gray when reaching 80% or higher
+  if (progressBar) {
+    if (percentage >= 80) {
+      progressBar.classList.add('!bg-medium-gray');
+      progressBar.classList.add('!text-white');
+    } else {
+      progressBar.classList.remove('!bg-medium-gray');
+      progressBar.classList.remove('!text-white');
+    }
   }
 
   currentPercentage = percentage;
@@ -72,7 +93,7 @@ export const initProgressBar = (
   element: HTMLElement | null,
   initialPercentage: number = 56
 ): void => {
-  const progressBar = element?.querySelector<HTMLElement>('[data-js-percentage-bar]');
+  const progressMask = element?.querySelector<HTMLElement>('[data-js-percentage-mask]');
 
   currentPercentage = initialPercentage;
   updateProgress(element, initialPercentage, false);
@@ -80,15 +101,15 @@ export const initProgressBar = (
   // Double RAF to ensure DOM is ready for transitions
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      if (progressBar) {
+      if (progressMask) {
         // Set initial duration and add is-animating for reveal
-        progressBar.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`);
-        progressBar.classList.add('is-animating');
+        progressMask.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`);
+        progressMask.classList.add('is-animating');
 
         // After initial animation, remove is-animating and set default duration
         setTimeout(() => {
-          progressBar.classList.remove('is-animating');
-          progressBar.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`);
+          progressMask.classList.remove('is-animating');
+          progressMask.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`);
         }, INITIAL_DURATION);
       }
 
