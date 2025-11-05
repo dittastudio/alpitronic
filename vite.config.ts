@@ -1,6 +1,6 @@
-import { resolve, join } from 'node:path';
-import { readdirSync, statSync, existsSync, copyFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { defineConfig } from 'vite';
+import { resolve, join } from 'node:path';
+import { readdirSync, statSync, existsSync, readFileSync, writeFileSync, copyFileSync } from 'node:fs';
 import tailwindcss from '@tailwindcss/vite';
 import postcss from 'postcss';
 import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
@@ -18,27 +18,27 @@ function componentBuilderPlugin() {
         return statSync(itemPath).isDirectory();
       });
 
-      console.log(`\n🧠 Processing components with PurgeCSS...\n`);
+      console.log(`\n🧠 Processing files with PurgeCSS...\n`);
 
       for (const component of components) {
         const srcComponentDir = join(srcDir, component);
         const distComponentDir = join(distDir, component);
         const htmlPath = join(srcComponentDir, `${component}.html`);
-        const jsPath = join(srcComponentDir, `${component}.js`);
+        const tsPath = join(srcComponentDir, `${component}.ts`);
         const cssPath = join(distComponentDir, `${component}.css`);
 
-        if (existsSync(htmlPath) && existsSync(jsPath) && existsSync(cssPath)) {
+        if (existsSync(htmlPath) && existsSync(tsPath) && existsSync(cssPath)) {
           const css = readFileSync(cssPath, 'utf-8');
 
           const result = await postcss([
             purgeCSSPlugin({
-              content: [htmlPath, jsPath],
+              content: [htmlPath, tsPath],
               defaultExtractor: content => {
                 const matches = content.match(/[A-Za-z0-9_-]+(?:\.[0-9]+)?(?:\/[0-9]+)?/g) || [];
                 return matches;
               },
               safelist: {
-                standard: [/^alert-component/, /^heading-component/, /^component-/],
+                standard: [],
                 deep: [],
                 greedy: [],
               },
@@ -73,25 +73,34 @@ function componentBuilderPlugin() {
   };
 }
 
-function getComponentCSSEntries() {
-  const srcDir = resolve(__dirname, 'src/components');
+function getComponentEntries() {
   const entries: Record<string, string> = {};
+  const srcDir = resolve(__dirname, 'src/components');
 
-  if (!existsSync(srcDir)) {
-    return entries;
-  }
+  const scanDirectory = (dir: string, basePath: string = '') => {
+    const items = readdirSync(dir);
 
-  readdirSync(srcDir)
-    .filter(item => {
-      const itemPath = join(srcDir, item);
-      return statSync(itemPath).isDirectory();
-    })
-    .forEach(component => {
-      const cssPath = join(srcDir, component, `${component}.css`);
-      if (existsSync(cssPath)) {
-        entries[`${component}/${component}`] = cssPath;
+    items.forEach(item => {
+      const fullPath = resolve(dir, item);
+      const stat = statSync(fullPath);
+
+      if (stat.isDirectory()) {
+        const entry = resolve(fullPath, `index.ts`);
+
+        try {
+          statSync(entry);
+          const entryName = basePath ? `${basePath}/${item}` : item;
+          entries[entryName] = entry;
+        } catch {
+          scanDirectory(fullPath, basePath ? `${basePath}/${item}` : item);
+        }
       }
     });
+  };
+
+  try {
+    scanDirectory(srcDir);
+  } catch {}
 
   return entries;
 }
@@ -104,18 +113,26 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
-    emptyOutDir: true,
+    modulePreload: {
+      polyfill: false,
+    },
     rollupOptions: {
-      input: getComponentCSSEntries(),
+      treeshake: false,
+      input: getComponentEntries(),
       output: {
-        assetFileNames: chunkInfo => {
-          // console.log('asset chunkInfo:', chunkInfo.names);
-          return `[name][extname]`;
-        },
-        entryFileNames: chunkInfo => {
-          // console.log('entry chunkInfo:', chunkInfo.name);
-          return `[name].js`;
+        entryFileNames: chunkInfo => `${chunkInfo.name}/[name].js`,
+        chunkFileNames: _chunkInfo => 'assets/[name].js',
+        assetFileNames: assetInfo => {
+          const name = assetInfo.names[0] || '';
+          const fileParts = name.split('.');
+          const fileName = fileParts.at(0);
+          const fileExt = fileParts.at(-1);
+
+          if (fileName && fileExt && ['css', 'html'].includes(fileExt)) {
+            return `${fileName}/[name][extname]`;
+          }
+
+          return 'assets/[name][extname]';
         },
       },
     },

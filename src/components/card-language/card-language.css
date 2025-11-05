@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./card-language.html";
-@source "./card-language.js";
+@source "./card-language.ts";
 
 .box {
   --container-name: card-language;
