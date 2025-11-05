@@ -2,7 +2,7 @@ import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
 import '@/components/progress-bar-small/progress-bar-small.css'
 import template from '@/components/progress-bar-small/progress-bar-small.html?raw'
-import { initProgressBar, updateProgress, setBackgroundColor } from '@/components/progress-bar-large/progress-bar-large'
+import { initProgressBar, updateProgress, setBackgroundColor, setLinesCount } from '@/components/progress-bar-large/progress-bar-large'
 
 // Store for maintaining element state across re-renders
 const storyElements = new Map<string, HTMLElement>()
@@ -17,7 +17,7 @@ export default {
     },
   },
   render: (args: any, context: StoryContext) => {
-    const { percentage = 56, backgroundColor = '#54e300' } = args
+    const { percentage = 56, backgroundColor = '#54e300', linesCount = 80 } = args
     const storyId = context.id
     let element = storyElements.get(storyId)
     const isInitialized = storyInitialized.get(storyId)
@@ -53,12 +53,14 @@ export default {
       setTimeout(() => {
         updateProgress(element!, percentage, true)
         setBackgroundColor(element!.querySelector('[data-js-percentage-bar]'), backgroundColor)
+        setLinesCount(element!, linesCount)
         storyInitialized.set(storyId, true)
       }, 100)
     } else if (isInitialized) {
       // Update existing element
       updateProgress(element, percentage, true)
       setBackgroundColor(element.querySelector('[data-js-percentage-bar]'), backgroundColor)
+      setLinesCount(element, linesCount)
     }
 
     return element
@@ -72,6 +74,10 @@ export default {
       control: { type: 'color' },
       description: 'Background color of the progress bar'
     },
+    linesCount: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+      description: 'Number for the percentage limit display (default: 80)'
+    },
   },
 }
 
@@ -79,6 +85,7 @@ export const Primary = {
   args: {
     percentage: 56,
     backgroundColor: '#54e300',
+    linesCount: 80,
   },
 }
 
@@ -86,5 +93,6 @@ export const Secondary = {
   args: {
     percentage: 42,
     backgroundColor: '#371E0A',
+    linesCount: 80,
   },
 }

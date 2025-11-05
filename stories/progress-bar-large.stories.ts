@@ -2,7 +2,7 @@ import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
 import '@/components/progress-bar-large/progress-bar-large.css'
 import template from '@/components/progress-bar-large/progress-bar-large.html?raw'
-import { initProgressBar, updateProgress, setBackgroundColor, setTextColor } from '@/components/progress-bar-large/progress-bar-large'
+import { initProgressBar, updateProgress, setBackgroundColor, setTextColor, setLinesCount } from '@/components/progress-bar-large/progress-bar-large'
 
 // Store for maintaining element state across re-renders
 const storyElements = new Map<string, HTMLElement>()
@@ -12,7 +12,7 @@ export default {
   title: 'Alpitronic/Progress Bar Large',
   tags: ['autodocs'],
   render: (args: any, context: StoryContext) => {
-    const { percentage = 56, backgroundColor = '#54e300', darkText = true } = args
+    const { percentage = 56, backgroundColor = '#54e300', darkText = true, linesCount = 80 } = args
     const storyId = context.id
     let element = storyElements.get(storyId)
     const isInitialized = storyInitialized.get(storyId)
@@ -49,6 +49,7 @@ export default {
         updateProgress(element!, percentage, true)
         setBackgroundColor(element!.querySelector('[data-js-percentage-bar]'), backgroundColor)
         setTextColor(element!.querySelector('[data-js-percentage-bar]'), darkText)
+        setLinesCount(element!, linesCount)
         storyInitialized.set(storyId, true)
       }, 100)
     } else if (isInitialized) {
@@ -56,6 +57,7 @@ export default {
       updateProgress(element, percentage, true)
       setBackgroundColor(element.querySelector('[data-js-percentage-bar]'), backgroundColor)
       setTextColor(element.querySelector('[data-js-percentage-bar]'), darkText)
+      setLinesCount(element, linesCount)
     }
 
     return element
@@ -73,6 +75,10 @@ export default {
       control: { type: 'boolean' },
       description: 'Toggle between dark (true) and light (false) text color'
     },
+    linesCount: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+      description: 'Number of vertical lines to display (default: 80)'
+    },
   },
 }
 
@@ -81,6 +87,7 @@ export const Primary = {
     percentage: 56,
     backgroundColor: '#54e300',
     darkText: true,
+    linesCount: 80,
   },
 }
 
@@ -89,6 +96,7 @@ export const Secondary = {
     percentage: 42,
     backgroundColor: '#371E0A',
     darkText: false,
+    linesCount: 80,
   },
 }
 

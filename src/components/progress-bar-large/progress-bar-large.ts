@@ -1,6 +1,7 @@
 const INITIAL_DURATION = 1500;
 const DEFAULT_DURATION = 200;
 let currentPercentage = 56;
+let currentLinesCount = 80;
 
 const animateCounter = (
   element: HTMLElement,
@@ -64,9 +65,9 @@ export const updateProgress = (
     progressMask.style.setProperty('--percentage', `${percentage}%`);
   }
 
-  // Hide percentage limit when reaching 80% or higher
+  // Hide percentage limit when reaching lines count threshold or higher
   if (percentageLimit) {
-    if (percentage >= 80) {
+    if (percentage >= currentLinesCount) {
       percentageLimit.classList.add('opacity-0');
       percentageLimit.classList.add('scale-95');
     } else {
@@ -75,9 +76,9 @@ export const updateProgress = (
     }
   }
 
-  // Change progress bar background to medium gray when reaching 80% or higher
+  // Change progress bar background to medium gray when reaching lines count threshold or higher
   if (progressBar) {
-    if (percentage >= 80) {
+    if (percentage >= currentLinesCount) {
       progressBar.classList.add('!bg-medium-gray');
       progressBar.classList.add('!text-white');
     } else {
@@ -129,5 +130,20 @@ export const setTextColor = (element: HTMLElement | null, isDark: boolean = fals
   if (!element) return;
   element.classList.toggle('text-white', !isDark);
   element.classList.toggle('text-black', isDark);
+};
+
+export const setLinesCount = (element: HTMLElement | null, count: number): void => {
+  if (!element) return;
+  const limitNumberElement = element.querySelector<HTMLElement>('[data-js-percentage-limit-number]');
+
+  if (element) {
+    element.style.setProperty('--lines-count', `${count}`);
+  }
+
+  if (limitNumberElement) {
+    limitNumberElement.textContent = `${count}`;
+  }
+
+  currentLinesCount = count;
 };
 
