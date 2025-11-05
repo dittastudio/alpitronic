@@ -2,9 +2,8 @@ import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
 import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
-import { initProgressBar, updateProgress, setBackgroundColor, setLinesCount } from '@/components/progress-bar-large/progress-bar-large'
+import { setCircleProgress } from '@/components/progress-bar-large/progress-bar-large'
 
-// Store for maintaining element state across re-renders
 const storyElements = new Map<string, HTMLElement>()
 const storyInitialized = new Map<string, boolean>()
 
@@ -12,7 +11,7 @@ export default {
   title: 'Alpitronic/Progress Bar Circle',
   tags: ['autodocs'],
   render: (args: any, context: StoryContext) => {
-    const { percentage = 56, backgroundColor = '#54e300', linesCount = 80 } = args
+    const { percentage = 56, backgroundColor = '#54e300' } = args
     const storyId = context.id
     let element = storyElements.get(storyId)
     const isInitialized = storyInitialized.get(storyId)
@@ -25,6 +24,7 @@ export default {
 
       const container = element.querySelector('.container-settings')
       const resizeIndicator = element.querySelector('[data-resize-indicator]')
+      const progressRing = element.querySelector<SVGCircleElement>('[data-js-progress-ring]')
 
       if (container && resizeIndicator) {
         const updateResizeIndicatorPosition = () => {
@@ -36,26 +36,27 @@ export default {
         const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
         resizeObserver.observe(container)
 
-        // Initial position update
         requestAnimationFrame(() => {
           updateResizeIndicatorPosition()
         })
       }
 
-      initProgressBar(element, 0)
+      if (progressRing) {
+        setCircleProgress(progressRing, 0)
 
-      // Delay initial update
-      setTimeout(() => {
-        updateProgress(element!, percentage, true)
-        setBackgroundColor(element!.querySelector('[data-js-percentage-bar]'), backgroundColor)
-        setLinesCount(element!, linesCount)
-        storyInitialized.set(storyId, true)
-      }, 100)
+        progressRing.style.stroke = backgroundColor
+
+        setTimeout(() => {
+          setCircleProgress(progressRing, percentage)
+          storyInitialized.set(storyId, true)
+        }, 100)
+      }
     } else if (isInitialized) {
-      // Update existing element
-      updateProgress(element, percentage, true)
-      setBackgroundColor(element.querySelector('[data-js-percentage-bar]'), backgroundColor)
-      setLinesCount(element, linesCount)
+      const progressRing = element.querySelector<SVGCircleElement>('[data-js-progress-ring]')
+      if (progressRing) {
+        setCircleProgress(progressRing, percentage)
+        progressRing.style.stroke = backgroundColor
+      }
     }
 
     return element
@@ -67,11 +68,7 @@ export default {
     },
     backgroundColor: {
       control: { type: 'color' },
-      description: 'Background color of the progress bar'
-    },
-    linesCount: {
-      control: { type: 'range', min: 0, max: 100, step: 1 },
-      description: 'Number for the percentage limit display (default: 80)'
+      description: 'Stroke color of the progress ring'
     },
   },
 }
@@ -80,7 +77,6 @@ export const Primary = {
   args: {
     percentage: 56,
     backgroundColor: '#54e300',
-    linesCount: 80,
   },
 }
 
@@ -88,6 +84,5 @@ export const Secondary = {
   args: {
     percentage: 42,
     backgroundColor: '#371E0A',
-    linesCount: 80,
   },
 }
