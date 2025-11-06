@@ -1,47 +1,39 @@
-<div class="main">
-  <div class="alert flex flex-col items-center justify-center gap-2.5 text-center">
-    <svg class="alert__icon" width="68" height="68" viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
-      <rect class="alert__icon-disc" rx="34" />
+<div class="flex flex-col items-center justify-center gap-2.5 text-center aspect-video p-[1em] rounded-22 bg-grey-900 text-white font-medium w-full text-48-fluid">
+  <svg class="text-success" width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="34" cy="34" r="34" fill="currentColor" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M33.9998 11.3333C21.4814 11.3333 11.3332 21.4815 11.3332 34C11.3332 46.5185 21.4814 56.6667 33.9998 56.6667C46.5184 56.6667 56.6665 46.5185 56.6665 34C56.6665 21.4815 46.5184 11.3333 33.9998 11.3333ZM5.6665 34C5.6665 18.3519 18.3518 5.66667 33.9998 5.66667C49.6478 5.66667 62.3332 18.3519 62.3332 34C62.3332 49.6479 49.6478 62.3333 33.9998 62.3333C18.3518 62.3333 5.6665 49.6479 5.6665 34ZM25.4998 21.4931L33.9998 29.9928L42.4998 21.4931L46.5067 25.5001L38.0067 33.9997L46.5067 42.4994L42.4998 46.5063L33.9998 38.0066L25.4998 46.5063L21.4929 42.4994L29.9929 33.9997L21.4929 25.5001L25.4998 21.4931Z" fill="white"/>
+  </svg>
 
-      <path class="alert__icon-tick" d="M19.2588 34.8215L28.3249 43.9168L48.7423 23.4995" />
+  <svg class="text-danger" width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="34" cy="34" r="34" fill="currentColor" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M33.9998 11.3333C21.4814 11.3333 11.3332 21.4815 11.3332 34C11.3332 46.5185 21.4814 56.6667 33.9998 56.6667C46.5184 56.6667 56.6665 46.5185 56.6665 34C56.6665 21.4815 46.5184 11.3333 33.9998 11.3333ZM5.6665 34C5.6665 18.3519 18.3518 5.66667 33.9998 5.66667C49.6478 5.66667 62.3332 18.3519 62.3332 34C62.3332 49.6479 49.6478 62.3333 33.9998 62.3333C18.3518 62.3333 5.6665 49.6479 5.6665 34Z" fill="white"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M50.757 25.5002L28.3334 47.9238L17.2432 36.8336L21.2501 32.8264L28.3334 39.9098L46.7501 21.4932L50.757 25.5002Z" fill="white"/>
+  </svg>
 
+  <p>Alert message text</p>
+  <p class="text-36-fluid text-grey-400">Please try again</p>
+
+  <div class="flex flex-wrap justify-center items-center text-left gap-3.5 text-22-fluid font-medium text-grey-400 bg-grey-800 p-[1em] rounded-14 mt-[2em]">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        class="alert__icon-circle"
-        d="M34.0005 8.49121C48.0888 8.49121 59.5102 19.9117 59.5103 34C59.5103 48.0884 48.0889 59.5098 34.0005 59.5098C19.9121 59.5097 8.4917 48.0884 8.4917 34C8.49177 19.9117 19.9122 8.49128 34.0005 8.49121Z"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M16.0003 5.33341C10.1093 5.33341 5.33366 10.109 5.33366 16.0001C5.33366 21.8911 10.1093 26.6667 16.0003 26.6667C21.8914 26.6667 26.667 21.8911 26.667 16.0001C26.667 10.109 21.8914 5.33341 16.0003 5.33341ZM2.66699 16.0001C2.66699 8.63628 8.63653 2.66675 16.0003 2.66675C23.3641 2.66675 29.3337 8.63628 29.3337 16.0001C29.3337 23.3638 23.3641 29.3334 16.0003 29.3334C8.63653 29.3334 2.66699 23.3638 2.66699 16.0001Z"
+        fill="white"
       />
-
-      <path class="alert__icon-cross-1" d="M44.5054 23.4934L23.4818 44.5169" />
-      <path class="alert__icon-cross-2" d="M23.4673 23.4934L44.4909 44.517" />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M17.3337 9.33325V18.6666H14.667V9.33325H17.3337Z"
+        fill="white"
+      />
+      <path d="M14.667 20H17.3337V22.6667H14.667V20Z" fill="white" />
     </svg>
 
-    <p class="alert__label alert__label--success">Language has been changed</p>
-
-    <p class="alert__label alert__label--error">Something went wrong</p>
-
-    <p class="alert__description">Please try again</p>
-
-    <div class="alert__details">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M16.0003 5.33341C10.1093 5.33341 5.33366 10.109 5.33366 16.0001C5.33366 21.8911 10.1093 26.6667 16.0003 26.6667C21.8914 26.6667 26.667 21.8911 26.667 16.0001C26.667 10.109 21.8914 5.33341 16.0003 5.33341ZM2.66699 16.0001C2.66699 8.63628 8.63653 2.66675 16.0003 2.66675C23.3641 2.66675 29.3337 8.63628 29.3337 16.0001C29.3337 23.3638 23.3641 29.3334 16.0003 29.3334C8.63653 29.3334 2.66699 23.3638 2.66699 16.0001Z"
-          fill="white"
-        />
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M17.3337 9.33325V18.6666H14.667V9.33325H17.3337Z"
-          fill="white"
-        />
-        <path d="M14.667 20H17.3337V22.6667H14.667V20Z" fill="white" />
-      </svg>
-
-      <div class="alert__details-content">
-        <p>Charger ID: 323245678</p>
-
-        <p>Get help: 07554 224512</p>
-      </div>
-    </div>
+    <ul class="flex flex-col gap-1">
+      <li>Charger ID: 323245678</li>
+      <li>Get help: 07554 224512</li>
+    </ul>
   </div>
 </div>
+
