@@ -2,7 +2,7 @@ import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
 import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
-import { setCircleProgress } from '@/components/progress-bar-large/progress-bar-large'
+import { setCircleProgress } from '@/utils/progress'
 
 const storyElements = new Map<string, HTMLElement>()
 const storyInitialized = new Map<string, boolean>()

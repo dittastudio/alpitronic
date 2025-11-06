@@ -2,8 +2,8 @@ import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
 import '@/components/progress-bar-large/progress-bar-large.css'
 import template from '@/components/progress-bar-large/progress-bar-large.html?raw'
-import { initProgressBar, updateProgress, setBackgroundColor, setTextColor, setLinesCount } from '@/components/progress-bar-large/progress-bar-large'
 import { setupResizeIndicator } from '@/utils/storybook'
+import { initProgressBar, updateProgress, setBackgroundColor, setTextColor, setLinesCount } from '@/utils/progress'
 
 // Store for maintaining element state across re-renders
 const storyElements = new Map<string, HTMLElement>()
