@@ -45,6 +45,8 @@
   --radius-\*: initial;
   --radius-none: none;
   --radius-0: 0;
+  --radius-2: 2px;
+  --radius-4: 4px;
   --radius-14: 14px;
   --radius-22: 22px;
   --radius-42: 42px;
