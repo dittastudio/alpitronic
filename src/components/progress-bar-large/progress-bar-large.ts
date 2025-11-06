@@ -1,94 +1,111 @@
-const INITIAL_DURATION = 1500;
-const DEFAULT_DURATION = 200;
-let currentPercentage = 56;
-let currentLinesCount = 80;
+const INITIAL_DURATION = 1500
+const DEFAULT_DURATION = 200
+let currentPercentage = 56
+let currentLinesCount = 80
 
-const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
+const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4)
 
 const updateLimitVisibility = (
-  limitEl: HTMLElement | null | undefined,
+  element: HTMLElement | null | undefined,
   percentage: number,
   linesCount: number
 ): void => {
-  if (!limitEl) return;
+  if (!element) return
 
-  const shouldHide = percentage >= linesCount;
-  limitEl.classList.toggle('opacity-0', shouldHide);
-  limitEl.classList.toggle('scale-95', shouldHide);
-};
+  const shouldHide = percentage >= linesCount
+  element.classList.toggle('opacity-0', shouldHide)
+  element.classList.toggle('scale-95', shouldHide)
+}
 
 const updateBarStyling = (
-  barEl: HTMLElement | null | undefined,
+  element: HTMLElement | null | undefined,
   percentage: number,
   linesCount: number
 ): void => {
-  if (!barEl) return;
+  if (!element) return
 
-  const isOverLimit = percentage >= linesCount;
-  barEl.classList.toggle('!bg-medium-gray', isOverLimit);
-  barEl.classList.toggle('!text-white', isOverLimit);
-};
+  const isOverLimit = percentage >= linesCount
+  element.classList.toggle('!bg-medium-gray', isOverLimit)
+  element.classList.toggle('!text-white', isOverLimit)
+}
 
-const animateCounter = (
+const animateNumber = (
   element: HTMLElement,
   start: number,
   end: number,
   duration: number
 ): void => {
-  const startTime = performance.now();
-  const difference = end - start;
+  const startTime = performance.now()
+  const difference = end - start
 
   const updateCounter = (currentTime: number): void => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
 
-    const easedProgress = easeOutQuart(progress);
+    const easedProgress = easeOutQuart(progress)
 
-    const currentValue = Math.round(start + difference * easedProgress);
-    element.textContent = `${currentValue}`;
+    const currentValue = Math.round(start + difference * easedProgress)
+    element.textContent = `${currentValue}`
 
     if (progress < 1) {
-      requestAnimationFrame(updateCounter);
+      requestAnimationFrame(updateCounter)
     }
-  };
+  }
 
-  requestAnimationFrame(updateCounter);
-};
+  requestAnimationFrame(updateCounter)
+}
+
+const updatePercentageNumber = (
+  element: HTMLElement,
+  percentageNumbers: NodeListOf<HTMLElement>,
+  currentValue: number,
+  targetValue: number,
+  animated: boolean
+): void => {
+  if (animated) {
+    const durationStr = getComputedStyle(element)
+      .getPropertyValue('--progress-duration')
+      .trim()
+    const duration = parseFloat(durationStr) || DEFAULT_DURATION
+
+    element.classList.add('is-animating')
+
+    percentageNumbers.forEach((el) => {
+      animateNumber(el, currentValue, targetValue, duration)
+    })
+
+    setTimeout(() => {
+      element.classList.remove('is-animating')
+    }, duration)
+  } else {
+    percentageNumbers.forEach((el) => {
+      el.textContent = `${targetValue}`
+    })
+  }
+}
 
 export const updateProgress = (
   element: HTMLElement | null,
   percentage: number,
   animated: boolean = false
 ): void => {
-  const percentageMask = element?.querySelector<HTMLElement>('[data-js-percentage-mask]');
-  const percentageBar = percentageMask?.querySelector<HTMLElement>('[data-js-percentage-bar]');
-  const percentageNumbers = element?.querySelectorAll<HTMLElement>('[data-js-percentage-number]');
-  const percentageLimit = element?.querySelector<HTMLElement>('[data-js-percentage-limit]');
+  if (!element) return
 
-  if (element) {
-    if (animated) {
-      const durationStr = getComputedStyle(element)
-        .getPropertyValue('--progress-duration')
-        .trim();
-      const duration = parseFloat(durationStr) || DEFAULT_DURATION;
+  const percentageBar = element.querySelector<HTMLElement>('[data-js-percentage-bar]')
+  const percentageNumbers = element.querySelectorAll<HTMLElement>('[data-js-percentage-number]')
+  const percentageLimit = element.querySelector<HTMLElement>('[data-js-percentage-limit]')
 
-      element.classList.add('is-animating');
-
-      percentageNumbers?.forEach((el) => {
-        animateCounter(el, currentPercentage, percentage, duration);
-      });
-
-      setTimeout(() => {
-        element.classList.remove('is-animating');
-      }, duration);
-    } else {
-      percentageNumbers?.forEach((el) => {
-        el.textContent = `${percentage}`;
-      });
-    }
-
-    element.style.setProperty('--percentage', `${percentage}%`);
+  if (percentageNumbers.length > 0) {
+    updatePercentageNumber(
+      element,
+      percentageNumbers,
+      currentPercentage,
+      percentage,
+      animated
+    )
   }
+
+  element.style.setProperty('--percentage', `${percentage}%`)
 
   updateLimitVisibility(
     percentageLimit,
@@ -102,8 +119,8 @@ export const updateProgress = (
     currentLinesCount,
   )
 
-  currentPercentage = percentage;
-};
+  currentPercentage = percentage
+}
 
 export const initProgressBar = (
   element: HTMLElement | null,
@@ -111,65 +128,65 @@ export const initProgressBar = (
 ): void => {
   if (!element) return
 
-  currentPercentage = initialPercentage;
-  updateProgress(element, initialPercentage, false);
+  currentPercentage = initialPercentage
+  updateProgress(element, initialPercentage, false)
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
 
       // Set initial duration and add is-animating for reveal
-      element.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`);
-      element.classList.add('is-animating');
+      element.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`)
+      element.classList.add('is-animating')
 
       // After initial animation, remove is-animating and set default duration
       setTimeout(() => {
-        element.classList.remove('is-animating');
-        element.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`);
-      }, INITIAL_DURATION);
+        element.classList.remove('is-animating')
+        element.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`)
+      }, INITIAL_DURATION)
 
 
-      element.classList.add('is-ready');
-    });
-  });
-};
+      element.classList.add('is-ready')
+    })
+  })
+}
 
 export const setBackgroundColor = (element: HTMLElement | null, color: string): void => {
-  if (!element) return;
-  element.style.backgroundColor = color;
-};
+  if (!element) return
+  element.style.backgroundColor = color
+}
 
 export const setTextColor = (element: HTMLElement | null, isDark: boolean = false): void => {
-  if (!element) return;
-  element.classList.toggle('text-white', !isDark);
-  element.classList.toggle('text-black', isDark);
-};
+  if (!element) return
+  element.classList.toggle('text-white', !isDark)
+  element.classList.toggle('text-black', isDark)
+}
 
 export const setLinesCount = (element: HTMLElement | null, count: number): void => {
-  if (!element) return;
-  const limitNumberElement = element.querySelector<HTMLElement>('[data-js-percentage-limit-number]');
+  if (!element) return
+  const limitNumberElement = element.querySelector<HTMLElement>('[data-js-percentage-limit-number]')
 
   if (element) {
-    element.style.setProperty('--lines-count', `${count}`);
+    element.style.setProperty('--lines-count', `${count}`)
   }
 
   if (limitNumberElement) {
-    limitNumberElement.textContent = `${count}`;
+    limitNumberElement.textContent = `${count}`
   }
 
-  currentLinesCount = count;
-};
+  currentLinesCount = count
+}
 
 export const setCircleProgress = (
   ring: SVGCircleElement | null,
   percentage: number
 ): void => {
-  if (!ring) return;
+  if (!ring) return
 
-  const radius = parseFloat(ring.getAttribute('r') || '180');
-  const circumference = 2 * Math.PI * radius;
-  const clampedPercentage = Math.max(0, Math.min(100, percentage));
-  const offset = circumference - (clampedPercentage / 100) * circumference;
+  const radius = parseFloat(ring.getAttribute('r') || '180')
+  const circumference = 2 * Math.PI * radius
+  const clampedPercentage = Math.max(0, Math.min(100, percentage))
+  const offset = circumference - (clampedPercentage / 100) * circumference
 
-  ring.style.setProperty('--circumference', `${circumference}`);
-  ring.style.setProperty('--offset', `${offset}`);
-};
+  ring.style.setProperty('--circumference', `${circumference}`)
+  ring.style.setProperty('--offset', `${offset}`)
+}
