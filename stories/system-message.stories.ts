@@ -1,8 +1,8 @@
-import '@/components/alert/alert.css';
-import template from '@/components/alert/alert.html?raw';
+import '@/components/system-message/system-message.css';
+import template from '@/components/system-message/system-message.html?raw';
 
 export default {
-  title: 'Alpitronic/Alert',
+  title: 'Alpitronic/System Message',
   tags: ['autodocs'],
   render: ({ type }: { type?: 'success' | 'error' }) => {
     const wrapper = document.createElement('div');
