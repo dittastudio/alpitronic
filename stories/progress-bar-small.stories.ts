@@ -60,7 +60,7 @@ export default {
   },
 }
 
-export const Primary = {
+export const Default = {
   args: {
     percentage: 56,
     linesCount: 80,
@@ -68,7 +68,7 @@ export const Primary = {
   },
 }
 
-export const Secondary = {
+export const Branded = {
   args: {
     percentage: 42,
     linesCount: 80,
