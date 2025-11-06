@@ -65,21 +65,21 @@ export const updateProgress = (
   const percentageNumbers = element?.querySelectorAll<HTMLElement>('[data-js-percentage-number]');
   const percentageLimit = element?.querySelector<HTMLElement>('[data-js-percentage-limit]');
 
-  if (percentageMask) {
+  if (element) {
     if (animated) {
-      const durationStr = getComputedStyle(percentageMask)
+      const durationStr = getComputedStyle(element)
         .getPropertyValue('--progress-duration')
         .trim();
       const duration = parseFloat(durationStr) || DEFAULT_DURATION;
 
-      percentageMask.classList.add('is-animating');
+      element.classList.add('is-animating');
 
       percentageNumbers?.forEach((el) => {
         animateCounter(el, currentPercentage, percentage, duration);
       });
 
       setTimeout(() => {
-        percentageMask.classList.remove('is-animating');
+        element.classList.remove('is-animating');
       }, duration);
     } else {
       percentageNumbers?.forEach((el) => {
@@ -87,7 +87,7 @@ export const updateProgress = (
       });
     }
 
-    percentageMask.style.setProperty('--percentage', `${percentage}%`);
+    element.style.setProperty('--percentage', `${percentage}%`);
   }
 
   updateLimitVisibility(

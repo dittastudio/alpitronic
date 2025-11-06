@@ -57,4 +57,25 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
   return Math.round((min + randomStep * step) * 10) / 10;
 }
 
-export { PerlinNoise, randomRange };
+function setupResizeIndicator(element: HTMLElement): void {
+  const container = element.querySelector('[data-resize-container]');
+  const resizeIndicator = element.querySelector('[data-resize-indicator]');
+
+  if (container && resizeIndicator) {
+    const updateResizeIndicatorPosition = () => {
+      const { width, height } = container.getBoundingClientRect();
+      (resizeIndicator as HTMLElement).style.left = `${width}px`;
+      (resizeIndicator as HTMLElement).style.top = `${height}px`;
+    };
+
+    const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition);
+    resizeObserver.observe(container);
+
+    // Initial position update
+    requestAnimationFrame(() => {
+      updateResizeIndicatorPosition();
+    });
+  }
+}
+
+export { PerlinNoise, randomRange, setupResizeIndicator };

@@ -3,6 +3,7 @@ import '@/css/app.css'
 import '@/components/progress-bar-large/progress-bar-large.css'
 import template from '@/components/progress-bar-large/progress-bar-large.html?raw'
 import { initProgressBar, updateProgress, setBackgroundColor, setTextColor, setLinesCount } from '@/components/progress-bar-large/progress-bar-large'
+import { setupResizeIndicator } from '@/utils/storybook'
 
 // Store for maintaining element state across re-renders
 const storyElements = new Map<string, HTMLElement>()
@@ -23,24 +24,7 @@ export default {
       element = wrapper.firstChild as HTMLElement
       storyElements.set(storyId, element)
 
-      const container = element.querySelector('[data-js-progress-container]')
-      const resizeIndicator = element.querySelector('[data-resize-indicator]')
-
-      if (container && resizeIndicator) {
-        const updateResizeIndicatorPosition = () => {
-          const { width, height } = container.getBoundingClientRect();
-          (resizeIndicator as HTMLElement).style.left = `${width}px`;
-          (resizeIndicator as HTMLElement).style.top = `${height}px`
-        }
-
-        const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
-        resizeObserver.observe(container)
-
-        // Initial position update
-        requestAnimationFrame(() => {
-          updateResizeIndicatorPosition()
-        })
-      }
+      setupResizeIndicator(element)
 
       initProgressBar(element, 0)
 
@@ -82,21 +66,21 @@ export default {
   },
 }
 
-export const Primary = {
+export const Default = {
   args: {
     percentage: 56,
+    linesCount: 80,
     backgroundColor: '#54e300',
     darkText: true,
-    linesCount: 80,
   },
 }
 
-export const Secondary = {
+export const Branded = {
   args: {
     percentage: 42,
+    linesCount: 80,
     backgroundColor: '#371E0A',
     darkText: false,
-    linesCount: 80,
   },
 }
 
