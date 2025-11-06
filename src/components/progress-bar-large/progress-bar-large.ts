@@ -5,6 +5,30 @@ let currentLinesCount = 80;
 
 const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
 
+const updateLimitVisibility = (
+  limitEl: HTMLElement | null | undefined,
+  percentage: number,
+  linesCount: number
+): void => {
+  if (!limitEl) return;
+
+  const shouldHide = percentage >= linesCount;
+  limitEl.classList.toggle('opacity-0', shouldHide);
+  limitEl.classList.toggle('scale-95', shouldHide);
+};
+
+const updateBarStyling = (
+  barEl: HTMLElement | null | undefined,
+  percentage: number,
+  linesCount: number
+): void => {
+  if (!barEl) return;
+
+  const isOverLimit = percentage >= linesCount;
+  barEl.classList.toggle('!bg-medium-gray', isOverLimit);
+  barEl.classList.toggle('!text-white', isOverLimit);
+};
+
 const animateCounter = (
   element: HTMLElement,
   start: number,
@@ -66,27 +90,17 @@ export const updateProgress = (
     percentageMask.style.setProperty('--percentage', `${percentage}%`);
   }
 
-  // Hide percentage limit when reaching lines count threshold or higher
-  if (percentageLimit) {
-    if (percentage >= currentLinesCount) {
-      percentageLimit.classList.add('opacity-0');
-      percentageLimit.classList.add('scale-95');
-    } else {
-      percentageLimit.classList.remove('opacity-0');
-      percentageLimit.classList.remove('scale-95');
-    }
-  }
+  updateLimitVisibility(
+    percentageLimit,
+    percentage,
+    currentLinesCount,
+  )
 
-  // Change progress bar background to medium gray when reaching lines count threshold or higher
-  if (percentageBar) {
-    if (percentage >= currentLinesCount) {
-      percentageBar.classList.add('!bg-medium-gray');
-      percentageBar.classList.add('!text-white');
-    } else {
-      percentageBar.classList.remove('!bg-medium-gray');
-      percentageBar.classList.remove('!text-white');
-    }
-  }
+  updateBarStyling(
+    percentageBar,
+    percentage,
+    currentLinesCount,
+  )
 
   currentPercentage = percentage;
 };
@@ -95,27 +109,26 @@ export const initProgressBar = (
   element: HTMLElement | null,
   initialPercentage: number = 56
 ): void => {
-  const percentageMask = element?.querySelector<HTMLElement>('[data-js-percentage-mask]');
+  if (!element) return
 
   currentPercentage = initialPercentage;
   updateProgress(element, initialPercentage, false);
 
-  // Double RAF to ensure DOM is ready for transitions
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      if (percentageMask) {
-        // Set initial duration and add is-animating for reveal
-        percentageMask.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`);
-        percentageMask.classList.add('is-animating');
 
-        // After initial animation, remove is-animating and set default duration
-        setTimeout(() => {
-          percentageMask.classList.remove('is-animating');
-          percentageMask.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`);
-        }, INITIAL_DURATION);
-      }
+      // Set initial duration and add is-animating for reveal
+      element.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`);
+      element.classList.add('is-animating');
 
-      element?.classList.add('is-ready');
+      // After initial animation, remove is-animating and set default duration
+      setTimeout(() => {
+        element.classList.remove('is-animating');
+        element.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`);
+      }, INITIAL_DURATION);
+
+
+      element.classList.add('is-ready');
     });
   });
 };
@@ -157,10 +170,6 @@ export const setCircleProgress = (
   const clampedPercentage = Math.max(0, Math.min(100, percentage));
   const offset = circumference - (clampedPercentage / 100) * circumference;
 
-  // Initialize dasharray if needed
-  if (!ring.style.strokeDasharray) {
-    ring.style.strokeDasharray = `${circumference} ${circumference}`;
-  }
-
-  ring.style.strokeDashoffset = `${offset}`;
+  ring.style.setProperty('--circumference', `${circumference}`);
+  ring.style.setProperty('--offset', `${offset}`);
 };

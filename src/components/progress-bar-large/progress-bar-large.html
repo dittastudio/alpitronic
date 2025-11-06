@@ -1,15 +1,22 @@
-<div class="
-  relative
-  pb-8
-">
-  <div class="
-    @container-[size]
-    container-settings
-    resize
-    overflow-auto
-    w-full
-    h-100
-  ">
+<div
+  data-js-progress
+  class="
+    progress-bar-large
+    relative
+    pb-8
+  "
+>
+  <div
+    data-js-progress-container
+    class="
+      @container-[size]
+      container-settings
+      resize
+      overflow-auto
+      w-full
+      h-100
+    "
+  >
     <div class="
       grid
       text-[min(35cqmin,160px)]
@@ -86,6 +93,8 @@
               w-[calc(var(--lines-count)*1%)]
               @portrait:flex
               @portrait:items-end
+              @portrait:w-full
+              @portrait:h-[calc(var(--lines-count)*1%)]
               p-[min(10cqmin,30px)]
             "
           >
@@ -112,11 +121,8 @@
           <div
             class="
               grow
-              h-full
               flex
               items-end
-              @portrait:w-full
-              @portrait:h-[20%]
               text-[min(3cqi,32px)]
               @portrait:text-[min(5cqb,32px)]
               font-medium

@@ -23,7 +23,7 @@ export default {
       element = wrapper.firstChild as HTMLElement
       storyElements.set(storyId, element)
 
-      const container = element.querySelector('.container-settings')
+      const container = element.querySelector('[data-js-progress-container]')
       const resizeIndicator = element.querySelector('[data-resize-indicator]')
 
       if (container && resizeIndicator) {
