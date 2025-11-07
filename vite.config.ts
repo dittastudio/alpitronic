@@ -18,14 +18,24 @@ function componentBuilderPlugin() {
         return statSync(itemPath).isDirectory();
       });
 
-      console.log(`\n🧠 Processing files with PurgeCSS...\n`);
+      console.log(`\n🧠 Processing files...\n`);
+
+      let results = [];
 
       for (const component of components) {
         const srcComponentDir = join(srcDir, component);
         const distComponentDir = join(distDir, component);
         const htmlPath = join(srcComponentDir, `${component}.html`);
         const tsPath = join(srcComponentDir, `${component}.ts`);
-        const cssPath = join(distComponentDir, `${component}.css`);
+        const cssPath = join(srcComponentDir, `${component}.css`);
+
+        let currentResult = {
+          Component: component,
+          HTML: existsSync(htmlPath) ? `✅` : `❌`,
+          TS: existsSync(tsPath) ? `✅` : `❌`,
+          CSS: existsSync(cssPath) ? `✅` : `❌`,
+          PURGED: `❌`,
+        };
 
         if (existsSync(htmlPath) && existsSync(tsPath) && existsSync(cssPath)) {
           const css = readFileSync(cssPath, 'utf-8');
@@ -46,12 +56,13 @@ function componentBuilderPlugin() {
           ]).process(css, { from: cssPath });
 
           writeFileSync(cssPath, result.css);
-          console.log(`🔥 ${component}: PurgeCSS applied`);
+
+          currentResult.PURGED = `🔥`;
         }
 
+        results.push(currentResult);
+
         const filesToCopy = [
-          `${component}.html`,
-          `${component}.js`,
           `${component}.manifest.json`,
           `${component}.setup.js`,
           `${component}.state.js`,
@@ -68,6 +79,7 @@ function componentBuilderPlugin() {
         });
       }
 
+      console.table(results);
       console.log('\n✅ Component build complete!\n');
     },
   };

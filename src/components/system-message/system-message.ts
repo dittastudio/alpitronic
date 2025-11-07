@@ -1,1 +1,1 @@
-console.log('Alert component loaded');
+console.log('System Message Component Loaded');
