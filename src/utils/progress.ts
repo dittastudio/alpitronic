@@ -1,5 +1,5 @@
 const INITIAL_DURATION = 1500
-const DEFAULT_DURATION = 200
+const DEFAULT_DURATION = 0
 let currentPercentage = 56
 let currentLimit = 80
 

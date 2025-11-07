@@ -38,7 +38,7 @@ export default {
       }, 100)
     } else if (isInitialized) {
       // Update existing element
-      updateProgress(element, percentage, true)
+      updateProgress(element, percentage, false)
       setBackgroundColor(element.querySelector('[data-js-progress-bar]'), backgroundColor)
       setTextColor(element.querySelector('[data-js-progress-bar]'), darkText)
       setLimitCount(element, limit)
