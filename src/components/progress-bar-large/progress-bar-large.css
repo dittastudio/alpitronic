@@ -15,7 +15,7 @@
 }
 
 .progress-bar-large__lines {
-  --line-color: var(--color-medium-gray);
+  --line-color: var(--color-grey-800);
 
   opacity: 0;
   transition: opacity 1s var(--ease-out) 0.1s;

@@ -12,7 +12,7 @@
     data-js-resize-container
     class="
       @container-[size]
-      container-settings
+      box
       resize
       overflow-auto
       flex
@@ -23,6 +23,7 @@
     "
   >
     <div
+      data-js-percentage-lines
       class="
         flex
         items-baseline
@@ -106,7 +107,7 @@
           data-js-progress-bar
           class="
             size-full
-            bg-green
+            bg-accent
             rounded-[inherit]
             transition-colors
             duration-200
@@ -121,7 +122,7 @@
     data-js-resize-indicator
     class="
       absolute
-      text-light-gray
+      text-grey-400
       top-full
       left-full
       text-sm

@@ -19,45 +19,110 @@
 @theme {
   --color-*: initial;
   --color-black: #000000;
-  --color-dark-gray: #1e1e1e;
-  --color-medium-gray: #2c2c2c;
-  --color-light-gray: #b3b3b3;
-  --color-green: #54e300;
   --color-white: #ffffff;
   --color-red: #ff0000;
   --color-orange: #ff3700;
-  --color-yellow: #ffcd00;
+  --color-yellow: #f9ae00;
+  --color-green: #54e300;
 
-  --spacing: 4px;
+  --color-grey-100: #ffffff;
+  --color-grey-200: #f0f0f0;
+  --color-grey-300: #d9d9d9;
+  --color-grey-400: #b3b3b3;
+  --color-grey-500: #757575;
+  --color-grey-600: #444444;
+  --color-grey-700: #333333;
+  --color-grey-800: #2c2c2c;
+  --color-grey-900: #1e1e1e;
+  --color-grey-1000: #000000;
+
+  /* Token Colors (changed on light/dark) */
+  --color-danger: var(--color-red);
+  --color-warning: var(--color-orange);
+  --color-success: var(--color-green);
+  --color-accent: var(--color-green);
+
+  --radius-\*: initial;
+  --radius-2: 2px;
+  --radius-4: 4px;
+  --radius-14: 14px;
+  --radius-22: 22px;
+  --radius-42: 42px;
 
   --font-sans: 'PP Neue Montreal', 'Helvetica Neue', sans-serif;
+
+  --text-\*: initial;
+  --text-18: 18px;
+  --text-18--line-height: 1.2;
+
+  --text-22: 22px;
+  --text-22--line-height: 1.2;
+
+  --text-36: 28px;
+  --text-36--line-height: 1.5;
+
+  --text-48: 48px;
+  --text-48--line-height: 1.5;
+
+  --text-52: 52px;
+  --text-52--line-height: 1.5;
+
+  --text-22-fluid: clamp(16px, 4px + 3.75cqi, 22px);
+  --text-22-fluid--line-height: 1.5;
+
+  --text-36-fluid: clamp(18px, -18px + 11.25cqi, 36px);
+  --text-36-fluid--line-height: 1.2;
+
+  --text-48-fluid: clamp(22px, -30px + 16.25cqi, 48px);
+  --text-48-fluid--line-height: 1;
+
+  --spacing: 4px;
 }
 
-:root {
-  --type-18: 18px / 1.2 var(--font-sans);
-  --type-22: 22px / 1.2 var(--font-sans);
-  --type-36: 28px / 1.5 var(--font-sans);
-  --type-48: 48px / 1.5 var(--font-sans);
-  --type-52: 52px / 1.5 var(--font-sans);
+@layer base {
+  :root {
+    --container-name: default;
+  }
 
-  --type-22-fluid: clamp(16px, 4px + 3.75cqi, 22px) / 1.5 var(--font-sans);
-  --type-36-fluid: clamp(18px, -18px + 11.25cqi, 36px) / 1.2 var(--font-sans);
-  --type-48-fluid: clamp(22px, -30px + 16.25cqi, 48px) / 1 var(--font-sans);
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Token Colors (changed on light/dark) */
+      --color-danger: var(--color-red);
+      --color-warning: var(--color-orange);
+      --color-success: var(--color-green);
+      --color-accent: var(--color-green);
+    }
+  }
 
-  --container-name: default;
-}
-
-.box {
-  container-name: var(--container-name, default);
-  container-type: inline-size;
-  -webkit-font-smoothing: antialiased;
-  font-size: 16px;
+  .box {
+    container-name: var(--container-name, default);
+    container-type: inline-size;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
 }
 
 @utility container-settings {
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
 }
+
+@utility bg-chart-x {
+  background-image: repeating-linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) 2px,
+    transparent 2px,
+    transparent 10px
+  );
+}
+
+/* @custom-variant dark (&:is(.dark *)); */
+/* @custom-variant @dark {
+  @media (prefers-color-scheme: dark) {
+    @slot;
+  }
+} */
 
 @custom-variant @portrait {
   @container (orientation: portrait) {
@@ -69,14 +134,4 @@
   @container (orientation: landscape) {
     @slot;
   }
-}
-
-@utility bg-chart-x {
-  background-image: repeating-linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0.1) 0,
-    rgba(255, 255, 255, 0.1) 2px,
-    transparent 2px,
-    transparent 10px
-  );
 }

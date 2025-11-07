@@ -1,11 +1,26 @@
 <div
-  class="@container container-settings relative flex flex-col items-center justify-center min-h-100 gap-2.5 text-center"
+  class="
+    @container
+    box
+    relative
+    flex
+    flex-col
+    items-center
+    justify-center
+    min-h-100
+    gap-2.5
+    text-center
+  "
 >
   <!-- Toast Template -->
   <template id="toastTemplate">
-    <div class="toast" data-mounted="false">
+    <div class="
+      toast
+    " data-mounted="false">
       <svg
-        class="toast__icon"
+        class="
+          toast__icon
+        "
         width="32"
         height="32"
         viewBox="0 0 32 32"
@@ -20,13 +35,31 @@
         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.3337 9.33325V18.6666H14.667V9.33325H17.3337Z" />
         <path d="M14.667 20H17.3337V22.6667H14.667V20Z" />
       </svg>
-      <span class="toast__label"></span>
+      <span class="
+        toast__label
+      "></span>
     </div>
   </template>
 
-  <div class="box__content w-full grow">
+  <div class="
+    box__content
+    w-full
+    grow
+  ">
     <div
-      class="toaster absolute left-1/2 bottom-20 flex flex-col items-center gap-(--gap) w-full z-1 -translate-x-1/2"
+      class="
+        toaster
+        absolute
+        left-1/2
+        bottom-20
+        flex
+        flex-col
+        items-center
+        gap-(--gap)
+        w-full
+        z-1
+        -translate-x-1/2
+      "
       id="toaster"
     >
       <!-- Toast notifications will be added here dynamically -->
@@ -34,7 +67,23 @@
   </div>
 
   <button
-    class="relative z-2 py-[0.5em] px-[0.75em] rounded-md mx-auto bg-white border-none transform-gpu scale-100 transition-[scale] duration-150 ease-in-out active:scale-97 font-medium"
+    class="
+      relative
+      z-2
+      py-[0.5em]
+      px-[0.75em]
+      rounded-md
+      mx-auto
+      bg-white
+      border-none
+      transform-gpu
+      scale-100
+      transition-[scale]
+      duration-150
+      ease-in-out
+      active:scale-97
+      font-medium
+    "
     id="addToastBtn"
   >
     Add toast

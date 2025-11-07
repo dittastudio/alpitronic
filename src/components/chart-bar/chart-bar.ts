@@ -15,7 +15,7 @@ class ChartBar {
   private yLabelContainer: HTMLElement | null = null;
 
   constructor(options: Options = {}) {
-    const { data = [], xLabel = [], yLabel = [], selector = '.chart-bar' } = options;
+    const { data = [], xLabel = [], yLabel = [], selector = '[data-chart]' } = options;
 
     this.data = data;
     this.xLabel = xLabel;
@@ -27,9 +27,9 @@ class ChartBar {
       return;
     }
 
-    this.barsContainer = this.chart.querySelector('.chart-bar__bars');
-    this.xLabelContainer = this.chart.querySelector('.chart-bar__x-label');
-    this.yLabelContainer = this.chart.querySelector('.chart-bar__y-label');
+    this.barsContainer = this.chart.querySelector('[data-bars]');
+    this.xLabelContainer = this.chart.querySelector('[data-x-label]');
+    this.yLabelContainer = this.chart.querySelector('[data-y-label]');
 
     this.init();
   }
@@ -48,9 +48,9 @@ class ChartBar {
       const bar = document.createElement('li');
       const width = 100 / this.data.length / 2;
       const height = (value / container.clientHeight) * 100;
-      const colour = height <= 25 ? 'bg-red' : 'bg-green';
+      const colour = height <= 25 ? 'bg-danger' : 'bg-success';
 
-      bar.className = `${colour} rounded transition-[height] duration-700 ease-out`;
+      bar.className = `${colour} rounded-4 transition-[height] duration-700 ease-out`;
       bar.style.width = `${width}%`;
       bar.style.height = '0%';
       bar.style.transitionDelay = `${index * 30}ms`;

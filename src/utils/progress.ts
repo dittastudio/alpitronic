@@ -25,10 +25,9 @@ const updateBarStyling = (
   if (!element) return
 
   const isOverLimit = percentage >= limit
-  element.classList.toggle('!bg-medium-gray', isOverLimit)
+  element.classList.toggle('!bg-grey-800', isOverLimit)
   element.classList.toggle('!text-white', isOverLimit)
-  element.classList.toggle('!stroke-medium-gray', isOverLimit)
-
+  element.classList.toggle('!stroke-grey-800', isOverLimit)
 }
 
 const animateNumber = (

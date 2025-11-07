@@ -1,4 +1,3 @@
-import '@/css/app.css';
 import '@/components/chart-bar/chart-bar.css';
 import template from '@/components/chart-bar/chart-bar.html?raw';
 import ChartBar from '@/components/chart-bar/chart-bar';
@@ -20,15 +19,13 @@ export default {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
-    if (data.length) {
-      document.addEventListener('DOMContentLoaded', () => {
-        new ChartBar({
-          data,
-          xLabel,
-          yLabel,
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+      new ChartBar({
+        data,
+        xLabel,
+        yLabel,
       });
-    }
+    });
 
     return wrapper.firstChild;
   },
@@ -61,12 +58,13 @@ export default {
       },
     },
   },
-};
-
-export const Primary = {
   args: {
     data: 'perlin',
     xLabel: 'sample1',
     yLabel: 'sample1',
   },
+};
+
+export const Default = {
+  args: {},
 };

@@ -10,7 +10,7 @@
     data-js-resize-container
     class="
       @container-[size]
-      container-settings
+      box
       resize
       overflow-auto
       w-full
@@ -42,7 +42,7 @@
             flex
             flex-col
             justify-end
-            bg-green
+            bg-accent
             text-black
             transition-colors
             duration-200
@@ -70,6 +70,7 @@
 
       <!-- Progress bar lines -->
       <div
+        data-js-percentage-lines
         class="
           progress-bar-large__lines
           col-span-full
@@ -155,7 +156,7 @@
     data-js-resize-indicator
     class="
       absolute
-      text-light-gray
+      text-grey-400
       top-full
       left-full
       text-sm
