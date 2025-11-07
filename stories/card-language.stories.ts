@@ -23,7 +23,7 @@ export default {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = template;
 
-    const main: HTMLElement | null = wrapper.querySelector('.card-language');
+    const main: HTMLElement | null = wrapper.querySelector('[data-main]');
 
     if (!main) {
       return wrapper;
