@@ -1,13 +1,18 @@
-<div class="
-  relative
-  mt-8
-  mx-8
-  pb-8
-">
+<div
+  data-js-progress
+  class="
+    progress-bar-small
+    relative
+    mt-8
+    mx-8
+    pb-8
+  "
+>
   <div
+    data-js-resize-container
     class="
       @container-[size]
-      container-settings
+      box
       resize
       overflow-auto
       flex
@@ -43,7 +48,7 @@
             -my-[0.12em]
           "
         >
-          <span data-js-percentage-number>56</span>
+          <span data-js-progress-number>56</span>
           <small class="
             text-[60%]
             font-medium
@@ -58,12 +63,14 @@
           flex
           items-end
           text-[min(calc(100cqb---spacing(13)),9cqi,32px)]
+          main
           font-medium
           text-white
+          -translate-x-5
         "
       >
         <div
-          data-js-percentage-limit
+          data-js-progress-limit
           class="
             -mx-[0.035em]
             -my-[0.37em]
@@ -71,7 +78,7 @@
             duration-200
             ease-out
           ">
-          <span data-js-percentage-limit-number>80</span>%
+          <span data-js-progress-limit-number>80</span>%
         </div>
       </div>
     </div>
@@ -90,7 +97,6 @@
       "
     >
       <div
-        data-js-percentage-mask
         class="
           progress-bar-small__mask
           absolute
@@ -100,7 +106,7 @@
         "
       >
         <div
-          data-js-percentage-bar
+          data-js-progress-bar
           class="
             size-full
             bg-accent
@@ -115,7 +121,7 @@
   </div>
 
   <div
-    data-resize-indicator
+    data-js-resize-indicator
     class="
       absolute
       text-grey-400
