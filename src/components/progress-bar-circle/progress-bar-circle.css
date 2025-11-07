@@ -8,3 +8,6 @@
   transition: stroke-dashoffset var(--progress-duration) var(--ease-out);
 }
 
+.progress-bar-circle__limit {
+  rotate: calc(45deg + ((var(--lines-count) / 100) * 360) * 1deg);
+}

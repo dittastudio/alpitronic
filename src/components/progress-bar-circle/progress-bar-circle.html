@@ -26,7 +26,6 @@
     <div class="
       relative
       size-full
-      p-8
       max-w-116
       max-h-116
     ">
@@ -54,6 +53,7 @@
 
         <!-- animated progress ring -->
         <circle
+          data-js-progress-bar
           data-js-progress-ring
           class="
             progress-bar-circle__ring
@@ -93,12 +93,19 @@
         </div>
       </div>
 
-      <div>
-        <div data-js-progress-limit>
-          <span class="
-            text-white
-          " data-js-progress-limit-number>80</span>%
-        </div>
+      <div class="
+        progress-bar-circle__limit
+        absolute
+        inset-[17.5%]
+        z-1
+      ">
+        <span class="
+          block
+          bg-white
+          size-2
+          rounded-full
+        ">
+        </span>
       </div>
     </div>
   </div>
