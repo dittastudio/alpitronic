@@ -1,3 +1,3 @@
-import './alert.css';
-import './alert.html?url';
-import './alert.ts';
+import './system-message.css';
+import './system-message.html?url';
+import './system-message.ts';

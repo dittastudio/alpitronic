@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./toast.html";
-@source "./toast.js";
+@source "./toast.ts";
 
 .box__content {
   flex-grow: 1;
