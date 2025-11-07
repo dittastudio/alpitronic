@@ -8,8 +8,10 @@ import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
 function componentBuilderPlugin() {
   return {
     name: 'component-builder',
+    apply: 'build',
 
-    async closeBundle() {
+    // async closeBundle() {
+    async writeBundle() {
       const srcDir = resolve(__dirname, 'src/components');
       const distDir = resolve(__dirname, 'dist');
 
@@ -28,6 +30,7 @@ function componentBuilderPlugin() {
         const htmlPath = join(srcComponentDir, `${component}.html`);
         const tsPath = join(srcComponentDir, `${component}.ts`);
         const cssPath = join(srcComponentDir, `${component}.css`);
+        const distCssPath = join(distComponentDir, `${component}.css`);
 
         let currentResult = {
           Component: component,
@@ -37,8 +40,8 @@ function componentBuilderPlugin() {
           PURGED: `❌`,
         };
 
-        if (existsSync(htmlPath) && existsSync(tsPath) && existsSync(cssPath)) {
-          const css = readFileSync(cssPath, 'utf-8');
+        if (existsSync(htmlPath) && existsSync(tsPath) && existsSync(cssPath) && existsSync(distCssPath)) {
+          const css = readFileSync(distCssPath, 'utf-8');
 
           const result = await postcss([
             purgeCSSPlugin({
@@ -53,9 +56,9 @@ function componentBuilderPlugin() {
                 greedy: [],
               },
             }),
-          ]).process(css, { from: cssPath });
+          ]).process(css, { from: distCssPath });
 
-          writeFileSync(cssPath, result.css);
+          writeFileSync(distCssPath, result.css);
 
           currentResult.PURGED = `🔥`;
         }
@@ -118,7 +121,10 @@ function getComponentEntries() {
 }
 
 export default defineConfig({
-  plugins: [tailwindcss(), componentBuilderPlugin()],
+  plugins: [
+    tailwindcss(),
+    //componentBuilderPlugin()
+  ],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
