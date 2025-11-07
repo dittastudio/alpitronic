@@ -94,17 +94,11 @@
     }
   }
 
-  .box {
-    container-name: var(--container-name, default);
-    container-type: inline-size;
+  .normalize {
     -webkit-font-smoothing: antialiased;
     font-size: 16px;
+    font-feature-settings: 'ss01'; /* changes a character */
   }
-}
-
-@utility container-settings {
-  -webkit-font-smoothing: antialiased;
-  font-size: 16px;
 }
 
 @utility bg-chart-x {
@@ -115,6 +109,10 @@
     transparent 2px,
     transparent 10px
   );
+}
+
+@utility shadow-toast {
+  box-shadow: 0 0 3px 0 rgba(255, 255, 255, 0.10) inset, 0 20px 60px 0 rgba(0, 0, 0, 0.54), 0 0 3px 0 rgba(0, 0, 0, 0.25);
 }
 
 /* @custom-variant dark (&:is(.dark *)); */
