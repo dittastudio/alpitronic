@@ -2,7 +2,8 @@ import type { StoryContext } from '@storybook/html'
 import '@/css/app.css'
 import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
-import { setCircleProgress } from '@/utils/progress'
+import { setupResizeIndicator } from '@/utils/storybook'
+import { initProgressBar, updateProgress, setStrokeColor } from '@/utils/progress'
 
 const storyElements = new Map<string, HTMLElement>()
 const storyInitialized = new Map<string, boolean>()
@@ -22,41 +23,18 @@ export default {
       element = wrapper.firstChild as HTMLElement
       storyElements.set(storyId, element)
 
-      const container = element.querySelector('.container-settings')
-      const resizeIndicator = element.querySelector('[data-resize-indicator]')
-      const progressRing = element.querySelector<SVGCircleElement>('[data-js-progress-ring]')
+      setupResizeIndicator(element)
 
-      if (container && resizeIndicator) {
-        const updateResizeIndicatorPosition = () => {
-          const { width, height } = container.getBoundingClientRect();
-          (resizeIndicator as HTMLElement).style.left = `${width}px`;
-          (resizeIndicator as HTMLElement).style.top = `${height}px`
-        }
+      initProgressBar(element, 0)
 
-        const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
-        resizeObserver.observe(container)
-
-        requestAnimationFrame(() => {
-          updateResizeIndicatorPosition()
-        })
-      }
-
-      if (progressRing) {
-        setCircleProgress(progressRing, 0)
-
-        progressRing.style.stroke = backgroundColor
-
-        setTimeout(() => {
-          setCircleProgress(progressRing, percentage)
-          storyInitialized.set(storyId, true)
-        }, 100)
-      }
+      setTimeout(() => {
+        updateProgress(element!, percentage, true)
+        setStrokeColor(element!.querySelector('[data-js-progress-ring]'), backgroundColor)
+        storyInitialized.set(storyId, true)
+      }, 100)
     } else if (isInitialized) {
-      const progressRing = element.querySelector<SVGCircleElement>('[data-js-progress-ring]')
-      if (progressRing) {
-        setCircleProgress(progressRing, percentage)
-        progressRing.style.stroke = backgroundColor
-      }
+      updateProgress(element, percentage, true)
+      setStrokeColor(element!.querySelector('[data-js-progress-ring]'), backgroundColor)
     }
 
     return element
@@ -71,16 +49,15 @@ export default {
       description: 'Stroke color of the progress ring'
     },
   },
-}
-
-export const Primary = {
   args: {
     percentage: 56,
     backgroundColor: '#54e300',
   },
 }
 
-export const Secondary = {
+export const Default = {}
+
+export const Branded = {
   args: {
     percentage: 42,
     backgroundColor: '#371E0A',

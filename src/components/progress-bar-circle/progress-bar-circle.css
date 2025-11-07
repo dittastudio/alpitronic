@@ -2,11 +2,6 @@
 @source "./progress-bar-circle.html";
 @source "./progress-bar-circle.ts";
 
-.progress-bar-circle {
-  /* Progress duration can be controlled via CSS variable */
-  --progress-duration: 200ms;
-}
-
 .progress-bar-circle__ring {
   stroke-dasharray: var(--circumference) var(--circumference);
   stroke-dashoffset: var(--offset);

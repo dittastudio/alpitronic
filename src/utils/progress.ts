@@ -1,18 +1,18 @@
 const INITIAL_DURATION = 1500
 const DEFAULT_DURATION = 200
 let currentPercentage = 56
-let currentLinesCount = 80
+let currentLimit = 80
 
 const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4)
 
 const updateLimitVisibility = (
   element: HTMLElement | null | undefined,
   percentage: number,
-  linesCount: number
+  limit: number
 ): void => {
   if (!element) return
 
-  const shouldHide = percentage >= linesCount
+  const shouldHide = percentage >= limit
   element.classList.toggle('opacity-0', shouldHide)
   element.classList.toggle('scale-95', shouldHide)
 }
@@ -20,11 +20,11 @@ const updateLimitVisibility = (
 const updateBarStyling = (
   element: HTMLElement | null | undefined,
   percentage: number,
-  linesCount: number
+  limit: number
 ): void => {
   if (!element) return
 
-  const isOverLimit = percentage >= linesCount
+  const isOverLimit = percentage >= limit
   element.classList.toggle('!bg-medium-gray', isOverLimit)
   element.classList.toggle('!text-white', isOverLimit)
 }
@@ -91,11 +91,12 @@ export const updateProgress = (
 ): void => {
   if (!element) return
 
-  const percentageBar = element.querySelector<HTMLElement>('[data-js-percentage-bar]')
-  const percentageNumbers = element.querySelectorAll<HTMLElement>('[data-js-percentage-number]')
-  const percentageLimit = element.querySelector<HTMLElement>('[data-js-percentage-limit]')
+  const percentageBar = element.querySelector<HTMLElement>('[data-js-progress-bar]')
+  const percentageNumbers = element.querySelectorAll<HTMLElement>('[data-js-progress-number]')
+  const percentageLimit = element.querySelector<HTMLElement>('[data-js-progress-limit]')
+  const percentageRing = element.querySelector<SVGCircleElement>('[data-js-progress-ring]')
 
-  if (percentageNumbers.length > 0) {
+  if (percentageNumbers) {
     updatePercentageNumber(
       element,
       percentageNumbers,
@@ -105,19 +106,30 @@ export const updateProgress = (
     )
   }
 
+  if (percentageLimit) {
+    updateLimitVisibility(
+      percentageLimit,
+      percentage,
+      currentLimit,
+    )
+  }
+
+  if (percentageBar) {
+    updateBarStyling(
+      percentageBar,
+      percentage,
+      currentLimit,
+    )
+  }
+
+  if (percentageRing) {
+    setCircleProgress(
+      percentageRing,
+      percentage,
+    )
+  }
+
   element.style.setProperty('--percentage', `${percentage}%`)
-
-  updateLimitVisibility(
-    percentageLimit,
-    percentage,
-    currentLinesCount,
-  )
-
-  updateBarStyling(
-    percentageBar,
-    percentage,
-    currentLinesCount,
-  )
 
   currentPercentage = percentage
 }
@@ -155,15 +167,20 @@ export const setBackgroundColor = (element: HTMLElement | null, color: string): 
   element.style.backgroundColor = color
 }
 
+export const setStrokeColor = (element: HTMLElement | null, color: string): void => {
+  if (!element) return
+  element.style.stroke = color
+}
+
 export const setTextColor = (element: HTMLElement | null, isDark: boolean = false): void => {
   if (!element) return
   element.classList.toggle('text-white', !isDark)
   element.classList.toggle('text-black', isDark)
 }
 
-export const setLinesCount = (element: HTMLElement | null, count: number): void => {
+export const setLimitCount = (element: HTMLElement | null, count: number): void => {
   if (!element) return
-  const limitNumberElement = element.querySelector<HTMLElement>('[data-js-percentage-limit-number]')
+  const limitNumberElement = element.querySelector<HTMLElement>('[data-js-progress-limit-number]')
 
   if (element) {
     element.style.setProperty('--lines-count', `${count}`)
@@ -173,7 +190,7 @@ export const setLinesCount = (element: HTMLElement | null, count: number): void 
     limitNumberElement.textContent = `${count}`
   }
 
-  currentLinesCount = count
+  currentLimit = count
 }
 
 export const setCircleProgress = (
@@ -187,6 +204,6 @@ export const setCircleProgress = (
   const clampedPercentage = Math.max(0, Math.min(100, percentage))
   const offset = circumference - (clampedPercentage / 100) * circumference
 
-  ring.style.setProperty('--circumference', `${circumference}`)
-  ring.style.setProperty('--offset', `${offset}`)
+  ring.style.setProperty('--circumference', `${circumference.toFixed(0)}`)
+  ring.style.setProperty('--offset', `${offset.toFixed(0)}`)
 }

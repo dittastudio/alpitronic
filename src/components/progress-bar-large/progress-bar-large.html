@@ -7,7 +7,7 @@
   "
 >
   <div
-    data-resize-container
+    data-js-resize-container
     class="
       @container-[size]
       container-settings
@@ -27,7 +27,6 @@
     ">
       <!-- Progress bar -->
       <div
-        data-js-percentage-mask
         class="
           progress-bar-large__mask
           col-span-full
@@ -36,7 +35,7 @@
         "
       >
         <div
-          data-js-percentage-bar
+          data-js-progress-bar
           class="
             size-full
             p-[min(10cqmin,30px)]
@@ -60,7 +59,7 @@
               -my-[0.12em]
             "
           >
-            <span data-js-percentage-number>56</span>
+            <span data-js-progress-number>56</span>
             <small class="
               text-[60%]
               font-medium
@@ -71,7 +70,6 @@
 
       <!-- Progress bar lines -->
       <div
-        data-js-percentage-lines
         class="
           progress-bar-large__lines
           col-span-full
@@ -110,7 +108,7 @@
                 -my-[0.12em]
               "
             >
-              <span data-js-percentage-number>56</span>
+              <span data-js-progress-number>56</span>
               <small class="
                 text-[60%]
                 font-medium
@@ -135,7 +133,7 @@
               "
             >
               <div
-                data-js-percentage-limit
+                data-js-progress-limit
                 class="
                   -mx-[0.035em]
                   -my-[0.37em]
@@ -144,7 +142,7 @@
                   ease-out
                 "
               >
-                <span data-js-percentage-limit-number>80</span>%
+                <span data-js-progress-limit-number>80</span>%
               </div>
             </div>
           </div>
@@ -154,7 +152,7 @@
   </div>
 
   <div
-    data-resize-indicator
+    data-js-resize-indicator
     class="
       absolute
       text-light-gray

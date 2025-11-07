@@ -58,8 +58,8 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
 }
 
 function setupResizeIndicator(element: HTMLElement): void {
-  const container = element.querySelector('[data-resize-container]');
-  const resizeIndicator = element.querySelector('[data-resize-indicator]');
+  const container = element.querySelector('[data-js-resize-container]');
+  const resizeIndicator = element.querySelector('[data-js-resize-indicator]');
 
   if (container && resizeIndicator) {
     const updateResizeIndicatorPosition = () => {

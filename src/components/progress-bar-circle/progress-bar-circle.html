@@ -1,10 +1,14 @@
-<div class="
-  relative
-  mt-8
-  mx-8
-  pb-8
-">
+<div
+  data-js-progress
+  class="
+    relative
+    mt-8
+    mx-8
+    pb-8
+  "
+>
   <div
+    data-js-resize-container
     class="
       @container-[size]
       container-settings
@@ -14,49 +18,93 @@
       flex-col
       justify-end
       gap-3
-      h-100
+      h-116
+      bg-dark-gray
+      rounded-xl
     "
   >
-    <svg
-      class="
-        progress-bar-circle
-        size-100
-        -rotate-90
-      "
-      width="400"
-      height="400"
-      viewBox="0 0 400 400"
-      fill="none"
-    >
-      <!-- grey background ring -->
-      <circle
+    <div class="
+      relative
+      size-full
+      p-8
+      max-w-116
+      max-h-116
+    ">
+      <svg
         class="
-          stroke-medium-gray
+          progress-bar-circle
+          size-full
+          -rotate-90
         "
-        stroke-width="29"
-        cx="200"
-        cy="200"
-        r="180"
-      />
+        width="400"
+        height="400"
+        viewBox="0 0 400 400"
+        fill="none"
+      >
+        <!-- grey background ring -->
+        <circle
+          class="
+            stroke-black
+          "
+          stroke-width="29"
+          cx="200"
+          cy="200"
+          r="180"
+        />
 
-      <!-- animated progress ring -->
-      <circle
-        data-js-progress-ring
+        <!-- animated progress ring -->
+        <circle
+          data-js-progress-ring
+          class="
+            progress-bar-circle__ring
+            stroke-green
+          "
+          stroke-width="29"
+          stroke-linecap="round"
+          cx="200"
+          cy="200"
+          r="180"
+        />
+      </svg>
+
+      <div
         class="
-          progress-bar-circle__ring
-          stroke-green
+          absolute
+          inset-0
+          flex
+          items-center
+          justify-center
+          text-white
+          text-[min(calc(41cqmin-30px),160px)]
+          tracking-[-0.04em]
+          leading-none
         "
-        stroke-width="29"
-        stroke-linecap="round"
-        cx="200"
-        cy="200"
-        r="180"
-      />
-    </svg>
+      >
+        <div class="
+          relative
+          flex
+          items-baseline
+        ">
+          <span data-js-progress-number>56</span>
+          <small class="
+            text-[60%]
+            font-medium
+          ">%</small>
+        </div>
+      </div>
+
+      <div>
+        <div data-js-progress-limit>
+          <span class="
+            text-white
+          " data-js-progress-limit-number>80</span>%
+        </div>
+      </div>
+    </div>
   </div>
 
   <div
-    data-resize-indicator
+    data-js-resize-indicator
     class="
       absolute
       text-light-gray
