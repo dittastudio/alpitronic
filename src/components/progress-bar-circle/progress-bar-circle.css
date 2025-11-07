@@ -2,8 +2,17 @@
 @source "./progress-bar-circle.html";
 @source "./progress-bar-circle.ts";
 
-.progress-ring {
-  /* Progress duration can be controlled via CSS variable */
-  --progress-duration: 200ms;
+.progress-bar-circle__ring {
+  stroke-dasharray: var(--circumference) var(--circumference);
+  stroke-dashoffset: var(--offset);
+  transition: stroke-dashoffset var(--progress-duration) var(--ease-out);
 }
 
+.progress-bar-circle__limit {
+  rotate: calc(45deg + ((var(--lines-count) / 100) * 360) * 1deg);
+}
+
+.progress-bar-circle__dot {
+  transform-origin: 200px 200px;
+  rotate: calc(((var(--lines-count) / 100) * 360) * 1deg);
+}

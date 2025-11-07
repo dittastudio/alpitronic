@@ -9,7 +9,7 @@
     clip-path: polygon(0 calc(100% - var(--percentage)), 100% calc(100% - var(--percentage)), 100% 100%, 0 100%);
   }
 
-  &.is-animating {
+  .progress-bar-large.is-animating & {
     transition: clip-path var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
@@ -44,7 +44,8 @@
     background-repeat: no-repeat;
   }
 
-  .is-ready & {
+  .progress-bar-large.is-ready & {
     opacity: 1;
   }
 }
+
