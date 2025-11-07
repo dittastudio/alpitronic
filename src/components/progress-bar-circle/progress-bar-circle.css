@@ -11,3 +11,8 @@
 .progress-bar-circle__limit {
   rotate: calc(45deg + ((var(--lines-count) / 100) * 360) * 1deg);
 }
+
+.progress-bar-circle__dot {
+  transform-origin: 200px 200px;
+  rotate: calc(((var(--lines-count) / 100) * 360) * 1deg);
+}
