@@ -5,7 +5,10 @@
 .progress-bar-circle__ring {
   stroke-dasharray: var(--circumference) var(--circumference);
   stroke-dashoffset: var(--offset);
-  transition: stroke-dashoffset var(--progress-duration) var(--ease-out);
+
+  .progress-bar-circle.is-animating & {
+    transition: stroke-dashoffset var(--progress-duration) var(--ease-out);
+  }
 }
 
 .progress-bar-circle__limit {
