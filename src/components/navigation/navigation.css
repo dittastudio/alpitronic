@@ -1,0 +1,3 @@
+@import '@/css/app.css';
+@source "./navigation.html";
+@source "./navigation.ts";

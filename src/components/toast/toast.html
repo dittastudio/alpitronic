@@ -1,91 +1,38 @@
-<div
-  class="
-    @container
-    box
-    relative
-    flex
-    flex-col
-    items-center
-    justify-center
-    min-h-100
-    gap-2.5
-    text-center
-  "
->
-  <!-- Toast Template -->
-  <template id="toastTemplate">
-    <div class="
-      toast
-    " data-mounted="false">
-      <svg
-        class="
-          toast__icon
-        "
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M16.0003 5.33341C10.1093 5.33341 5.33366 10.109 5.33366 16.0001C5.33366 21.8911 10.1093 26.6667 16.0003 26.6667C21.8914 26.6667 26.667 21.8911 26.667 16.0001C26.667 10.109 21.8914 5.33341 16.0003 5.33341ZM2.66699 16.0001C2.66699 8.63628 8.63653 2.66675 16.0003 2.66675C23.3641 2.66675 29.3337 8.63628 29.3337 16.0001C29.3337 23.3638 23.3641 29.3334 16.0003 29.3334C8.63653 29.3334 2.66699 23.3638 2.66699 16.0001Z"
-        />
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.3337 9.33325V18.6666H14.667V9.33325H17.3337Z" />
-        <path d="M14.667 20H17.3337V22.6667H14.667V20Z" />
-      </svg>
-      <span class="
-        toast__label
-      "></span>
-    </div>
-  </template>
-
-  <div class="
-    box__content
-    w-full
-    grow
-  ">
-    <div
-      class="
-        toaster
-        absolute
-        left-1/2
-        bottom-20
-        flex
-        flex-col
-        items-center
-        gap-(--gap)
-        w-full
-        z-1
-        -translate-x-1/2
-      "
-      id="toaster"
-    >
-      <!-- Toast notifications will be added here dynamically -->
-    </div>
-  </div>
-
-  <button
+<div class="
+  normalize
+  @container
+  h-[calc(100vh-30px)]
+  flex
+  items-end
+  justify-center
+  bg-grey-600
+  rounded-14
+  pb-10
+">
+  <div
+    data-js-toast
     class="
-      relative
-      z-2
-      py-[0.5em]
-      px-[0.75em]
-      rounded-4
-      mx-auto
-      bg-white
-      border-none
-      transform-gpu
-      scale-100
-      transition-[scale]
-      duration-150
-      ease-in-out
-      active:scale-97
+      flex
+      items-center
+      gap-3.5
+      p-[calc(20/22*1em)]
+      bg-grey-800
+      text-white
+      rounded-14
+      text-22
       font-medium
+      shadow-toast
     "
-    id="addToastBtn"
   >
-    Add toast
-  </button>
+    <svg class="
+      size-[calc(26.7/22*1em)]
+    " width="32" height="32" viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M16.0003 5.33341C10.1093 5.33341 5.33366 10.109 5.33366 16.0001C5.33366 21.8911 10.1093 26.6667 16.0003 26.6667C21.8914 26.6667 26.667 21.8911 26.667 16.0001C26.667 10.109 21.8914 5.33341 16.0003 5.33341ZM2.66699 16.0001C2.66699 8.63628 8.63653 2.66675 16.0003 2.66675C23.3641 2.66675 29.3337 8.63628 29.3337 16.0001C29.3337 23.3638 23.3641 29.3334 16.0003 29.3334C8.63653 29.3334 2.66699 23.3638 2.66699 16.0001Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.3337 9.33325V18.6666H14.667V9.33325H17.3337Z" />
+      <path d="M14.667 20H17.3337V22.6667H14.667V20Z" />
+    </svg>
+
+    <span data-js-toast-label>Message placeholder</span>
+  </div>
 </div>

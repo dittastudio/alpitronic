@@ -34,7 +34,7 @@ export default {
         storyInitialized.set(storyId, true)
       }, 100)
     } else if (isInitialized) {
-      updateProgress(element, percentage, true)
+      updateProgress(element, percentage, false)
       setStrokeColor(element!.querySelector('[data-js-progress-ring]'), backgroundColor)
       setLimitCount(element, limit)
     }
