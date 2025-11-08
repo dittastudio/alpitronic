@@ -4,21 +4,20 @@ export function makeDraggable(element: HTMLElement, container: HTMLElement) {
   let startMouseY = 0
   let startElementX = 0
   let startElementY = 0
-  let useBottomPositioning = false
 
   element.style.cursor = 'grab'
   element.style.position = 'absolute'
 
-  // Get initial position
+  // Get initial position - start at bottom
   const elementRect = element.getBoundingClientRect()
   const containerRect = container.getBoundingClientRect()
   let currentLeft = elementRect.left - containerRect.left
-  let currentTop = elementRect.top - containerRect.top
+  let currentTop = containerRect.height - elementRect.height
 
-  // Set initial position explicitly
+  // Set initial position at bottom
   element.style.left = `${currentLeft}px`
-  element.style.top = `${currentTop}px`
-  element.style.bottom = 'auto'
+  element.style.top = 'auto'
+  element.style.bottom = '0px'
   element.style.transform = 'none'
 
   element.addEventListener('mousedown', dragStart)
@@ -34,6 +33,7 @@ export function makeDraggable(element: HTMLElement, container: HTMLElement) {
     if (e.target === element || element.contains(e.target as Node)) {
       // Check if click is on resize handle (bottom-right corner)
       const rect = element.getBoundingClientRect()
+      const containerRect = container.getBoundingClientRect()
       const resizeHandleSize = 20 // Size of the resize handle area in pixels
 
       let clientX: number
@@ -62,6 +62,10 @@ export function makeDraggable(element: HTMLElement, container: HTMLElement) {
 
       startMouseX = clientX
       startMouseY = clientY
+
+      // Recalculate current position from actual DOM position
+      currentLeft = rect.left - containerRect.left
+      currentTop = rect.top - containerRect.top
 
       startElementX = currentLeft
       startElementY = currentTop
@@ -104,14 +108,10 @@ export function makeDraggable(element: HTMLElement, container: HTMLElement) {
       const isAtBottom = newTop >= containerRect.height - elementRect.height
 
       if (isAtBottom) {
-        // Use bottom positioning
-        useBottomPositioning = true
         element.style.top = 'auto'
         element.style.bottom = '0px'
         element.style.left = `${newLeft}px`
       } else {
-        // Use top positioning
-        useBottomPositioning = false
         element.style.bottom = 'auto'
         element.style.top = `${newTop}px`
         element.style.left = `${newLeft}px`
