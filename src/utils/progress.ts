@@ -5,11 +5,7 @@ let currentLimit = 80
 
 const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4)
 
-const updateLimitVisibility = (
-  element: HTMLElement | null | undefined,
-  percentage: number,
-  limit: number
-): void => {
+const updateLimitVisibility = (element: HTMLElement | null | undefined, percentage: number, limit: number): void => {
   if (!element) return
 
   const shouldHide = percentage >= limit
@@ -17,11 +13,7 @@ const updateLimitVisibility = (
   element.classList.toggle('scale-95', shouldHide)
 }
 
-const updateBarStyling = (
-  element: HTMLElement | null | undefined,
-  percentage: number,
-  limit: number
-): void => {
+const updateBarStyling = (element: HTMLElement | null | undefined, percentage: number, limit: number): void => {
   if (!element) return
 
   const isOverLimit = percentage >= limit
@@ -30,12 +22,7 @@ const updateBarStyling = (
   element.classList.toggle('!stroke-grey-800', isOverLimit)
 }
 
-const animateNumber = (
-  element: HTMLElement,
-  start: number,
-  end: number,
-  duration: number
-): void => {
+const animateNumber = (element: HTMLElement, start: number, end: number, duration: number): void => {
   const startTime = performance.now()
   const difference = end - start
 
@@ -64,14 +51,12 @@ const updatePercentageNumber = (
   animated: boolean
 ): void => {
   if (animated) {
-    const durationStr = getComputedStyle(element)
-      .getPropertyValue('--progress-duration')
-      .trim()
+    const durationStr = getComputedStyle(element).getPropertyValue('--progress-duration').trim()
     const duration = parseFloat(durationStr) || DEFAULT_DURATION
 
     element.classList.add('is-animating')
 
-    percentageNumbers.forEach((el) => {
+    percentageNumbers.forEach(el => {
       animateNumber(el, currentValue, targetValue, duration)
     })
 
@@ -79,17 +64,13 @@ const updatePercentageNumber = (
       element.classList.remove('is-animating')
     }, duration)
   } else {
-    percentageNumbers.forEach((el) => {
+    percentageNumbers.forEach(el => {
       el.textContent = `${targetValue}`
     })
   }
 }
 
-export const updateProgress = (
-  element: HTMLElement | null,
-  percentage: number,
-  animated: boolean = false
-): void => {
+export const updateProgress = (element: HTMLElement | null, percentage: number, animated: boolean = false): void => {
   if (!element) return
 
   const percentageBar = element.querySelector<HTMLElement>('[data-js-progress-bar]')
@@ -98,36 +79,19 @@ export const updateProgress = (
   const percentageRing = element.querySelector<SVGCircleElement>('[data-js-progress-ring]')
 
   if (percentageNumbers) {
-    updatePercentageNumber(
-      element,
-      percentageNumbers,
-      currentPercentage,
-      percentage,
-      animated
-    )
+    updatePercentageNumber(element, percentageNumbers, currentPercentage, percentage, animated)
   }
 
   if (percentageLimit) {
-    updateLimitVisibility(
-      percentageLimit,
-      percentage,
-      currentLimit,
-    )
+    updateLimitVisibility(percentageLimit, percentage, currentLimit)
   }
 
   if (percentageBar) {
-    updateBarStyling(
-      percentageBar,
-      percentage,
-      currentLimit,
-    )
+    updateBarStyling(percentageBar, percentage, currentLimit)
   }
 
   if (percentageRing) {
-    setCircleProgress(
-      percentageRing,
-      percentage,
-    )
+    setCircleProgress(percentageRing, percentage)
   }
 
   element.style.setProperty('--percentage', `${percentage}%`)
@@ -135,10 +99,7 @@ export const updateProgress = (
   currentPercentage = percentage
 }
 
-export const initProgressBar = (
-  element: HTMLElement | null,
-  initialPercentage: number = 56
-): void => {
+export const initProgressBar = (element: HTMLElement | null, initialPercentage: number = 56): void => {
   if (!element) return
 
   currentPercentage = initialPercentage
@@ -146,7 +107,6 @@ export const initProgressBar = (
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-
       // Set initial duration and add is-animating for reveal
       element.style.setProperty('--progress-duration', `${INITIAL_DURATION}ms`)
       element.classList.add('is-animating')
@@ -156,7 +116,6 @@ export const initProgressBar = (
         element.classList.remove('is-animating')
         element.style.setProperty('--progress-duration', `${DEFAULT_DURATION}ms`)
       }, INITIAL_DURATION)
-
 
       element.classList.add('is-ready')
     })
@@ -181,7 +140,7 @@ export const setTextColor = (element: HTMLElement | null, isDark: boolean = fals
 
 export const setLimitCount = (element: HTMLElement | null, count: number): void => {
   if (!element) return
-  const limitNumberElement = element.querySelector<HTMLElement>('[data-js-progress-limit-number]')
+  const limitNumberElement = element.querySelector('[data-js-progress-limit-number]')
 
   if (element) {
     element.style.setProperty('--lines-count', `${count}`)
@@ -194,10 +153,7 @@ export const setLimitCount = (element: HTMLElement | null, count: number): void 
   currentLimit = count
 }
 
-export const setCircleProgress = (
-  ring: SVGCircleElement | null,
-  percentage: number
-): void => {
+export const setCircleProgress = (ring: SVGCircleElement | null, percentage: number): void => {
   if (!ring) return
 
   const radius = parseFloat(ring.getAttribute('r') || '180')

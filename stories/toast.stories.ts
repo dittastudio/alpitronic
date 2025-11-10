@@ -1,4 +1,3 @@
-import '@/css/app.css'
 import '@/components/toast/toast.css'
 import template from '@/components/toast/toast.html?raw'
 
