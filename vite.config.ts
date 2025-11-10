@@ -32,10 +32,10 @@ function componentBuilderPlugin(): Plugin {
         const srcComponentDir = join(srcDir, component)
         const distComponentDir = join(distDir, component)
         const htmlPath = join(srcComponentDir, `${component}.html`)
-        const distHtmlPath = join(distComponentDir, `${component}.html`)
         const tsPath = join(srcComponentDir, `${component}.ts`)
-        const distJsPath = join(distComponentDir, `${component}.js`)
         const cssPath = join(srcComponentDir, `${component}.css`)
+        const distHtmlPath = join(distComponentDir, `${component}.html`)
+        const distJsPath = join(distComponentDir, `${component}.js`)
         const distCssPath = join(distComponentDir, `${component}.css`)
 
         let currentResult = {
