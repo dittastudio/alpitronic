@@ -16,8 +16,7 @@
       resize
       overflow-auto
       gap-3
-      w-100
-      h-100
+      size-12.5
       bg-grey-900
       rounded-14
     "
@@ -33,20 +32,20 @@
           size-full
           -rotate-90
         "
-        width="400"
-        height="400"
-        viewBox="0 0 400 400"
+        width="50"
+        height="50"
+        viewBox="0 0 50 50"
         fill="none"
       >
         <!-- grey background ring -->
         <circle
           class="
-            stroke-white/60
+            stroke-grey-400/60
           "
-          stroke-width="50"
-          cx="200"
-          cy="200"
-          r="175"
+          stroke-width="8"
+          cx="25"
+          cy="25"
+          r="21"
         />
 
         <!-- animated progress ring -->
@@ -55,11 +54,11 @@
             time-out-loader__ring
             stroke-white
           "
-          stroke-width="50"
+          stroke-width="8"
           stroke-linecap="round"
-          cx="200"
-          cy="200"
-          r="175"
+          cx="25"
+          cy="25"
+          r="21"
         />
       </svg>
 
@@ -70,24 +69,14 @@
           flex
           items-center
           justify-center
-          text-white
-          text-[min(40cqb,40cqi,160px)]
+          text-grey-400
+          text-[min(38.5cqb,38.5cqi)]
+          font-medium
           tracking-[-0.04em]
           leading-none
         "
       >
-        <div class="
-          relative
-          flex
-          items-baseline
-          gap-[0.1em]
-        ">
-          <span data-js-time-out-number>56</span>
-          <small class="
-            text-[60%]
-            font-medium
-          ">s</small>
-        </div>
+        <span data-js-time-out-number></span>
       </div>
     </div>
   </div>

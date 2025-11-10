@@ -2,7 +2,13 @@
 @source "./time-out-loader.html";
 @source "./time-out-loader.ts";
 
-@keyframes countdown {
+@property --time-remaining {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 45;
+}
+
+@keyframes countdown-ring {
   from {
     stroke-dashoffset: 0;
   }
@@ -11,9 +17,29 @@
   }
 }
 
-.time-out-loader__ring {
+@keyframes countdown-number {
+  to {
+    --time-remaining: 0;
+  }
+}
+
+.time-out-loader {
   --countdown-duration: 45s;
+  --countdown-seconds: 45;
+}
+
+.time-out-loader__ring {
   stroke-dasharray: var(--circumference) var(--circumference);
   stroke-dashoffset: 0;
-  animation: countdown var(--countdown-duration) linear forwards;
+  animation: countdown-ring var(--countdown-duration) linear forwards;
+}
+
+[data-js-time-out-number] {
+  --time-remaining: var(--countdown-seconds);
+  counter-reset: time var(--time-remaining);
+  animation: countdown-number var(--countdown-duration) linear forwards;
+
+  &::before {
+    content: counter(time);
+  }
 }

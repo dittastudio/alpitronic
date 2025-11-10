@@ -41,7 +41,7 @@ export default {
     },
   },
   args: {
-    seconds: 45,
+    seconds: 30,
   },
 }
 
