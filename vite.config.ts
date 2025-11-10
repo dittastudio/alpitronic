@@ -26,7 +26,7 @@ function componentBuilderPlugin(): Plugin {
 
       console.log(`\n🧠 Processing files...\n`)
 
-      let results = []
+      const results = []
 
       for (const component of components) {
         const srcComponentDir = join(srcDir, component)
@@ -104,9 +104,7 @@ function getComponentEntries() {
     })
   }
 
-  try {
-    scanDirectory(srcDir)
-  } catch {}
+  scanDirectory(srcDir)
 
   return entries
 }
