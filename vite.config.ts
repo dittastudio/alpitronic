@@ -31,6 +31,7 @@ function componentBuilderPlugin(): Plugin {
       for (const component of components) {
         const srcComponentDir = join(srcDir, component)
         const distComponentDir = join(distDir, component)
+
         const htmlPath = join(srcComponentDir, `${component}.html`)
         const tsPath = join(srcComponentDir, `${component}.ts`)
         const cssPath = join(srcComponentDir, `${component}.css`)
@@ -38,7 +39,7 @@ function componentBuilderPlugin(): Plugin {
         const distJsPath = join(distComponentDir, `${component}.js`)
         const distCssPath = join(distComponentDir, `${component}.css`)
 
-        let currentResult = {
+        const currentResult = {
           Component: component,
           HTML: message(htmlPath, distHtmlPath),
           JS: message(tsPath, distJsPath),
