@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./progress-bar-small.html";
-@source "@/utils/progress.ts";
+@source "../../utils/progress.ts";
 
 .progress-bar-small__limiter {
   &::after {
@@ -23,4 +23,3 @@
     transition: translate var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
-
