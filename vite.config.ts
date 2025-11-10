@@ -3,6 +3,14 @@ import { resolve, join } from 'node:path'
 import { readdirSync, statSync, existsSync, copyFileSync, exists } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
 
+type Result = {
+  Component: string
+  HTML: string
+  JS: string
+  CSS: string
+  COPIED: string[] | string
+}
+
 const bytesToKB = (bytes: number) => (bytes / 1024).toFixed(2) + ' KB'
 
 const message = (src: string, dist: string) =>
@@ -26,7 +34,7 @@ function componentBuilderPlugin(): Plugin {
 
       console.log(`\n🧠 Processing files...\n`)
 
-      const results = []
+      const results: Result[] = []
 
       for (const component of components) {
         const srcComponentDir = join(srcDir, component)
