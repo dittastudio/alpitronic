@@ -1,5 +1,4 @@
 import type { StoryContext } from '@storybook/html'
-import '@/css/app.css'
 import '@/components/progress-bar-large/progress-bar-large.css'
 import template from '@/components/progress-bar-large/progress-bar-large.html?raw'
 import { setupResizeIndicator } from '@/utils/storybook'
@@ -49,19 +48,19 @@ export default {
   argTypes: {
     percentage: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
-      description: 'Current progress percentage from 0 to 100'
+      description: 'Current progress percentage from 0 to 100',
     },
     backgroundColor: {
       control: { type: 'color' },
-      description: 'Background color of the progress bar'
+      description: 'Background color of the progress bar',
     },
     darkText: {
       control: { type: 'boolean' },
-      description: 'Toggle between dark (true) and light (false) text color'
+      description: 'Toggle between dark (true) and light (false) text color',
     },
     limit: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
-      description: 'Number of vertical lines to display (default: 80)'
+      description: 'Number of vertical lines to display (default: 80)',
     },
   },
   args: {
@@ -82,4 +81,3 @@ export const Branded = {
     darkText: false,
   },
 }
-
