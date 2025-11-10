@@ -1,7 +1,7 @@
 <div
-  data-js-progress
+  data-js-time-out
   class="
-    progress-bar-circle
+    time-out-loader
     relative
     mt-8
     mx-8
@@ -41,32 +41,26 @@
         <!-- grey background ring -->
         <circle
           class="
-            stroke-black
+            stroke-white/60
           "
-          stroke-width="29"
+          stroke-width="50"
           cx="200"
           cy="200"
-          r="185"
+          r="175"
         />
 
         <!-- animated progress ring -->
         <circle
-          data-js-progress-bar
-          data-js-progress-ring
           class="
-            progress-bar-circle__ring
-            stroke-green
+            time-out-loader__ring
+            stroke-white
           "
-          stroke-width="29"
+          stroke-width="50"
           stroke-linecap="round"
           cx="200"
           cy="200"
-          r="185"
+          r="175"
         />
-
-        <circle class="
-          progress-bar-circle__dot
-        " cx="385" cy="200" r="4" fill="white"/>
       </svg>
 
       <div
@@ -88,11 +82,11 @@
           items-baseline
           gap-[0.1em]
         ">
-          <span data-js-progress-number>56</span>
+          <span data-js-time-out-number>56</span>
           <small class="
             text-[60%]
             font-medium
-          ">%</small>
+          ">s</small>
         </div>
       </div>
     </div>

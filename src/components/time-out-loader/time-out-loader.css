@@ -1,0 +1,19 @@
+@import '@/css/app.css';
+@source "./time-out-loader.html";
+@source "./time-out-loader.ts";
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: var(--circumference);
+  }
+}
+
+.time-out-loader__ring {
+  --countdown-duration: 45s;
+  stroke-dasharray: var(--circumference) var(--circumference);
+  stroke-dashoffset: 0;
+  animation: countdown var(--countdown-duration) linear forwards;
+}

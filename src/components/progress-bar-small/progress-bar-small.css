@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./progress-bar-small.html";
-@source "../progress-bar-large/progress-bar-large.ts";
+@source "@/utils/progress.ts";
 
 .progress-bar-small__limiter {
   &::after {

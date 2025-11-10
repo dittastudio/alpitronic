@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./progress-bar-circle.html";
-@source "./progress-bar-circle.ts";
+@source "@/utils/progress.ts";
 
 .progress-bar-circle__ring {
   stroke-dasharray: var(--circumference) var(--circumference);
