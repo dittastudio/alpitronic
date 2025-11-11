@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^7.0.2",
-    "@html-eslint/eslint-plugin": "^0.47.1",
-    "@html-eslint/parser": "^0.47.1",
+    "@html-eslint/eslint-plugin": "^0.48.0",
+    "@html-eslint/parser": "^0.48.0",
     "@storybook/addon-docs": "^10.0.6",
     "@storybook/html-vite": "^10.0.6",
     "@tailwindcss/vite": "^4.1.17",
