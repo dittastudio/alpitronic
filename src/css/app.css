@@ -93,12 +93,12 @@
       --color-accent: var(--color-green);
     }
   }
+}
 
-  .normalize {
-    -webkit-font-smoothing: antialiased;
-    font-size: 16px;
-    font-feature-settings: 'ss01'; /* changes a character */
-  }
+@utility normalize {
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  font-feature-settings: 'ss01'; /* changes a character */
 }
 
 @utility bg-chart-x {
