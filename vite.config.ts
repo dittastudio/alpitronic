@@ -1,6 +1,6 @@
 import { defineConfig, type Plugin } from 'vite'
 import { resolve, join } from 'node:path'
-import { readdirSync, statSync, existsSync, copyFileSync, exists } from 'node:fs'
+import { readdirSync, statSync, existsSync, copyFileSync } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
 
 type Result = {
