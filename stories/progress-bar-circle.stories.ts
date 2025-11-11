@@ -16,8 +16,11 @@ export default {
     let wrapper = wrappers.get(context.id)
 
     if (wrapper) {
-      if (progresses.has(context.id)) {
-        progresses.get(context.id)?.setProgress(percentage)
+      const savedProgress = progresses.get(context.id)
+
+      if (savedProgress) {
+        savedProgress.setProgress(percentage)
+        savedProgress.setLimit(limit)
       }
     } else {
       wrapper = document.createElement('div')
@@ -26,10 +29,10 @@ export default {
       wrappers.set(context.id, wrapper)
 
       document.addEventListener('DOMContentLoaded', async () => {
-        const progress = new Progress({ percentage: 0, selector: '[data-js-progress]' })
+        const progress = new Progress({ percentage: 0, limit: limit, selector: '[data-js-progress]' })
         progresses.set(context.id, progress)
 
-        await wait(1000)
+        await wait(500)
         progress.animateProgress(percentage)
       })
     }

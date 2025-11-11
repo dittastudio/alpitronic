@@ -2,22 +2,24 @@ import { wait, easeOutQuart } from '@/utils/helpers'
 
 interface Options {
   percentage?: number
+  limit?: number
   selector?: string
 }
 
 class Progress {
   private percentage: number
+  private limit: number = 80
   private element: HTMLElement | null = null
   private percentageBar: HTMLElement | null = null
   private percentageNumbers: NodeListOf<HTMLElement> | null = null
   private percentageLimit: HTMLElement | null = null
   private percentageRing: SVGCircleElement | null = null
-  private currentLimit: number = 80
 
   constructor(options: Options = {}) {
-    const { percentage = 0, selector = '[data-js-progress]' } = options
+    const { percentage = 0, limit = 80, selector = '[data-js-progress]' } = options
 
     this.percentage = percentage
+    this.limit = limit
     this.element = document.querySelector(selector)
 
     if (!this.element) {
@@ -53,7 +55,7 @@ class Progress {
     window.requestAnimationFrame(updateCounter)
   }
 
-  public animateNumbers(percentage: number, duration: number): void {
+  private animateNumbers(percentage: number, duration: number): void {
     if (!this.element || !this.percentageNumbers) return
 
     this.percentageNumbers.forEach(el => {
@@ -81,6 +83,13 @@ class Progress {
     this.percentageRing.style.setProperty('--offset', `${offset.toFixed(0)}`)
   }
 
+  public setLimit = (count: number): void => {
+    if (!this.element) return
+
+    this.element.style.setProperty('--lines-count', `${count}`)
+    this.limit = count
+  }
+
   public setProgress(percentage: number, animate: boolean = false, duration: number = 1500): void {
     this.setCircleProgress(percentage)
 
@@ -105,6 +114,7 @@ class Progress {
   private init(): void {
     if (this.element) {
       this.setProgress(this.percentage)
+      this.setLimit(this.limit)
     }
   }
 }
