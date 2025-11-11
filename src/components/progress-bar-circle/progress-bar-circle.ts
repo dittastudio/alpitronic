@@ -10,13 +10,11 @@ class Progress {
   private percentage: number
   private limit: number = 80
   private element: HTMLElement | null = null
-  private percentageBar: HTMLElement | null = null
-  private percentageNumbers: NodeListOf<HTMLElement> | null = null
-  private percentageLimit: HTMLElement | null = null
-  private percentageRing: SVGCircleElement | null = null
+  private progressBar: HTMLElement | null = null
+  private progressNumbers: NodeListOf<HTMLElement> | null = null
 
   constructor(options: Options = {}) {
-    const { percentage = 0, limit = 80, selector = '[data-js-progress]' } = options
+    const { percentage = 0, limit = 80, selector = '' } = options
 
     this.percentage = percentage
     this.limit = limit
@@ -27,10 +25,8 @@ class Progress {
       return
     }
 
-    this.percentageBar = this.element.querySelector('[data-js-progress-bar]')
-    this.percentageNumbers = this.element.querySelectorAll('[data-js-progress-number]')
-    this.percentageLimit = this.element.querySelector('[data-js-progress-limit]')
-    this.percentageRing = this.element.querySelector('[data-js-progress-ring]')
+    this.progressBar = this.element.querySelector('[data-js-progress-bar]')
+    this.progressNumbers = this.element.querySelectorAll('[data-js-progress-number]')
 
     this.init()
   }
@@ -49,6 +45,10 @@ class Progress {
 
       if (progress < 1) {
         window.requestAnimationFrame(updateCounter)
+      } else {
+        this.percentage = percentage
+        this.element?.style.setProperty('--percentage', `${percentage}%`)
+        this.limitCheck()
       }
     }
 
@@ -56,47 +56,63 @@ class Progress {
   }
 
   private animateNumbers(percentage: number, duration: number): void {
-    if (!this.element || !this.percentageNumbers) return
+    if (!this.element || !this.progressNumbers) return
 
-    this.percentageNumbers.forEach(el => {
+    this.progressNumbers.forEach(el => {
       this.animateNumber(el, percentage, duration)
     })
   }
 
   private setNumberProgress(percentage: number): void {
-    if (!this.percentageNumbers) return
+    if (!this.progressNumbers) return
 
-    this.percentageNumbers.forEach(el => {
+    this.progressNumbers.forEach(el => {
       el.textContent = `${percentage}`
     })
   }
 
   private setCircleProgress(percentage: number): void {
-    if (!this.percentageRing) return
+    if (!this.progressBar) return
 
-    const radius = parseFloat(this.percentageRing.getAttribute('r') || '180')
+    const radius = parseFloat(this.progressBar.getAttribute('r') || '180')
     const circumference = 2 * Math.PI * radius
     const clampedPercentage = Math.max(0, Math.min(100, percentage))
     const offset = circumference - (clampedPercentage / 100) * circumference
 
-    this.percentageRing.style.setProperty('--circumference', `${circumference.toFixed(0)}`)
-    this.percentageRing.style.setProperty('--offset', `${offset.toFixed(0)}`)
+    this.progressBar.style.setProperty('--circumference', `${circumference.toFixed(0)}`)
+    this.progressBar.style.setProperty('--offset', `${offset.toFixed(0)}`)
   }
 
-  public setLimit = (count: number): void => {
+  private limitCheck(): void {
+    if (!this.progressBar) return
+
+    const isOverLimit = this.percentage >= this.limit
+
+    this.progressBar.classList.toggle('!bg-grey-800', isOverLimit)
+    this.progressBar.classList.toggle('!text-white', isOverLimit)
+    this.progressBar.classList.toggle('!stroke-grey-800', isOverLimit)
+  }
+
+  public setLimit(count: number): void {
+    this.limit = count
+
     if (!this.element) return
 
-    this.element.style.setProperty('--lines-count', `${count}`)
-    this.limit = count
+    this.element.style.setProperty('--limit', `${count}`)
+    this.limitCheck()
   }
 
   public setProgress(percentage: number, animate: boolean = false, duration: number = 1500): void {
     this.setCircleProgress(percentage)
+    this.limitCheck()
 
     if (animate) {
+      // animateNumbers will assign this.percentage when done animating.
       this.animateNumbers(percentage, duration)
     } else {
       this.setNumberProgress(percentage)
+      this.percentage = percentage
+      this.element?.style.setProperty('--percentage', `${percentage}%`)
     }
   }
 

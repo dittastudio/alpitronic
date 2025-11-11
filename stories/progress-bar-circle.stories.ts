@@ -2,8 +2,6 @@ import type { StoryContext } from '@storybook/html'
 import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
 import Progress from '@/components/progress-bar-circle/progress-bar-circle'
-// import { setupResizeIndicator } from '@/utils/storybook'
-// import { initProgressBar, updateProgress, setStrokeColor, setLimitCount } from '@/utils/progress'
 import { wait } from '@/utils/helpers'
 
 const wrappers = new Map<string, HTMLDivElement>()
@@ -31,6 +29,8 @@ export default {
       document.addEventListener('DOMContentLoaded', async () => {
         const progress = new Progress({ percentage: 0, limit: limit, selector: '[data-js-progress]' })
         progresses.set(context.id, progress)
+
+        console.dir(progress)
 
         await wait(500)
         progress.animateProgress(percentage)

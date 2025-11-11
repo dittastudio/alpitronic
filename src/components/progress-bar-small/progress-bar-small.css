@@ -23,3 +23,17 @@
     transition: translate var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
+
+@property --lines-count {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.progress-bar-small__limit {
+  counter-reset: limit var(--lines-count);
+
+  &::before {
+    content: counter(limit);
+  }
+}

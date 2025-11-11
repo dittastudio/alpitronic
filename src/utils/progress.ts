@@ -140,15 +140,15 @@ export const setTextColor = (element: HTMLElement | null, isDark: boolean = fals
 
 export const setLimitCount = (element: HTMLElement | null, count: number): void => {
   if (!element) return
-  const limitNumberElement = element.querySelector('[data-js-progress-limit-number]')
+  // const limitNumberElement = element.querySelector('[data-js-progress-limit-number]')
 
   if (element) {
     element.style.setProperty('--lines-count', `${count}`)
   }
 
-  if (limitNumberElement) {
-    limitNumberElement.textContent = `${count}`
-  }
+  // if (limitNumberElement) {
+  //   limitNumberElement.textContent = `${count}`
+  // }
 
   currentLimit = count
 }

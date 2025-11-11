@@ -48,3 +48,17 @@
     opacity: 1;
   }
 }
+
+@property --lines-count {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.progress-bar-large__limit {
+  counter-reset: limit var(--lines-count);
+
+  &::before {
+    content: counter(limit);
+  }
+}

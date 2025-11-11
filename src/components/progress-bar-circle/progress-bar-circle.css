@@ -1,18 +1,18 @@
 @import '@/css/app.css';
 @source "./progress-bar-circle.html";
-@source "../../utils/progress.ts";
+@source "./progress-bar-circle.ts";
 
-.progress-bar-circle__ring {
+.progress-bar-circle__bar {
   stroke-dasharray: var(--circumference) var(--circumference);
   stroke-dashoffset: var(--offset);
   transition: stroke-dashoffset var(--progress-duration) var(--ease-inOutQuart);
 }
 
 .progress-bar-circle__limit {
-  rotate: calc(45deg + ((var(--lines-count) / 100) * 360) * 1deg);
+  rotate: calc(45deg + ((var(--limit) / 100) * 360) * 1deg);
 }
 
 .progress-bar-circle__dot {
   transform-origin: 200px 200px;
-  rotate: calc(((var(--lines-count) / 100) * 360) * 1deg);
+  rotate: calc(((var(--limit) / 100) * 360) * 1deg);
 }
