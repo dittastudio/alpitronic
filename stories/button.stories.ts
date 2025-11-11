@@ -3,7 +3,6 @@ import template from '@/components/button/button.html?raw'
 
 export default {
   title: 'Alpitronic/Button',
-  tags: ['autodocs'],
   render: ({
     label,
     fullWidth,

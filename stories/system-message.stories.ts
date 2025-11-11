@@ -3,7 +3,6 @@ import template from '@/components/system-message/system-message.html?raw'
 
 export default {
   title: 'Alpitronic/System Message',
-  tags: ['autodocs'],
   render: ({
     type,
     textHeadline,

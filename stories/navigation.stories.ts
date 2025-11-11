@@ -7,7 +7,6 @@ import { makeDraggable } from '@/utils/draggable'
 
 export default {
   title: 'Alpitronic/Navigation',
-  tags: ['autodocs'],
   render: (args: any) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template
@@ -24,7 +23,7 @@ export default {
     if (nav && navContent && buttonElement) {
       navContent.innerHTML = ''
 
-      Array.from({ length: 4 }, (_, i) => i + 1).forEach((buttonIndex) => {
+      Array.from({ length: 4 }, (_, i) => i + 1).forEach(buttonIndex => {
         const btn = buttonElement.cloneNode(true) as HTMLElement
         const label = btn.querySelector('span')
 

@@ -10,7 +10,6 @@ const storyInitialized = new Map<string, boolean>()
 
 export default {
   title: 'Alpitronic/Progress Bar Large',
-  tags: ['autodocs'],
   render: (args: any, context: StoryContext) => {
     const { percentage = 56, backgroundColor = '#54e300', darkText = true, limit = 80 } = args
     const storyId = context.id
