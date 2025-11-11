@@ -118,8 +118,11 @@ function getComponentEntries() {
   return entries
 }
 
+// Netlify sets this to "true" during builds.
+const IS_NETLIFY = process.env.NETLIFY === 'true'
+
 export default defineConfig({
-  plugins: [tailwindcss(), componentBuilderPlugin()],
+  plugins: [tailwindcss(), ...(IS_NETLIFY ? [] : [componentBuilderPlugin()])],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
