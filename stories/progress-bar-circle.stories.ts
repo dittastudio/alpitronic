@@ -1,60 +1,38 @@
 import type { StoryContext } from '@storybook/html'
 import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
-import { setupResizeIndicator } from '@/utils/storybook'
-import { initProgressBar, updateProgress, setStrokeColor, setLimitCount } from '@/utils/progress'
+import Progress from '@/components/progress-bar-circle/progress-bar-circle'
+// import { setupResizeIndicator } from '@/utils/storybook'
+// import { initProgressBar, updateProgress, setStrokeColor, setLimitCount } from '@/utils/progress'
+import { wait } from '@/utils/helpers'
 
-const storyElements = new Map<string, HTMLElement>()
-const storyInitialized = new Map<string, boolean>()
+const wrappers = new Map<string, HTMLDivElement>()
+const progresses = new Map<string, Progress>()
 
 export default {
   title: 'Alpitronic/Progress Bar Circle',
   render: (args: any, context: StoryContext) => {
-    // console.log(context)
     const { percentage = 56, backgroundColor = '#54e300', limit = 80 } = args
+    let wrapper = wrappers.get(context.id)
 
-    const wrapper = document.createElement('div')
-    wrapper.classList.add('mt-8', 'mx-8', 'pb-8')
-    wrapper.innerHTML = template
+    if (wrapper) {
+      if (progresses.has(context.id)) {
+        progresses.get(context.id)?.setProgress(percentage)
+      }
+    } else {
+      wrapper = document.createElement('div')
+      wrapper.classList.add('mt-8', 'mx-8', 'pb-8')
+      wrapper.innerHTML = template
+      wrappers.set(context.id, wrapper)
 
-    const element = wrapper.firstChild as HTMLElement | null
+      document.addEventListener('DOMContentLoaded', async () => {
+        const progress = new Progress({ percentage: 0, selector: '[data-js-progress]' })
+        progresses.set(context.id, progress)
 
-    if (!element) {
-      return wrapper
+        await wait(1000)
+        progress.animateTo(percentage)
+      })
     }
-
-    setupResizeIndicator(element)
-    updateProgress(element, percentage, false)
-    setStrokeColor(element.querySelector('[data-js-progress-ring]'), backgroundColor)
-    setLimitCount(element, limit)
-
-    // const storyId = context.id
-    // let element = storyElements.get(storyId)
-    // const isInitialized = storyInitialized.get(storyId)
-
-    // console.log('Rendering', storyElements)
-
-    // if (!element) {
-    //   const wrapper = document.createElement('div')
-    //   wrapper.innerHTML = template
-    //   element = wrapper.firstChild as HTMLElement
-    //   storyElements.set(storyId, element)
-
-    //   setupResizeIndicator(element)
-
-    //   initProgressBar(element, 0)
-
-    //   setTimeout(() => {
-    //     updateProgress(element!, percentage, true)
-    //     setStrokeColor(element!.querySelector('[data-js-progress-ring]'), backgroundColor)
-    //     setLimitCount(element!, limit)
-    //     storyInitialized.set(storyId, true)
-    //   }, 100)
-    // } else if (isInitialized) {
-    //   updateProgress(element, percentage, false)
-    //   setStrokeColor(element!.querySelector('[data-js-progress-ring]'), backgroundColor)
-    //   setLimitCount(element, limit)
-    // }
 
     return wrapper
   },
