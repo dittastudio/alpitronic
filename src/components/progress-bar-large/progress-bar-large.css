@@ -1,6 +1,6 @@
 @import '@/css/app.css';
 @source "./progress-bar-large.html";
-@source "./progress-bar-large.ts";
+@source "../../utils/progress.ts";
 
 .progress-bar-large__mask {
   clip-path: polygon(0 0, var(--percentage) 0, var(--percentage) 100%, 0 100%);
@@ -48,4 +48,3 @@
     opacity: 1;
   }
 }
-
