@@ -1,17 +1,28 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { resolve, join } from 'node:path'
-import { readdirSync, statSync, existsSync, readFileSync, writeFileSync, copyFileSync } from 'node:fs'
+import { readdirSync, statSync, existsSync, copyFileSync, exists } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
-import postcss from 'postcss'
-import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss'
 
-function componentBuilderPlugin() {
+type Result = {
+  Component: string
+  HTML: string
+  JS: string
+  CSS: string
+  COPIED: string[] | string
+}
+
+const bytesToKB = (bytes: number) => (bytes / 1024).toFixed(2) + ' KB'
+
+const message = (src: string, dist: string) =>
+  existsSync(src)
+    ? `${existsSync(dist) ? `✅ ${bytesToKB(statSync(dist).size)}` : '⚠️  Not built to dist'}`
+    : `❌ Not in src`
+
+function componentBuilderPlugin(): Plugin {
   return {
     name: 'component-builder',
     apply: 'build',
     enforce: 'post',
-
-    // async closeBundle() {
     async closeBundle() {
       const srcDir = resolve(__dirname, 'src/components')
       const distDir = resolve(__dirname, 'dist')
@@ -23,48 +34,26 @@ function componentBuilderPlugin() {
 
       console.log(`\n🧠 Processing files...\n`)
 
-      let results = []
+      const results: Result[] = []
 
       for (const component of components) {
         const srcComponentDir = join(srcDir, component)
         const distComponentDir = join(distDir, component)
+
         const htmlPath = join(srcComponentDir, `${component}.html`)
         const tsPath = join(srcComponentDir, `${component}.ts`)
         const cssPath = join(srcComponentDir, `${component}.css`)
+        const distHtmlPath = join(distComponentDir, `${component}.html`)
+        const distJsPath = join(distComponentDir, `${component}.js`)
         const distCssPath = join(distComponentDir, `${component}.css`)
 
-        let currentResult = {
+        const currentResult = {
           Component: component,
-          HTML: existsSync(htmlPath) ? `✅` : `❌`,
-          TS: existsSync(tsPath) ? `✅` : `❌`,
-          CSS: existsSync(cssPath) ? `✅` : `❌`,
-          PURGED: `❌`,
+          HTML: message(htmlPath, distHtmlPath),
+          JS: message(tsPath, distJsPath),
+          CSS: message(cssPath, distCssPath),
+          COPIED: [] as string[] | string,
         }
-
-        if (existsSync(htmlPath) && existsSync(tsPath) && existsSync(cssPath) && existsSync(distCssPath)) {
-          const css = readFileSync(distCssPath, 'utf-8')
-
-          const result = await postcss([
-            purgeCSSPlugin({
-              content: [htmlPath, tsPath],
-              defaultExtractor: content => {
-                const matches = content.match(/[A-Za-z0-9_-]+(?:\.[0-9]+)?(?:\/[0-9]+)?/g) || []
-                return matches
-              },
-              safelist: {
-                standard: [],
-                deep: [],
-                greedy: [],
-              },
-            }),
-          ]).process(css, { from: distCssPath })
-
-          writeFileSync(distCssPath, result.css)
-
-          currentResult.PURGED = `🔥`
-        }
-
-        results.push(currentResult)
 
         const filesToCopy = [
           `${component}.manifest.json`,
@@ -77,10 +66,20 @@ function componentBuilderPlugin() {
           const srcFile = join(srcComponentDir, file)
           const distFile = join(distComponentDir, file)
 
-          if (existsSync(srcFile) && existsSync(distFile)) {
+          if (existsSync(srcFile)) {
             copyFileSync(srcFile, distFile)
+
+            if (Array.isArray(currentResult.COPIED)) {
+              currentResult.COPIED.push(file)
+            }
           }
         })
+
+        if (!currentResult.COPIED.length) {
+          currentResult.COPIED = 'No files to copy'
+        }
+
+        results.push(currentResult)
       }
 
       console.table(results)
@@ -114,20 +113,13 @@ function getComponentEntries() {
     })
   }
 
-  try {
-    scanDirectory(srcDir)
-  } catch {}
+  scanDirectory(srcDir)
 
   return entries
 }
 
 export default defineConfig({
-  plugins: [
-    // test
-    // another
-    tailwindcss(),
-    componentBuilderPlugin(),
-  ],
+  plugins: [tailwindcss(), componentBuilderPlugin()],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

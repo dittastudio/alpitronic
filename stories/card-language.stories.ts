@@ -1,10 +1,9 @@
-import { fn } from 'storybook/test';
-import '@/components/card-language/card-language.css';
-import template from '@/components/card-language/card-language.html?raw';
+import { fn } from 'storybook/test'
+import '@/components/card-language/card-language.css'
+import template from '@/components/card-language/card-language.html?raw'
 
 export default {
   title: 'Alpitronic/Card Language',
-  tags: ['autodocs'],
   render: ({
     flag,
     textPrimary,
@@ -13,66 +12,66 @@ export default {
     fullWidth,
     onClick = () => {},
   }: {
-    flag?: string;
-    textPrimary?: string;
-    textSecondary?: string;
-    isActive?: boolean;
-    fullWidth?: boolean;
-    onClick?: () => void;
+    flag?: string
+    textPrimary?: string
+    textSecondary?: string
+    isActive?: boolean
+    fullWidth?: boolean
+    onClick?: () => void
   }) => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = template;
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = template
 
-    const main: HTMLElement | null = wrapper.querySelector('[data-main]');
+    const main: HTMLElement | null = wrapper.querySelector('[data-main]')
 
     if (!main) {
-      return wrapper;
+      return wrapper
     }
 
-    const primary = main.querySelector('[data-primary]');
-    const secondary = main.querySelector('[data-secondary]');
+    const primary = main.querySelector('[data-primary]')
+    const secondary = main.querySelector('[data-secondary]')
 
     if (primary && textPrimary) {
-      primary.textContent = textPrimary;
+      primary.textContent = textPrimary
     } else if (primary) {
-      primary.classList.remove('block');
-      primary.classList.add('hidden');
+      primary.classList.remove('block')
+      primary.classList.add('hidden')
     }
 
     if (secondary && textSecondary) {
-      secondary.textContent = textSecondary;
+      secondary.textContent = textSecondary
     } else if (secondary) {
-      secondary.classList.remove('block');
-      secondary.classList.add('hidden');
+      secondary.classList.remove('block')
+      secondary.classList.add('hidden')
     }
 
     if (isActive) {
-      main.classList.remove('outline-transparent');
-      main.classList.add('outline-white');
+      main.classList.remove('outline-transparent')
+      main.classList.add('outline-white')
     }
 
     if (fullWidth) {
-      main.classList.add('w-full');
+      main.classList.add('w-full')
     }
 
     if (flag) {
-      const flagImg = main.querySelector('img');
+      const flagImg = main.querySelector('img')
 
       if (flagImg && flag === 'None') {
-        flagImg.classList.remove('block');
-        flagImg.classList.add('hidden');
+        flagImg.classList.remove('block')
+        flagImg.classList.add('hidden')
       } else if (flagImg) {
-        flagImg.setAttribute('src', `flags/${flag}.svg`);
+        flagImg.setAttribute('src', `flags/${flag}.svg`)
       }
     } else {
-      main.classList.add('card-language--no-flag');
+      main.classList.add('card-language--no-flag')
     }
 
     if (typeof onClick === 'function') {
-      main.addEventListener('click', onClick);
+      main.addEventListener('click', onClick)
     }
 
-    return wrapper.firstChild;
+    return wrapper.firstChild
   },
   argTypes: {
     textPrimary: { control: 'text' },
@@ -366,8 +365,8 @@ export default {
     fullWidth: false,
     onClick: fn(),
   },
-};
+}
 
 export const Default = {
   args: {},
-};
+}

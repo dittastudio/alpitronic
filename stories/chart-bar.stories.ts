@@ -1,13 +1,12 @@
-import '@/components/chart-bar/chart-bar.css';
-import template from '@/components/chart-bar/chart-bar.html?raw';
-import ChartBar from '@/components/chart-bar/chart-bar';
-import { PerlinNoise, randomRange } from '@/utils/storybook';
+import '@/components/chart-bar/chart-bar.css'
+import template from '@/components/chart-bar/chart-bar.html?raw'
+import ChartBar from '@/components/chart-bar/chart-bar'
+import { PerlinNoise, randomRange } from '@/utils/storybook'
 
-const perlin = new PerlinNoise(50);
+const perlin = new PerlinNoise(50)
 
 export default {
   title: 'Alpitronic/Chart Bar',
-  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
@@ -16,18 +15,18 @@ export default {
     },
   },
   render: ({ data = [], xLabel = [], yLabel = [] }: { data: number[]; xLabel?: string[]; yLabel?: string[] }) => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = template;
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = template
 
     document.addEventListener('DOMContentLoaded', () => {
       new ChartBar({
         data,
         xLabel,
         yLabel,
-      });
-    });
+      })
+    })
 
-    return wrapper.firstChild;
+    return wrapper.firstChild
   },
   argTypes: {
     data: {
@@ -63,8 +62,8 @@ export default {
     xLabel: 'sample1',
     yLabel: 'sample1',
   },
-};
+}
 
 export const Default = {
   args: {},
-};
+}

@@ -1,28 +1,27 @@
-import '@/components/icon-system/icon-system.css';
-import template from '@/components/icon-system/icon-system.html?raw';
+import '@/components/icon-system/icon-system.css'
+import template from '@/components/icon-system/icon-system.html?raw'
 
 export default {
   title: 'Alpitronic/Icon System',
-  tags: ['autodocs'],
   render: ({ icon }: { icon?: string }) => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = template;
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = template
 
-    const main: HTMLElement | null = wrapper.querySelector('[data-main]');
+    const main: HTMLElement | null = wrapper.querySelector('[data-main]')
 
     if (!main) {
-      return wrapper;
+      return wrapper
     }
 
     if (icon) {
-      const iconImg = main.querySelector('img');
+      const iconImg = main.querySelector('img')
 
       if (iconImg) {
-        iconImg.setAttribute('src', `icon-system/${icon}.svg`);
+        iconImg.setAttribute('src', `icon-system/${icon}.svg`)
       }
     }
 
-    return wrapper.firstChild;
+    return wrapper.firstChild
   },
   argTypes: {
     icon: {
@@ -61,8 +60,8 @@ export default {
   args: {
     icon: 'bolt',
   },
-};
+}
 
 export const Default = {
   args: {},
-};
+}
