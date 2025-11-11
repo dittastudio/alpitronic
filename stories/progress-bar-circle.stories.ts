@@ -1,15 +1,15 @@
 import type { StoryContext } from '@storybook/html'
 import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
-import Progress from '@/components/progress-bar-circle/progress-bar-circle'
+import ProgressBarCircle from '@/components/progress-bar-circle/progress-bar-circle'
 import { wait } from '@/utils/helpers'
 
 const wrappers = new Map<string, HTMLDivElement>()
-const progresses = new Map<string, Progress>()
+const progresses = new Map<string, ProgressBarCircle>()
 
 export default {
   title: 'Alpitronic/Progress Bar Circle',
-  render: (args: any, context: StoryContext) => {
+  render: (args: { percentage?: number; accentColor?: string; limit?: number }, context: StoryContext) => {
     const { percentage = 56, accentColor = '#54e300', limit = 80 } = args
     let wrapper = wrappers.get(context.id)
 
@@ -17,7 +17,7 @@ export default {
       const savedProgress = progresses.get(context.id)
 
       if (savedProgress) {
-        savedProgress.setProgress(percentage)
+        savedProgress.setProgress({ percentage })
         savedProgress.setLimit(limit)
       }
     } else {
@@ -27,13 +27,16 @@ export default {
       wrappers.set(context.id, wrapper)
 
       document.addEventListener('DOMContentLoaded', async () => {
-        const progress = new Progress({ percentage: 0, limit: limit, selector: '[data-js-progress]' })
+        const progress = new ProgressBarCircle({
+          percentage: 0,
+          limit: limit,
+          selector: '[data-js-progress]',
+        })
+
         progresses.set(context.id, progress)
 
-        console.dir(progress)
-
         await wait(500)
-        progress.animateProgress(percentage)
+        await progress.setProgress({ percentage, animate: true, duration: 1500 })
       })
     }
 

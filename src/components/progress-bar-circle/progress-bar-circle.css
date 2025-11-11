@@ -1,11 +1,12 @@
 @import '@/css/app.css';
 @source "./progress-bar-circle.html";
 @source "./progress-bar-circle.ts";
+@source "../../utils/progress.ts";
 
 .progress-bar-circle__bar {
   stroke-dasharray: var(--circumference) var(--circumference);
   stroke-dashoffset: var(--offset);
-  transition: stroke-dashoffset var(--progress-duration) var(--ease-inOutQuart);
+  transition: stroke-dashoffset var(--duration) var(--ease-inOutQuart);
 }
 
 .progress-bar-circle__limit {

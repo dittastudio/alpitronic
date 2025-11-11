@@ -1,8 +1,8 @@
 import './progress-bar-circle.css'
 import './progress-bar-circle.html?url'
-import Progress from './progress-bar-circle'
+import ProgressBarCircle from './progress-bar-circle'
 
-new Progress({
+new ProgressBarCircle({
   percentage: 0,
   limit: 80,
   selector: '[data-js-progress]',

@@ -20,7 +20,7 @@
   translate: calc(var(--percentage) - (100% - 0px)) 0 0;
 
   .progress-bar-small.is-animating & {
-    transition: translate var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: translate var(--duration) cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 }
 

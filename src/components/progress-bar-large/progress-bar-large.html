@@ -70,7 +70,6 @@
 
       <!-- Progress bar lines -->
       <div
-        data-js-percentage-lines
         class="
           progress-bar-large__lines
           col-span-full
@@ -89,11 +88,11 @@
         >
           <div
             class="
-              w-[calc(var(--lines-count)*1%)]
+              w-[calc(var(--limit)*1%)]
               @portrait:flex
               @portrait:items-end
               @portrait:w-full
-              @portrait:h-[calc(var(--lines-count)*1%)]
+              @portrait:h-[calc(var(--limit)*1%)]
               p-[min(10cqmin,30px)]
             "
           >
@@ -109,7 +108,7 @@
                 -my-[0.12em]
               "
             >
-              <span data-js-progress-number>56</span>
+              <span data-js-progress-number>0</span>
               <small class="
                 text-[60%]
                 font-medium
@@ -134,7 +133,6 @@
               "
             >
               <div
-                data-js-progress-limit
                 class="
                   -mx-[0.035em]
                   -my-[0.37em]

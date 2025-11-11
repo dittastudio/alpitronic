@@ -1,48 +1,80 @@
 import type { StoryContext } from '@storybook/html'
 import '@/components/progress-bar-large/progress-bar-large.css'
 import template from '@/components/progress-bar-large/progress-bar-large.html?raw'
-import { setupResizeIndicator } from '@/utils/storybook'
-import { initProgressBar, updateProgress, setBackgroundColor, setTextColor, setLimitCount } from '@/utils/progress'
+// import { setupResizeIndicator } from '@/utils/storybook'
+// import { initProgressBar, updateProgress, setBackgroundColor, setTextColor, setLimitCount } from '@/utils/progress'
+import ProgressBarLarge from '@/components/progress-bar-large/progress-bar-large'
+import { wait } from '@/utils/helpers'
 
-// Store for maintaining element state across re-renders
-const storyElements = new Map<string, HTMLElement>()
-const storyInitialized = new Map<string, boolean>()
+const wrappers = new Map<string, HTMLDivElement>()
+const progresses = new Map<string, ProgressBarLarge>()
 
 export default {
   title: 'Alpitronic/Progress Bar Large',
-  render: (args: any, context: StoryContext) => {
-    const { percentage = 56, backgroundColor = '#54e300', darkText = true, limit = 80 } = args
-    const storyId = context.id
-    let element = storyElements.get(storyId)
-    const isInitialized = storyInitialized.get(storyId)
+  render: (args: { percentage?: number; accentColor?: string; limit?: number }, context: StoryContext) => {
+    const { percentage = 56, accentColor = '#54e300', limit = 80 } = args
+    let wrapper = wrappers.get(context.id)
 
-    if (!element) {
-      const wrapper = document.createElement('div')
+    if (wrapper) {
+      const savedProgress = progresses.get(context.id)
+
+      if (savedProgress) {
+        savedProgress.setProgress({ percentage })
+        savedProgress.setLimit(limit)
+      }
+    } else {
+      wrapper = document.createElement('div')
+      wrapper.classList.add('mt-8', 'mx-8', 'pb-8')
       wrapper.innerHTML = template
-      element = wrapper.firstChild as HTMLElement
-      storyElements.set(storyId, element)
+      wrappers.set(context.id, wrapper)
 
-      setupResizeIndicator(element)
+      document.addEventListener('DOMContentLoaded', async () => {
+        const progress = new ProgressBarLarge({
+          percentage: 0,
+          limit: limit,
+          selector: '[data-js-progress]',
+        })
 
-      initProgressBar(element, 0)
+        progresses.set(context.id, progress)
 
-      // Delay initial update
-      setTimeout(() => {
-        updateProgress(element!, percentage, true)
-        setBackgroundColor(element!.querySelector('[data-js-progress-bar]'), backgroundColor)
-        setTextColor(element!.querySelector('[data-js-progress-bar]'), darkText)
-        setLimitCount(element!, limit)
-        storyInitialized.set(storyId, true)
-      }, 100)
-    } else if (isInitialized) {
-      // Update existing element
-      updateProgress(element, percentage, false)
-      setBackgroundColor(element.querySelector('[data-js-progress-bar]'), backgroundColor)
-      setTextColor(element.querySelector('[data-js-progress-bar]'), darkText)
-      setLimitCount(element, limit)
+        await wait(500)
+        await progress.setProgress({ percentage, animate: true, duration: 1500 })
+      })
     }
 
-    return element
+    return wrapper
+    // const { percentage = 56, backgroundColor = '#54e300', darkText = true, limit = 80 } = args
+    // const storyId = context.id
+    // let element = storyElements.get(storyId)
+    // const isInitialized = storyInitialized.get(storyId)
+
+    // if (!element) {
+    //   const wrapper = document.createElement('div')
+    //   wrapper.innerHTML = template
+    //   element = wrapper.firstChild as HTMLElement
+    //   storyElements.set(storyId, element)
+
+    //   setupResizeIndicator(element)
+
+    //   initProgressBar(element, 0)
+
+    //   // Delay initial update
+    //   setTimeout(() => {
+    //     updateProgress(element!, percentage, true)
+    //     setBackgroundColor(element!.querySelector('[data-js-progress-bar]'), backgroundColor)
+    //     setTextColor(element!.querySelector('[data-js-progress-bar]'), darkText)
+    //     setLimitCount(element!, limit)
+    //     storyInitialized.set(storyId, true)
+    //   }, 100)
+    // } else if (isInitialized) {
+    //   // Update existing element
+    //   updateProgress(element, percentage, false)
+    //   setBackgroundColor(element.querySelector('[data-js-progress-bar]'), backgroundColor)
+    //   setTextColor(element.querySelector('[data-js-progress-bar]'), darkText)
+    //   setLimitCount(element, limit)
+    // }
+
+    // return element
   },
   argTypes: {
     percentage: {
