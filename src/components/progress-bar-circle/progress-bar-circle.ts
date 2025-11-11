@@ -91,7 +91,7 @@ class Progress {
     }
   }
 
-  public async animateTo(percentage: number, duration: number = 1500): Promise<void> {
+  public async animateProgress(percentage: number, duration: number = 1500): Promise<void> {
     if (!this.element) return
 
     this.element.style.setProperty('--progress-duration', `${duration}ms`)

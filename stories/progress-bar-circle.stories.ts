@@ -12,7 +12,7 @@ const progresses = new Map<string, Progress>()
 export default {
   title: 'Alpitronic/Progress Bar Circle',
   render: (args: any, context: StoryContext) => {
-    const { percentage = 56, backgroundColor = '#54e300', limit = 80 } = args
+    const { percentage = 56, accentColor = '#54e300', limit = 80 } = args
     let wrapper = wrappers.get(context.id)
 
     if (wrapper) {
@@ -30,7 +30,7 @@ export default {
         progresses.set(context.id, progress)
 
         await wait(1000)
-        progress.animateTo(percentage)
+        progress.animateProgress(percentage)
       })
     }
 
@@ -41,7 +41,7 @@ export default {
       control: { type: 'range', min: 0, max: 100, step: 1 },
       description: 'Current progress percentage from 0 to 100',
     },
-    backgroundColor: {
+    accentColor: {
       control: { type: 'color' },
       description: 'Stroke color of the progress ring',
     },
@@ -53,7 +53,7 @@ export default {
   args: {
     percentage: 56,
     limit: 80,
-    backgroundColor: '#54e300',
+    accentColor: '#54e300',
   },
 }
 
@@ -62,6 +62,6 @@ export const Default = {}
 export const Branded = {
   args: {
     percentage: 42,
-    backgroundColor: '#371E0A',
+    accentColor: '#371E0A',
   },
 }
