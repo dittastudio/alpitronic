@@ -55,7 +55,7 @@ function componentBuilderPlugin(): Plugin {
             plugins: [tailwindcss()],
             resolve: resolvedConfig.resolve,
             build: {
-              emptyOutDir: false,
+              emptyOutDir: true,
               outDir: distComponentDir,
               minify: false,
               lib: {
