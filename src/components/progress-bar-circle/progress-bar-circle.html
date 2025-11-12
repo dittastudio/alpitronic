@@ -3,12 +3,12 @@
   class="
     progress-bar-circle
     relative
+    normalize
   "
 >
   <div
     data-js-resize-container
     class="
-      normalize
       @container-[size]
       resize
       overflow-auto
@@ -49,10 +49,9 @@
         <!-- animated progress ring -->
         <circle
           data-js-progress-bar
-          data-js-progress-ring
           class="
-            progress-bar-circle__ring
-            stroke-green
+            progress-bar-circle__bar
+            stroke-(--color-accent)
           "
           stroke-width="29"
           stroke-linecap="round"
@@ -61,9 +60,11 @@
           r="185"
         />
 
-        <circle class="
-          progress-bar-circle__dot
-        " cx="385" cy="200" r="4" fill="white"/>
+        <circle
+          class="
+            progress-bar-circle__dot
+          " cx="385" cy="200" r="4" fill="white"
+        />
       </svg>
 
       <div
@@ -85,7 +86,9 @@
           items-baseline
           gap-[0.1em]
         ">
-          <span data-js-progress-number>56</span>
+          <span class="
+            progress-bar-circle__number
+          "></span>
           <small class="
             text-[60%]
             font-medium

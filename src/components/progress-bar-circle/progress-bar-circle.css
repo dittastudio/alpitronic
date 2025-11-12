@@ -1,21 +1,44 @@
 @import '@/css/app.css';
 @source "./progress-bar-circle.html";
+@source "./progress-bar-circle.ts";
 @source "../../utils/progress.ts";
 
-.progress-bar-circle__ring {
-  stroke-dasharray: var(--circumference) var(--circumference);
-  stroke-dashoffset: var(--offset);
+@property --progress {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
 
-  .progress-bar-circle.is-animating & {
-    transition: stroke-dashoffset var(--progress-duration) var(--ease-out);
+@keyframes progress-number {
+  from {
+    --progress: 0;
+  }
+  to {
+    --progress: var(--percentage);
   }
 }
 
+.progress-bar-circle__number {
+  --progress: 0;
+  counter-reset: progress var(--progress);
+  animation: progress-number var(--duration) var(--ease-inOutQuart) forwards;
+
+  &::before {
+    content: counter(progress);
+  }
+}
+
+.progress-bar-circle__bar {
+  stroke-dasharray: var(--circumference) var(--circumference);
+  stroke-dashoffset: var(--offset);
+  transition: stroke-dashoffset var(--duration) var(--ease-inOutQuart);
+}
+
 .progress-bar-circle__limit {
-  rotate: calc(45deg + ((var(--lines-count) / 100) * 360) * 1deg);
+  rotate: calc(45deg + ((var(--limit) / 100) * 360) * 1deg);
 }
 
 .progress-bar-circle__dot {
   transform-origin: 200px 200px;
-  rotate: calc(((var(--lines-count) / 100) * 360) * 1deg);
+  rotate: calc(((var(--limit) / 100) * 360) * 1deg);
 }

@@ -9,12 +9,10 @@ const storyInitialized = new Map<string, boolean>()
 
 export default {
   title: 'Alpitronic/Time Out Loader',
-  tags: ['autodocs'],
   render: (args: any, context: StoryContext) => {
     const { seconds = 45 } = args
     const storyId = context.id
     let element = storyElements.get(storyId)
-    const isInitialized = storyInitialized.get(storyId)
 
     if (!element) {
       const wrapper = document.createElement('div')
@@ -37,7 +35,7 @@ export default {
   argTypes: {
     seconds: {
       control: { type: 'range', min: 5, max: 120, step: 5 },
-      description: 'Timeout duration in seconds'
+      description: 'Timeout duration in seconds',
     },
   },
   args: {

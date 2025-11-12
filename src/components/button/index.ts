@@ -1,3 +1,2 @@
-import './button.css';
-import './button.html?url';
-import './button.ts';
+import './button.css'
+import './button.ts'

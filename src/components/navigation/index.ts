@@ -1,2 +1,2 @@
-import './navigation.css';
-import './navigation.html?url';
+import './navigation.css'
+import './navigation.ts'

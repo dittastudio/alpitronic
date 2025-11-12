@@ -1,60 +1,48 @@
 import type { StoryContext } from '@storybook/html'
 import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
-import { setupResizeIndicator } from '@/utils/storybook'
-import { initProgressBar, updateProgress, setStrokeColor, setLimitCount } from '@/utils/progress'
+import ProgressBarCircle from '@/components/progress-bar-circle/progress-bar-circle'
+import { wait } from '@/utils/helpers'
 
-const storyElements = new Map<string, HTMLElement>()
-const storyInitialized = new Map<string, boolean>()
+const wrappers = new Map<string, HTMLDivElement>()
+const progresses = new Map<string, ProgressBarCircle>()
 
 export default {
   title: 'Alpitronic/Progress Bar Circle',
-  render: (args: any, context: StoryContext) => {
-    // console.log(context)
-    const { percentage = 56, backgroundColor = '#54e300', limit = 80 } = args
+  render: (args: { percentage?: number; accentColor?: string; limit?: number }, context: StoryContext) => {
+    const { percentage = 56, limit = 80 } = args
+    const selectedColor = context.globals.accent ?? '#54e300'
 
-    const wrapper = document.createElement('div')
-    wrapper.classList.add('mt-8', 'mx-8', 'pb-8')
-    wrapper.innerHTML = template
+    let wrapper = wrappers.get(context.id)
 
-    const element = wrapper.firstChild as HTMLElement | null
+    if (wrapper) {
+      const savedProgress = progresses.get(context.id)
 
-    if (!element) {
-      return wrapper
+      if (savedProgress) {
+        savedProgress.setProgress({ percentage })
+        savedProgress.setLimit(limit)
+      }
+    } else {
+      wrapper = document.createElement('div')
+      wrapper.classList.add('mt-8', 'mx-8', 'pb-8')
+      wrapper.innerHTML = template
+      wrappers.set(context.id, wrapper)
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        const progress = new ProgressBarCircle({
+          percentage: 0,
+          limit: limit,
+          selector: '[data-js-progress]',
+        })
+
+        progresses.set(context.id, progress)
+
+        await wait(250)
+        await progress.setProgress({ percentage, animate: true })
+      })
     }
 
-    setupResizeIndicator(element)
-    updateProgress(element, percentage, false)
-    setStrokeColor(element.querySelector('[data-js-progress-ring]'), backgroundColor)
-    setLimitCount(element, limit)
-
-    // const storyId = context.id
-    // let element = storyElements.get(storyId)
-    // const isInitialized = storyInitialized.get(storyId)
-
-    // console.log('Rendering', storyElements)
-
-    // if (!element) {
-    //   const wrapper = document.createElement('div')
-    //   wrapper.innerHTML = template
-    //   element = wrapper.firstChild as HTMLElement
-    //   storyElements.set(storyId, element)
-
-    //   setupResizeIndicator(element)
-
-    //   initProgressBar(element, 0)
-
-    //   setTimeout(() => {
-    //     updateProgress(element!, percentage, true)
-    //     setStrokeColor(element!.querySelector('[data-js-progress-ring]'), backgroundColor)
-    //     setLimitCount(element!, limit)
-    //     storyInitialized.set(storyId, true)
-    //   }, 100)
-    // } else if (isInitialized) {
-    //   updateProgress(element, percentage, false)
-    //   setStrokeColor(element!.querySelector('[data-js-progress-ring]'), backgroundColor)
-    //   setLimitCount(element, limit)
-    // }
+    wrapper.style.setProperty('--color-accent', selectedColor)
 
     return wrapper
   },
@@ -62,10 +50,6 @@ export default {
     percentage: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
       description: 'Current progress percentage from 0 to 100',
-    },
-    backgroundColor: {
-      control: { type: 'color' },
-      description: 'Stroke color of the progress ring',
     },
     limit: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
@@ -75,15 +59,7 @@ export default {
   args: {
     percentage: 56,
     limit: 80,
-    backgroundColor: '#54e300',
   },
 }
 
 export const Default = {}
-
-export const Branded = {
-  args: {
-    percentage: 42,
-    backgroundColor: '#371E0A',
-  },
-}

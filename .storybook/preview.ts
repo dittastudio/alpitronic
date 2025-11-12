@@ -13,6 +13,20 @@ const alpitronicViewports = {
 }
 
 const preview: Preview = {
+  globalTypes: {
+    accent: {
+      description: 'Accent Colour',
+      toolbar: {
+        icon: 'paintbrush',
+        items: [
+          { title: 'Green', right: '🟢', value: '#54e300' },
+          { title: 'Red', right: '🔴', value: '#ff0000' },
+          { title: 'Orange', right: '🟠', value: '#ff3700' },
+          { title: 'Yellow', right: '🟡', value: '#f9ae00' },
+        ],
+      },
+    },
+  },
   parameters: {
     backgrounds: {
       default: 'dark',

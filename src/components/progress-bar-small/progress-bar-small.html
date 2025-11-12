@@ -23,7 +23,6 @@
     "
   >
     <div
-      data-js-percentage-lines
       class="
         flex
         items-baseline
@@ -33,7 +32,7 @@
     >
       <div
         class="
-          w-[calc(var(--lines-count)*1%)]
+          w-[calc(var(--limit)*1%)]
         "
       >
         <div
@@ -48,7 +47,9 @@
             -my-[0.12em]
           "
         >
-          <span data-js-progress-number>56</span>
+          <span class="
+            progress-bar-small__number
+          "></span>
           <small class="
             text-[60%]
             font-medium
@@ -78,7 +79,9 @@
             duration-200
             ease-out
           ">
-          <span data-js-progress-limit-number>80</span>%
+          <span class="
+            progress-bar-small__limit
+          "></span>%
         </div>
       </div>
     </div>

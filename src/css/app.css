@@ -44,6 +44,7 @@
   --color-accent: var(--color-green);
 
   --radius-\*: initial;
+  --radius-full: 9999px;
   --radius-2: 2px;
   --radius-4: 4px;
   --radius-14: 14px;
@@ -78,6 +79,13 @@
   --text-48-fluid--line-height: 1;
 
   --spacing: 4px;
+
+  --ease-inExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --ease-outExpo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-inOutExpo: cubic-bezier(1, 0, 0, 1);
+  --ease-inQuart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-outQuart: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-inOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @layer base {

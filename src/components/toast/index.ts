@@ -1,2 +1,2 @@
-import './toast.css';
-import './toast.html?url';
+import './toast.css'
+import './toast.ts'

@@ -1,13 +1,49 @@
 @import '@/css/app.css';
 @source "./progress-bar-small.html";
+@source "./progress-bar-small.ts";
 @source "../../utils/progress.ts";
+
+@property --progress {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --limit {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes progress-number {
+  from {
+    --progress: 0;
+  }
+  to {
+    --progress: var(--percentage);
+  }
+}
+
+.progress-bar-small {
+  --percentage-unit: calc(var(--percentage) * 1%);
+}
+
+.progress-bar-small__number {
+  --progress: 0;
+  counter-reset: progress var(--progress);
+  animation: progress-number var(--duration) var(--ease-inOutQuart) forwards;
+
+  &::before {
+    content: counter(progress);
+  }
+}
 
 .progress-bar-small__limiter {
   &::after {
     content: '';
     position: absolute;
     z-index: 1;
-    left: calc(var(--lines-count) * 1% - 20px);
+    left: calc(var(--limit) * 1% - 20px);
     width: 0.5rem;
     height: 0.5rem;
     background-color: white;
@@ -17,9 +53,14 @@
 }
 
 .progress-bar-small__mask {
-  translate: calc(var(--percentage) - (100% - 0px)) 0 0;
+  translate: calc(var(--percentage-unit) - 100%) 0 0;
+  transition: translate var(--duration) var(--ease-inOutQuart);
+}
 
-  .progress-bar-small.is-animating & {
-    transition: translate var(--progress-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
+.progress-bar-small__limit {
+  counter-reset: limit var(--limit);
+
+  &::before {
+    content: counter(limit);
   }
 }

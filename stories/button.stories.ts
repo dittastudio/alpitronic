@@ -52,7 +52,7 @@ export default {
     }
 
     if (rounded === 'large') {
-      btn.classList.remove('rounded-22')
+      btn.classList.remove('rounded-14')
       btn.classList.add('rounded-42')
     }
 
