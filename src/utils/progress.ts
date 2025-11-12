@@ -55,20 +55,26 @@ class Progress {
     window.requestAnimationFrame(updateCounter)
   }
 
-  private animateNumbers(percentage: number, duration: number): void {
-    if (!this.element || !this.progressNumbers) return
-
-    this.progressNumbers.forEach(el => {
-      this.animateNumber(el, percentage, duration)
-    })
-  }
-
-  private setNumberProgress(percentage: number): void {
+  private setNumberProgress({
+    percentage = 0,
+    animate = false,
+    duration = 0,
+  }: {
+    percentage: number
+    animate?: boolean
+    duration?: number
+  }): void {
     if (!this.progressNumbers) return
 
-    this.progressNumbers.forEach(el => {
-      el.textContent = `${percentage}`
-    })
+    if (animate) {
+      this.progressNumbers.forEach(el => {
+        this.animateNumber(el, percentage, duration)
+      })
+    } else {
+      this.progressNumbers.forEach(el => {
+        el.textContent = `${percentage}`
+      })
+    }
   }
 
   private limitCheck(): void {
@@ -105,13 +111,17 @@ class Progress {
 
     if (animate) {
       // animateNumbers will assign this.percentage when done animating.
+      this.element.style.setProperty('--percentage', `${percentage}%`)
       this.element.style.setProperty('--duration', `${duration}ms`)
-      this.animateNumbers(percentage, duration)
+      this.setNumberProgress({ percentage, animate: true, duration })
+
+      // Animate bar here...?
+      // this.percentage = percentage
 
       await wait(duration)
       this.element.style.setProperty('--duration', `0ms`)
     } else {
-      this.setNumberProgress(percentage)
+      this.setNumberProgress({ percentage })
       this.percentage = percentage
       this.element.style.setProperty('--percentage', `${percentage}%`)
     }

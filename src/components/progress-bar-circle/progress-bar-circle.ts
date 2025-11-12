@@ -21,17 +21,9 @@ class ProgressBarCircle extends Progress {
     this.progressBar.style.setProperty('--offset', `${offset.toFixed(0)}`)
   }
 
-  setProgress({
-    percentage = 0,
-    animate = false,
-    duration = 1500,
-  }: {
-    percentage: number
-    animate?: boolean
-    duration?: number
-  }): void {
+  setProgress({ percentage = 0, animate = false }: { percentage: number; animate?: boolean }): void {
     this.setCircleProgress(percentage)
-    super.updateProgress({ percentage, animate, duration })
+    super.updateProgress({ percentage, animate })
   }
 
   override init(): void {
