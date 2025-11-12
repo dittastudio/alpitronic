@@ -6,6 +6,7 @@
   "author": "Made by Many",
   "type": "module",
   "scripts": {
+    "cloc": "cloc . --exclude-dir=node_modules,storybook-static,dist",
     "build": "vite build",
     "dev": "vite dev",
     "storybook": "storybook dev -p 6006",
@@ -20,6 +21,7 @@
     "@storybook/html-vite": "^10.0.7",
     "@tailwindcss/vite": "^4.1.17",
     "@types/node": "^24.10.1",
+    "cloc": "^2.11.0",
     "eslint": "^9.39.1",
     "eslint-plugin-better-tailwindcss": "^3.7.10",
     "storybook": "^10.0.7",
