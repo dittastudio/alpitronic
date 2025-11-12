@@ -1,6 +1,5 @@
-/** @type { import('@storybook/html-vite').Preview } */
-
-import { INITIAL_VIEWPORTS } from 'storybook/viewport';
+import type { Preview } from '@storybook/html-vite'
+import { INITIAL_VIEWPORTS } from 'storybook/viewport'
 
 const alpitronicViewports = {
   main: {
@@ -11,9 +10,9 @@ const alpitronicViewports = {
     },
     type: 'desktop',
   },
-};
+}
 
-const preview = {
+const preview: Preview = {
   parameters: {
     backgrounds: {
       default: 'dark',
@@ -40,6 +39,6 @@ const preview = {
       value: 'dark',
     },
   },
-};
+}
 
-export default preview;
+export default preview

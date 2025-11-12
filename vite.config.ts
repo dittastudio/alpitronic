@@ -1,6 +1,6 @@
 import { defineConfig, type Plugin } from 'vite'
 import { resolve, join } from 'node:path'
-import { readdirSync, statSync, existsSync, copyFileSync, exists } from 'node:fs'
+import { readdirSync, statSync, existsSync, copyFileSync } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
 
 type Result = {
@@ -118,8 +118,11 @@ function getComponentEntries() {
   return entries
 }
 
+// Netlify sets this to "true" during builds.
+const IS_NETLIFY = process.env.NETLIFY === 'true'
+
 export default defineConfig({
-  plugins: [tailwindcss(), componentBuilderPlugin()],
+  plugins: [tailwindcss(), ...(IS_NETLIFY ? [] : [componentBuilderPlugin()])],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
