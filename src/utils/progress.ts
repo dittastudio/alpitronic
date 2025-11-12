@@ -1,4 +1,4 @@
-import { wait, easeOutQuart } from '@/utils/helpers'
+import { wait } from '@/utils/helpers'
 
 export interface Options {
   percentage?: number

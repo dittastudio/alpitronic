@@ -1,5 +1,4 @@
 import './chart-bar.css'
-import './chart-bar.html?url'
 import ChartBar from './chart-bar'
 
 new ChartBar({

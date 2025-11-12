@@ -61,7 +61,7 @@ function componentBuilderPlugin(): Plugin {
               lib: {
                 entry,
                 name: component,
-                formats: ['iife'], // ✅ No imports/exports
+                formats: ['es'],
                 fileName: () => `${component}.js`,
                 cssFileName: `${component}`,
               },

@@ -6,7 +6,7 @@
   "author": "Made by Many",
   "type": "module",
   "scripts": {
-    "cloc": "cloc . --exclude-dir=node_modules,storybook-static,dist",
+    "cloc": "cloc . --exclude-dir=node_modules,storybook-static,dist,package-lock.json",
     "build": "vite build",
     "dev": "vite dev",
     "storybook": "storybook dev -p 6006",

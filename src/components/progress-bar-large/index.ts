@@ -1,5 +1,4 @@
 import './progress-bar-large.css'
-import './progress-bar-large.html?url'
 import ProgressBarLarge from './progress-bar-large'
 
 new ProgressBarLarge({

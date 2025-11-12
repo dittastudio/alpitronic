@@ -1,5 +1,4 @@
 import './progress-bar-circle.css'
-import './progress-bar-circle.html?url'
 import ProgressBarCircle from './progress-bar-circle'
 
 new ProgressBarCircle({

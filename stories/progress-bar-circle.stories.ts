@@ -10,7 +10,9 @@ const progresses = new Map<string, ProgressBarCircle>()
 export default {
   title: 'Alpitronic/Progress Bar Circle',
   render: (args: { percentage?: number; accentColor?: string; limit?: number }, context: StoryContext) => {
-    const { percentage = 56, accentColor = '#54e300', limit = 80 } = args
+    const { percentage = 56, limit = 80 } = args
+    const selectedColor = context.globals.accent ?? '#54e300'
+
     let wrapper = wrappers.get(context.id)
 
     if (wrapper) {
@@ -40,16 +42,14 @@ export default {
       })
     }
 
+    wrapper.style.setProperty('--color-accent', selectedColor)
+
     return wrapper
   },
   argTypes: {
     percentage: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
       description: 'Current progress percentage from 0 to 100',
-    },
-    accentColor: {
-      control: { type: 'color' },
-      description: 'Stroke color of the progress ring',
     },
     limit: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
@@ -59,15 +59,7 @@ export default {
   args: {
     percentage: 56,
     limit: 80,
-    accentColor: '#54e300',
   },
 }
 
 export const Default = {}
-
-export const Branded = {
-  args: {
-    percentage: 42,
-    accentColor: '#371E0A',
-  },
-}
