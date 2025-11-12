@@ -1,0 +1,32 @@
+@utility type-title {
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+@utility type-subtitle {
+  font-size: 32px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+@utility type-body {
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+@utility type-display {
+  font-size: 160px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+@utility type-large {
+  font-size: 100px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
