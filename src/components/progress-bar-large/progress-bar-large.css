@@ -3,6 +3,20 @@
 @source "./progress-bar-large.ts";
 @source "../../utils/progress.ts";
 
+@property --limit {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+/* 
+
+@property --percentage {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 0%;
+} */
+
 .progress-bar-large__mask {
   clip-path: polygon(0 0, var(--percentage) 0, var(--percentage) 100%, 0 100%);
 
@@ -15,9 +29,6 @@
 
 .progress-bar-large__lines {
   --line-color: var(--color-grey-800);
-
-  opacity: 0;
-  transition: opacity 1s var(--ease-out) 0.1s;
 
   background-image: repeating-linear-gradient(
     to left,
@@ -42,16 +53,6 @@
     background-position: bottom;
     background-repeat: no-repeat;
   }
-
-  .progress-bar-large.is-ready & {
-    opacity: 1;
-  }
-}
-
-@property --limit {
-  syntax: '<integer>';
-  inherits: true;
-  initial-value: 0;
 }
 
 .progress-bar-large__limit {
