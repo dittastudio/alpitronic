@@ -4,9 +4,46 @@
   place-items-center
   place-content-center
 ">
-  <img class="
-    block
-    size-20
-  " src="" width="48" height="36" alt="Icon" />
+  <div
+    data-js-resize-container
+    class="
+      normalize
+      resize
+      overflow-auto
+      size-20
+    "
+  >
+    <div data-svg class="
+      block
+      size-full
+      [&_svg]:block
+      [&_svg]:size-[inherit]
+      [&_svg]:fill-current
+    ">
+  </div>
+
+  <div
+    data-js-resize-indicator
+    class="
+      absolute
+      text-grey-400
+      top-full
+      left-full
+      text-sm
+      -translate-x-full
+      translate-y-full
+      whitespace-nowrap
+      pointer-events-none
+    "
+  >
+    Resize here
+
+    <span class="
+      relative
+      -top-2.5
+      inline-block
+      -rotate-6
+    ">&#x2934;</span>
+  </div>
 </div>
 
