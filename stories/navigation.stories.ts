@@ -59,6 +59,10 @@ export default {
           svg.classList.remove('hidden')
         }
 
+        if (args.showLineGuide) {
+          btn.classList.remove('before:hidden')
+        }
+
         navContent.appendChild(btn)
       })
 
@@ -79,6 +83,7 @@ export default {
     icon: { control: 'boolean', table: { category: 'Global Styling' } },
     reversed: { control: 'boolean', table: { category: 'Global Styling' } },
     stacked: { control: 'boolean', table: { category: 'Global Styling' } },
+    showLineGuide: { control: 'boolean', table: { category: 'Global Styling' } },
   },
   args: {
     button1Label: 'Button 1',
@@ -92,6 +97,7 @@ export default {
     icon: true,
     reversed: false,
     stacked: false,
+    showLineGuide: false,
   },
 }
 
