@@ -58,9 +58,9 @@ export default {
 
     if (stacked && reversed) {
       btn.classList.remove('flex-row-reverse')
-      btn.classList.add('flex-col')
       btn.classList.add('flex-col-reverse')
     } else if (reversed) {
+      btn.classList.remove('flex-col-reverse')
       btn.classList.add('flex-row-reverse')
     } else if (stacked) {
       btn.classList.add('flex-col')
