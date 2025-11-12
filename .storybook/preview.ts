@@ -1,3 +1,4 @@
+import '../src/css/storybook.css'
 import type { Preview } from '@storybook/html-vite'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
 
