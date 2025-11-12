@@ -12,6 +12,7 @@ export default {
     icon,
     reversed,
     stacked,
+    showLineGuide,
   }: {
     label?: string
     fullWidth?: boolean
@@ -21,6 +22,7 @@ export default {
     icon?: boolean
     reversed?: boolean
     stacked?: boolean
+    showLineGuide?: boolean
   }) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template
@@ -50,7 +52,7 @@ export default {
     }
 
     if (rounded === 'large') {
-      btn.classList.remove('rounded-22')
+      btn.classList.remove('rounded-14')
       btn.classList.add('rounded-42')
     }
 
@@ -70,6 +72,10 @@ export default {
       svg.classList.remove('hidden')
     }
 
+    if (showLineGuide) {
+      btn.classList.remove('before:hidden')
+    }
+
     return wrapper.firstChild
   },
   argTypes: {
@@ -84,6 +90,7 @@ export default {
     icon: { control: 'boolean' },
     reversed: { control: 'boolean' },
     stacked: { control: 'boolean' },
+    showLineGuide: { control: 'boolean' },
   },
   args: {
     label: 'Hello World',
@@ -92,6 +99,7 @@ export default {
     icon: true,
     reversed: false,
     stacked: false,
+    showLineGuide: false,
   },
 }
 

@@ -1,63 +1,61 @@
 import '@/components/icon-system/icon-system.css'
 import template from '@/components/icon-system/icon-system.html?raw'
 
+const iconModules = (import.meta as any).glob('@/assets/icon-system/*.svg', {
+  import: 'default',
+  query: '?raw',
+  eager: true,
+})
+
+const iconNames = Object.keys(iconModules).map((path) => {
+  const fileName = path.split('/').pop()
+  return fileName?.replace('.svg', '') || ''
+}).filter(Boolean).sort()
+
 export default {
   title: 'Alpitronic/Icon System',
-  render: ({ icon }: { icon?: string }) => {
+  render: ({ icon, color, size }: { icon?: string; color?: string; size?: number }) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template
 
     const main: HTMLElement | null = wrapper.querySelector('[data-main]')
+    const svgContainer: HTMLElement | null = wrapper.querySelector('[data-svg]')
 
-    if (!main) {
+    if (!main || !svgContainer) {
       return wrapper
     }
 
-    if (icon) {
-      const iconImg = main.querySelector('img')
+    if (color) {
+      svgContainer.style.color = color
+    }
 
-      if (iconImg) {
-        iconImg.setAttribute('src', `icon-system/${icon}.svg`)
+    if (icon) {
+      const iconPath = Object.keys(iconModules).find((path) =>
+        path.includes(`/${icon}.svg`)
+      )
+
+      if (iconPath) {
+        const svgContent = iconModules[iconPath]
+
+        if (svgContainer) {
+          svgContainer.innerHTML = svgContent
+        }
       }
     }
 
-    return wrapper.firstChild
+    return main
   },
   argTypes: {
+    color: {
+      control: 'color',
+    },
     icon: {
       control: 'radio',
-      options: [
-        '1',
-        '2',
-        '3',
-        '4',
-        'arrow-down',
-        'arrow-left',
-        'arrow-right',
-        'arrow-up',
-        'bolt',
-        'card-bolt',
-        'credit-card',
-        'danger',
-        'device',
-        'error',
-        'globe',
-        'hourglass',
-        'house',
-        'minus',
-        'padlock',
-        'plug',
-        'price',
-        'question',
-        'reciept',
-        'telephone',
-        'tick',
-        'timer',
-        'warning',
-      ],
+      options: iconNames,
     },
   },
   args: {
+    color: '#ffffff',
     icon: 'bolt',
   },
 }
