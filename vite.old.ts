@@ -1,4 +1,4 @@
-import { defineConfig, build as viteBuild, type Plugin, type ResolvedConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { resolve, join } from 'node:path'
 import { readdirSync, statSync, existsSync, copyFileSync } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
@@ -19,15 +19,10 @@ const message = (src: string, dist: string) =>
     : `❌ Not in src`
 
 function componentBuilderPlugin(): Plugin {
-  let resolvedConfig: ResolvedConfig
-
   return {
     name: 'component-builder',
     apply: 'build',
     enforce: 'post',
-    configResolved(config) {
-      resolvedConfig = config
-    },
     async closeBundle() {
       const srcDir = resolve(__dirname, 'src/components')
       const distDir = resolve(__dirname, 'dist')
@@ -45,37 +40,6 @@ function componentBuilderPlugin(): Plugin {
         const srcComponentDir = join(srcDir, component)
         const distComponentDir = join(distDir, component)
 
-        const entry = resolve(srcComponentDir, 'index.ts')
-
-        if (existsSync(entry)) {
-          console.log(`🦊 Bundling ${component}...`)
-
-          await viteBuild({
-            configFile: false,
-            plugins: [tailwindcss()],
-            resolve: resolvedConfig.resolve,
-            build: {
-              emptyOutDir: false,
-              outDir: distComponentDir,
-              minify: false,
-              lib: {
-                entry,
-                name: component,
-                formats: ['iife'], // ✅ No imports/exports
-                fileName: () => `${component}.js`,
-                cssFileName: `${component}`,
-              },
-              rollupOptions: {
-                external: [],
-                output: {
-                  extend: true,
-                  manualChunks: undefined,
-                },
-              },
-            },
-          })
-        }
-
         const htmlPath = join(srcComponentDir, `${component}.html`)
         const tsPath = join(srcComponentDir, `${component}.ts`)
         const cssPath = join(srcComponentDir, `${component}.css`)
@@ -83,21 +47,20 @@ function componentBuilderPlugin(): Plugin {
         const distJsPath = join(distComponentDir, `${component}.js`)
         const distCssPath = join(distComponentDir, `${component}.css`)
 
-        const filesToCopy = [
-          `${component}.html`,
-          `${component}.manifest.json`,
-          `${component}.setup.js`,
-          `${component}.state.js`,
-          'preview.png',
-        ]
-
-        let currentResult = {
+        const currentResult = {
           Component: component,
           HTML: message(htmlPath, distHtmlPath),
           JS: message(tsPath, distJsPath),
           CSS: message(cssPath, distCssPath),
           COPIED: [] as string[] | string,
         }
+
+        const filesToCopy = [
+          `${component}.manifest.json`,
+          `${component}.setup.js`,
+          `${component}.state.js`,
+          'preview.png',
+        ]
 
         filesToCopy.forEach(file => {
           const srcFile = join(srcComponentDir, file)
@@ -111,11 +74,6 @@ function componentBuilderPlugin(): Plugin {
             }
           }
         })
-
-        currentResult = {
-          ...currentResult,
-          HTML: message(htmlPath, distHtmlPath),
-        }
 
         if (!currentResult.COPIED.length) {
           currentResult.COPIED = 'No files to copy'
@@ -160,6 +118,7 @@ function getComponentEntries() {
   return entries
 }
 
+// Netlify sets this to "true" during builds.
 const IS_NETLIFY = process.env.NETLIFY === 'true'
 
 export default defineConfig({
@@ -171,18 +130,28 @@ export default defineConfig({
   },
   build: {
     minify: false,
-    modulePreload: { polyfill: false },
-    lib: {
-      entry: resolve(__dirname, 'src/noop.ts'),
-      name: 'noop',
-      formats: ['es'],
-      fileName: () => 'noop.js',
+    modulePreload: {
+      polyfill: false,
     },
     rollupOptions: {
       treeshake: true,
+      input: getComponentEntries(),
       output: {
-        extend: true,
         manualChunks: undefined,
+        entryFileNames: chunkInfo => `${chunkInfo.name}/[name].js`,
+        chunkFileNames: _chunkInfo => 'assets/[name].js',
+        assetFileNames: assetInfo => {
+          const name = assetInfo.names[0] || ''
+          const fileParts = name.split('.')
+          const fileName = fileParts.at(0)
+          const fileExt = fileParts.at(-1)
+
+          if (fileName && fileExt && ['css', 'html'].includes(fileExt)) {
+            return `${fileName}/[name][extname]`
+          }
+
+          return 'assets/[name][extname]'
+        },
       },
     },
   },
