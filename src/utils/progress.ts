@@ -11,7 +11,6 @@ class Progress {
   limit: number = 80
   element: HTMLElement | null = null
   progressBar: HTMLElement | null = null
-  progressNumbers: NodeListOf<HTMLElement> | null = null
 
   constructor(options: Options = {}) {
     const { percentage = 0, limit = 80, selector = '' } = options
@@ -26,55 +25,8 @@ class Progress {
     }
 
     this.progressBar = this.element.querySelector('[data-js-progress-bar]')
-    this.progressNumbers = this.element.querySelectorAll('[data-js-progress-number]')
 
     this.init()
-  }
-
-  private animateNumber(element: HTMLElement, percentage: number, duration: number): void {
-    const startTime = performance.now()
-    const difference = percentage - this.percentage
-
-    const updateCounter = (currentTime: number): void => {
-      const elapsed = currentTime - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      const easedProgress = easeOutQuart(progress)
-      const currentValue = Math.round(this.percentage + difference * easedProgress)
-
-      element.textContent = `${currentValue}`
-
-      if (progress < 1) {
-        window.requestAnimationFrame(updateCounter)
-      } else {
-        this.percentage = percentage
-        this.element?.style.setProperty('--percentage', `${percentage}%`)
-        this.limitCheck()
-      }
-    }
-
-    window.requestAnimationFrame(updateCounter)
-  }
-
-  private setNumberProgress({
-    percentage = 0,
-    animate = false,
-    duration = 0,
-  }: {
-    percentage: number
-    animate?: boolean
-    duration?: number
-  }): void {
-    if (!this.progressNumbers) return
-
-    if (animate) {
-      this.progressNumbers.forEach(el => {
-        this.animateNumber(el, percentage, duration)
-      })
-    } else {
-      this.progressNumbers.forEach(el => {
-        el.textContent = `${percentage}`
-      })
-    }
   }
 
   private limitCheck(): void {
@@ -109,17 +61,16 @@ class Progress {
 
     this.limitCheck()
 
-    this.element.style.setProperty('--percentage', `${percentage}%`)
+    this.element.style.setProperty('--percentage', `${percentage}`)
 
     if (animate) {
       // animateNumbers will assign this.percentage when done animating.
+      //this.percentage = percentage
       this.element.style.setProperty('--duration', `${duration}ms`)
-      this.setNumberProgress({ percentage, animate: true, duration })
 
       await wait(duration)
       this.element.style.setProperty('--duration', `0ms`)
     } else {
-      this.setNumberProgress({ percentage })
       this.percentage = percentage
     }
   }

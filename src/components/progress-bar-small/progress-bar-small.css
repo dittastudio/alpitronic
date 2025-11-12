@@ -3,10 +3,39 @@
 @source "./progress-bar-small.ts";
 @source "../../utils/progress.ts";
 
+@property --progress {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
 @property --limit {
   syntax: '<integer>';
   inherits: true;
   initial-value: 0;
+}
+
+@keyframes progress-number {
+  from {
+    --progress: 0;
+  }
+  to {
+    --progress: var(--percentage);
+  }
+}
+
+.progress-bar-small {
+  --percentage-unit: calc(var(--percentage) * 1%);
+}
+
+.progress-bar-small__number {
+  --progress: 0;
+  counter-reset: progress var(--progress);
+  animation: progress-number var(--duration) var(--ease-inOutQuart) forwards;
+
+  &::before {
+    content: counter(progress);
+  }
 }
 
 .progress-bar-small__limiter {
@@ -24,7 +53,7 @@
 }
 
 .progress-bar-small__mask {
-  translate: calc(var(--percentage) - (100% - 0px)) 0 0;
+  translate: calc(var(--percentage-unit) - 100%) 0 0;
   transition: translate var(--duration) var(--ease-inOutQuart);
 }
 

@@ -3,25 +3,51 @@
 @source "./progress-bar-large.ts";
 @source "../../utils/progress.ts";
 
+@property --progress {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
 @property --limit {
   syntax: '<integer>';
   inherits: true;
   initial-value: 0;
 }
 
-/* 
+@keyframes progress-number {
+  from {
+    --progress: 0;
+  }
+  to {
+    --progress: var(--percentage);
+  }
+}
 
-@property --percentage {
-  syntax: '<percentage>';
-  inherits: true;
-  initial-value: 0%;
-} */
+.progress-bar-large {
+  --percentage-unit: calc(var(--percentage) * 1%);
+}
+
+.progress-bar-large__number {
+  --progress: 0;
+  counter-reset: progress var(--progress);
+  animation: progress-number var(--duration) var(--ease-inOutQuart) forwards;
+
+  &::before {
+    content: counter(progress);
+  }
+}
 
 .progress-bar-large__mask {
-  clip-path: polygon(0 0, var(--percentage) 0, var(--percentage) 100%, 0 100%);
+  clip-path: polygon(0 0, var(--percentage-unit) 0, var(--percentage-unit) 100%, 0 100%);
 
   @container (orientation: portrait) {
-    clip-path: polygon(0 calc(100% - var(--percentage)), 100% calc(100% - var(--percentage)), 100% 100%, 0 100%);
+    clip-path: polygon(
+      0 calc(100% - var(--percentage-unit)),
+      100% calc(100% - var(--percentage-unit)),
+      100% 100%,
+      0 100%
+    );
   }
 
   transition: clip-path var(--duration) var(--ease-inOutQuart);

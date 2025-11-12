@@ -35,7 +35,7 @@ export default {
 
         progresses.set(context.id, progress)
 
-        await wait(500)
+        await wait(250)
         await progress.setProgress({ percentage, animate: true })
       })
     }
