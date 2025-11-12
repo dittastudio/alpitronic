@@ -129,13 +129,15 @@ export default defineConfig({
     },
   },
   build: {
+    minify: false,
     modulePreload: {
       polyfill: false,
     },
     rollupOptions: {
-      treeshake: false,
+      treeshake: true,
       input: getComponentEntries(),
       output: {
+        manualChunks: undefined,
         entryFileNames: chunkInfo => `${chunkInfo.name}/[name].js`,
         chunkFileNames: _chunkInfo => 'assets/[name].js',
         assetFileNames: assetInfo => {
