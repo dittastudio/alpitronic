@@ -130,36 +130,6 @@ function componentBuilderPlugin(): Plugin {
   }
 }
 
-function getComponentEntries() {
-  const entries: Record<string, string> = {}
-  const srcDir = resolve(__dirname, 'src/components')
-
-  const scanDirectory = (dir: string, basePath: string = '') => {
-    const items = readdirSync(dir)
-
-    items.forEach(item => {
-      const fullPath = resolve(dir, item)
-      const stat = statSync(fullPath)
-
-      if (stat.isDirectory()) {
-        const entry = resolve(fullPath, `index.ts`)
-
-        try {
-          statSync(entry)
-          const entryName = basePath ? `${basePath}/${item}` : item
-          entries[entryName] = entry
-        } catch {
-          scanDirectory(fullPath, basePath ? `${basePath}/${item}` : item)
-        }
-      }
-    })
-  }
-
-  scanDirectory(srcDir)
-
-  return entries
-}
-
 const IS_NETLIFY = process.env.NETLIFY === 'true'
 
 export default defineConfig({
