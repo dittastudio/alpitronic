@@ -2,7 +2,7 @@ import './progress-stepped.css'
 import ProgressStepped from './progress-stepped'
 
 new ProgressStepped({
-  percentage: 0,
-  limit: 80,
+  steps: ['Initialising', 'Ready', 'Preparing'],
+  step: 0,
   selector: '[data-js-progress]',
 })

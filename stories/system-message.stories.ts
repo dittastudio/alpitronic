@@ -48,7 +48,7 @@ export default {
     return wrapper.firstChild
   },
   argTypes: {
-    type: { control: 'radio', options: ['success', 'error'] },
+    type: { control: 'inline-radio', options: ['success', 'error'] },
   },
   args: {
     type: 'success',

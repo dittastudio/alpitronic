@@ -84,7 +84,7 @@ export default {
     backgroundColor: { control: 'color' },
     fullWidth: { control: 'boolean' },
     rounded: {
-      control: { type: 'radio' },
+      control: { type: 'inline-radio' },
       options: ['small', 'large'],
     },
     icon: { control: 'boolean' },

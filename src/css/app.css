@@ -1,5 +1,5 @@
-@import './type.css' source(none);
 @import 'tailwindcss' source(none);
+@import './type.css' source(none);
 
 @font-face {
   font-family: 'PP Neue Montreal';

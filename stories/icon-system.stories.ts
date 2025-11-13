@@ -7,10 +7,13 @@ const iconModules = (import.meta as any).glob('@/assets/icon-system/*.svg', {
   eager: true,
 })
 
-const iconNames = Object.keys(iconModules).map((path) => {
-  const fileName = path.split('/').pop()
-  return fileName?.replace('.svg', '') || ''
-}).filter(Boolean).sort()
+const iconNames = Object.keys(iconModules)
+  .map(path => {
+    const fileName = path.split('/').pop()
+    return fileName?.replace('.svg', '') || ''
+  })
+  .filter(Boolean)
+  .sort()
 
 export default {
   title: 'Alpitronic/Icon System',
@@ -30,9 +33,7 @@ export default {
     }
 
     if (icon) {
-      const iconPath = Object.keys(iconModules).find((path) =>
-        path.includes(`/${icon}.svg`)
-      )
+      const iconPath = Object.keys(iconModules).find(path => path.includes(`/${icon}.svg`))
 
       if (iconPath) {
         const svgContent = iconModules[iconPath]
@@ -50,7 +51,7 @@ export default {
       control: 'color',
     },
     icon: {
-      control: 'radio',
+      control: 'inline-radio',
       options: iconNames,
     },
   },

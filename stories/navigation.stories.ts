@@ -77,7 +77,7 @@ export default {
     button3Label: { control: 'text', table: { category: 'Button Labels' } },
     button4Label: { control: 'text', table: { category: 'Button Labels' } },
 
-    rounded: { control: { type: 'radio' }, options: ['small', 'large'], table: { category: 'Global Styling' } },
+    rounded: { control: { type: 'inline-radio' }, options: ['small', 'large'], table: { category: 'Global Styling' } },
     backgroundColor: { control: 'color', table: { category: 'Global Styling' } },
     textColor: { control: 'color', table: { category: 'Global Styling' } },
     icon: { control: 'boolean', table: { category: 'Global Styling' } },

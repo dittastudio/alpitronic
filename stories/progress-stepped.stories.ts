@@ -9,8 +9,8 @@ const progresses = new Map<string, ProgressStepped>()
 
 export default {
   title: 'Alpitronic/Progress Stepped',
-  render: (args: { percentage?: number; limit?: number }, context: StoryContext) => {
-    const { percentage = 56, limit = 80 } = args
+  render: (args: { step?: number }, context: StoryContext) => {
+    const { step = 0 } = args
     const selectedColor = context.globals.accent ?? '#54e300'
 
     let wrapper = wrappers.get(context.id)
@@ -19,8 +19,7 @@ export default {
       const savedProgress = progresses.get(context.id)
 
       if (savedProgress) {
-        savedProgress.setProgress({ percentage })
-        savedProgress.setLimit(limit)
+        savedProgress.setStep(step)
       }
     } else {
       wrapper = document.createElement('div')
@@ -30,15 +29,14 @@ export default {
 
       document.addEventListener('DOMContentLoaded', async () => {
         const progress = new ProgressStepped({
-          percentage: 0,
-          limit: limit,
+          steps: ['Initialising', 'Ready', 'Preparing'],
           selector: '[data-js-progress]',
         })
 
         progresses.set(context.id, progress)
 
         await wait(250)
-        await progress.setProgress({ percentage, animate: true })
+        await progress.setStep(0)
       })
     }
 
@@ -47,18 +45,15 @@ export default {
     return wrapper
   },
   argTypes: {
-    percentage: {
-      control: { type: 'range', min: 0, max: 100, step: 1 },
-      description: 'Current progress percentage from 0 to 100',
-    },
-    limit: {
-      control: { type: 'range', min: 0, max: 100, step: 1 },
-      description: 'Number for the percentage limit display (default: 80)',
+    steps: { control: 'array', description: 'Array of step labels' },
+    step: {
+      control: { type: 'range', min: 0, max: 2, step: 1 },
+      description: 'Current progress step from 0 to 2',
     },
   },
   args: {
-    percentage: 56,
-    limit: 80,
+    steps: ['Initialising', 'Ready', 'Preparing'],
+    step: 0,
   },
 }
 

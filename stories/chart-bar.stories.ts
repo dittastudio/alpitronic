@@ -30,7 +30,7 @@ export default {
   },
   argTypes: {
     data: {
-      control: 'select',
+      control: 'inline-radio',
       options: ['perlin', 'range', 'random'],
       mapping: {
         perlin: Array.from({ length: 60 }, (_, i) => (perlin.noise(i * 0.1) + 1) / 2),
@@ -39,7 +39,7 @@ export default {
       },
     },
     xLabel: {
-      control: 'select',
+      control: 'inline-radio',
       options: ['sample1', 'sample2', 'sample3'],
       mapping: {
         sample1: ['1:00', '1:10', '1:20', '1:30', '1:40', '1:50', '2:00', '2:10', '2:20'],
@@ -48,7 +48,7 @@ export default {
       },
     },
     yLabel: {
-      control: 'select',
+      control: 'inline-radio',
       options: ['sample1', 'sample2', 'sample3'],
       mapping: {
         sample1: ['400 kW', '200 kW'],

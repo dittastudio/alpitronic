@@ -1,31 +1,37 @@
-import Progress, { type Options } from '@/utils/progress'
+type Options = {
+  steps?: string[]
+  step?: number
+  selector?: string
+}
 
-class ProgressStepped extends Progress {
+class ProgressStepped {
+  steps: string[] = []
+  step: number = 0
+  element: HTMLElement | null = null
+
   constructor(options: Options = {}) {
-    const { percentage = 0, limit = 80, selector = '' } = options
+    const { steps = [], step = 0, selector = '' } = options
 
-    super({ percentage, limit, selector })
+    this.steps = steps
+    this.step = step
+    this.element = document.querySelector(selector)
+
+    if (!this.element) {
+      console.warn(`Element with selector "${selector}" not found`)
+      return
+    }
 
     this.init()
   }
 
-  setProgress({
-    percentage = 0,
-    animate = false,
-    duration = 1500,
-  }: {
-    percentage: number
-    animate?: boolean
-    duration?: number
-  }): void {
-    super.updateProgress({ percentage, animate, duration })
+  setStep(step = 0): void {
+    this.step = step
   }
 
-  override init(): void {
+  private init(): void {
     if (!this.element) return
 
-    super.updateProgress({ percentage: this.percentage })
-    super.setLimit(this.limit)
+    this.setStep(this.step)
   }
 }
 
