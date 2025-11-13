@@ -11,6 +11,7 @@ class Progress {
   limit: number = 80
   element: HTMLElement | null = null
   progressBar: HTMLElement | null = null
+  progressLimit: HTMLElement | null = null
 
   constructor(options: Options = {}) {
     const { percentage = 0, limit = 80, selector = '' } = options
@@ -25,6 +26,7 @@ class Progress {
     }
 
     this.progressBar = this.element.querySelector('[data-js-progress-bar]')
+    this.progressLimit = this.element.querySelector('[data-js-progress-limit]')
 
     this.init()
   }
@@ -37,6 +39,11 @@ class Progress {
     this.progressBar.classList.toggle('!bg-grey-800', isOverLimit)
     this.progressBar.classList.toggle('!text-white', isOverLimit)
     this.progressBar.classList.toggle('!stroke-grey-800', isOverLimit)
+
+    if (!this.progressLimit) return
+
+    this.progressLimit.classList.toggle('opacity-0', isOverLimit)
+    this.progressLimit.classList.toggle('scale-95', isOverLimit)
   }
 
   setLimit(count: number): void {
