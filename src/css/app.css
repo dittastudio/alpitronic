@@ -131,14 +131,19 @@
   }
 } */
 
-@custom-variant @portrait {
-  @container (orientation: portrait) {
-    @slot;
+@custom-variant @landscape {
+  @container (orientation: landscape) {
+    && {
+      @slot;
+    }
   }
 }
 
-@custom-variant @landscape {
-  @container (orientation: landscape) {
-    @slot;
+@custom-variant @portrait {
+  @container (orientation: portrait) {
+    && {
+      @slot;
+    }
   }
 }
+

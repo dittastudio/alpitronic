@@ -3,7 +3,7 @@
 @source "./progress-bar-large.ts";
 @source "../../utils/progress.ts";
 
-@property --progress {
+@property --percentage-count {
   syntax: '<integer>';
   inherits: true;
   initial-value: 0;
@@ -15,12 +15,12 @@
   initial-value: 0;
 }
 
-@keyframes progress-number {
+@keyframes progress-percentage-animation {
   from {
-    --progress: 0;
+    --percentage-count: 0;
   }
   to {
-    --progress: var(--percentage);
+    --percentage-count: var(--percentage);
   }
 }
 
@@ -29,12 +29,13 @@
 }
 
 .progress-bar-large__number {
-  --progress: 0;
-  counter-reset: progress var(--progress);
-  animation: progress-number var(--duration) var(--ease-inOutQuart) forwards;
+  --percentage-count: 0;
+
+  counter-reset: percentage-count var(--percentage-count);
+  animation: progress-percentage-animation var(--duration) var(--ease-inOutQuart) forwards;
 
   &::before {
-    content: counter(progress);
+    content: counter(percentage-count);
   }
 }
 
