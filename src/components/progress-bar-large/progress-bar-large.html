@@ -32,6 +32,9 @@
           col-span-full
           row-span-full
           z-1
+          flex
+          flex-col
+          justify-end
         "
       >
         <div
@@ -47,6 +50,10 @@
             transition-colors
             duration-200
             ease-out
+            basis-[calc(var(--percentage)*1%)]x
+            @portrait:h-auto
+            @portrait:basis-[calc(var(--percentage)*1%)]
+            @portrait:justify-start
           ">
           <div
             class="
@@ -84,17 +91,21 @@
         <div
           class="
             flex
+            items-end
+            justify-between
+            h-full
             @portrait:flex-col-reverse
-            @portrait:h-full
+            @portrait:items-start
           "
         >
           <div
             class="
-              w-[calc(var(--limit)*1%)]
+              basis-[calc(var(--limit)*1%)]
               @portrait:flex
-              @portrait:items-end
+              @portrait:flex-col
+              @portrait:justify-start
               @portrait:w-full
-              @portrait:h-[calc(var(--limit)*1%)]
+              @portrait:basis-[calc(var(--percentage)*1%)]
               p-[min(10cqmin,30px)]
             "
           >
@@ -122,13 +133,14 @@
 
           <div
             class="
-              grow
               flex
               items-end
               text-[min(3cqi,36px)]
-              @portrait:text-[min(5cqb,36px)]
               font-medium
               text-white
+              basis-[calc(100%-(var(--limit)*1%))]
+              @portrait:text-[min(5cqb,36px)]
+              @portrait:basis-[calc(100%-(var(--limit)*1%))]
             "
           >
             <div
@@ -137,6 +149,7 @@
               "
             >
               <div
+                data-js-progress-limit
                 class="
                   -mx-[0.035em]
                   -my-[0.37em]
