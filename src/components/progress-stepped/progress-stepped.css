@@ -1,0 +1,66 @@
+@import '@/css/app.css';
+@source "./progress-stepped.html";
+@source "./progress-stepped.ts";
+@source "../../utils/progress.ts";
+
+@property --progress {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --limit {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes progress-number {
+  from {
+    --progress: 0;
+  }
+  to {
+    --progress: var(--percentage);
+  }
+}
+
+.progress-stepped {
+  --percentage-unit: calc(var(--percentage) * 1%);
+}
+
+.progress-stepped__number {
+  --progress: 0;
+  counter-reset: progress var(--progress);
+  animation: progress-number var(--duration) var(--ease-inOutQuart) forwards;
+
+  &::before {
+    content: counter(progress);
+  }
+}
+
+.progress-stepped__limiter {
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    left: calc(var(--limit) * 1% - 20px);
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: white;
+    border-radius: inherit;
+    translate: -50% 0;
+  }
+}
+
+.progress-stepped__mask {
+  translate: calc(var(--percentage-unit) - 100%) 0 0;
+  transition: translate var(--duration) var(--ease-inOutQuart);
+}
+
+.progress-stepped__limit {
+  counter-reset: limit var(--limit);
+
+  &::before {
+    content: counter(limit);
+  }
+}
