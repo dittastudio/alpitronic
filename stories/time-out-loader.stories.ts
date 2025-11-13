@@ -9,6 +9,7 @@ const storyInitialized = new Map<string, boolean>()
 
 export default {
   title: 'Alpitronic/Time Out Loader',
+  component: 'time-out-loader',
   render: (args: any, context: StoryContext) => {
     const { seconds = 45 } = args
     const storyId = context.id

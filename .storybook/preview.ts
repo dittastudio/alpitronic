@@ -1,6 +1,17 @@
 import '../src/css/storybook.css'
-import type { Preview } from '@storybook/html-vite'
+import type { Preview, StoryFn, StoryContext } from '@storybook/html-vite'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
+import { disableInjectedCSS } from '../src/utils/storybook'
+
+export const decorators = [
+  (Story: StoryFn, context: StoryContext) => {
+    if (typeof context?.component === 'string') {
+      disableInjectedCSS(context.component)
+    }
+
+    return Story({}, context)
+  },
+]
 
 const alpitronicViewports = {
   main: {

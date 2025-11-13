@@ -9,6 +9,7 @@ const progresses = new Map<string, ProgressBarLarge>()
 
 export default {
   title: 'Alpitronic/Progress Bar Large',
+  component: 'progress-bar-large',
   render: (args: { percentage?: number; limit?: number }, context: StoryContext) => {
     const { percentage = 56, limit = 80 } = args
     const selectedColor = context.globals.accent ?? '#54e300'

@@ -7,6 +7,7 @@ const perlin = new PerlinNoise(50)
 
 export default {
   title: 'Alpitronic/Chart Bar',
+  component: 'chart-bar',
   parameters: {
     docs: {
       description: {

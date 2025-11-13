@@ -78,4 +78,58 @@ function setupResizeIndicator(element: HTMLElement): void {
   }
 }
 
-export { PerlinNoise, randomRange, setupResizeIndicator }
+const disableInjectedCSS = (component: string = '') => {
+  const run = (component: string, element: Element) => {
+    // Development Output:
+    const tag = element as HTMLLinkElement | HTMLStyleElement
+    const viteId = tag.getAttribute('data-vite-dev-id')
+
+    if (viteId && !viteId.includes(`/${component}/`)) {
+      console.log('⚠️ Disabled CSS file:', viteId)
+      tag.disabled = true
+
+      return
+    } else if (viteId && viteId.includes(`/${component}/`)) {
+      console.log('✅ Enable CSS file:', viteId)
+      tag.disabled = false
+
+      return
+    }
+
+    // Production Output:
+    const rel = element.getAttribute('rel')
+    const href = element.getAttribute('href')
+
+    if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}`)) {
+      console.log('⚠️ Disabled CSS file:', href)
+      tag.disabled = true
+
+      return
+    } else if (href && href.includes(`/${component}/`)) {
+      console.log('✅ Enable CSS file:', href)
+      tag.disabled = false
+
+      return
+    }
+  }
+
+  const observer = new MutationObserver(mutations => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const element = node as Element
+
+          run(component, element)
+        }
+      }
+    }
+  })
+
+  observer.observe(document.head, { childList: true })
+
+  document.head.querySelectorAll('link, style').forEach(element => {
+    run(component, element)
+  })
+}
+
+export { PerlinNoise, randomRange, setupResizeIndicator, disableInjectedCSS }

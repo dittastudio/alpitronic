@@ -3,11 +3,8 @@ import template from '@/components/typography/typography.html?raw'
 
 export default {
   title: 'Alpitronic/Typography',
-  render: ({
-    label,
-  }: {
-    label?: string
-  }) => {
+  component: 'typography',
+  render: ({ label }: { label?: string }) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template
 

@@ -9,6 +9,7 @@ const themeClasses = {
 
 export default {
   title: 'Alpitronic/Toast',
+  component: 'toast',
   render: (args: any) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template

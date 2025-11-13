@@ -3,6 +3,7 @@ import template from '@/components/button/button.html?raw'
 
 export default {
   title: 'Alpitronic/Button',
+  component: 'button',
   render: ({
     label,
     fullWidth,

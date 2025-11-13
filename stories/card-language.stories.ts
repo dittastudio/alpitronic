@@ -4,6 +4,7 @@ import template from '@/components/card-language/card-language.html?raw'
 
 export default {
   title: 'Alpitronic/Card Language',
+  component: 'card-language',
   render: ({
     flag,
     textPrimary,

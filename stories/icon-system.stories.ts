@@ -17,6 +17,7 @@ const iconNames = Object.keys(iconModules)
 
 export default {
   title: 'Alpitronic/Icon System',
+  component: 'icon-system',
   render: ({ icon, color, size }: { icon?: string; color?: string; size?: number }) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template

@@ -9,6 +9,7 @@ const progresses = new Map<string, ProgressBarCircle>()
 
 export default {
   title: 'Alpitronic/Progress Bar Circle',
+  component: 'progress-bar-circle',
   render: (args: { percentage?: number; accentColor?: string; limit?: number }, context: StoryContext) => {
     const { percentage = 56, limit = 80 } = args
     const selectedColor = context.globals.accent ?? '#54e300'
