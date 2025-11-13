@@ -2,7 +2,7 @@ import type { StoryContext } from '@storybook/html'
 import '@/components/progress-stepped/progress-stepped.css'
 import template from '@/components/progress-stepped/progress-stepped.html?raw'
 import ProgressStepped from '@/components/progress-stepped/progress-stepped'
-import { wait } from '@/utils/helpers'
+// import { wait } from '@/utils/helpers'
 
 const wrappers = new Map<string, HTMLDivElement>()
 const progresses = new Map<string, ProgressStepped>()
@@ -27,17 +27,17 @@ export default {
       wrapper.innerHTML = template
       wrappers.set(context.id, wrapper)
 
-      document.addEventListener('DOMContentLoaded', async () => {
-        const progress = new ProgressStepped({
-          steps: ['Initialising', 'Ready', 'Preparing'],
-          selector: '[data-js-progress]',
-        })
+      // document.addEventListener('DOMContentLoaded', async () => {
+      //   const progress = new ProgressStepped({
+      //     steps: ['Initialising', 'Ready', 'Preparing'],
+      //     selector: '[data-js-progress]',
+      //   })
 
-        progresses.set(context.id, progress)
+      //   progresses.set(context.id, progress)
 
-        await wait(250)
-        await progress.setStep(0)
-      })
+      //   await wait(250)
+      //   await progress.setStep(0)
+      // })
     }
 
     wrapper.style.setProperty('--color-accent', selectedColor)

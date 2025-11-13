@@ -38,7 +38,7 @@ export default {
       },
     },
     theme: {
-      control: 'select',
+      control: 'inline-radio',
       options: ['dark', 'light', 'warning'],
       description: 'The theme of the toast',
       table: {
