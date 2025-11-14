@@ -8,7 +8,7 @@ const config: StorybookConfig = {
     name: '@storybook/html-vite',
     options: {},
   },
-  staticDirs: ['../src/assets'],
+  staticDirs: ['../public', '../src/assets'],
   async viteFinal(config) {
     config.plugins = config.plugins || []
     config.plugins.push(tailwindcss())
