@@ -5,7 +5,7 @@ import { disableInjectedCSS } from '../src/utils/storybook'
 
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => {
-    if (typeof context?.component === 'string') {
+    if (Array.isArray(context?.component) || typeof context?.component === 'string') {
       disableInjectedCSS(context.component)
     }
 

@@ -7,7 +7,7 @@ import { makeDraggable } from '@/utils/draggable'
 
 export default {
   title: 'Alpitronic/Navigation',
-  component: 'navigation',
+  component: ['navigation', 'button'],
   render: (args: any) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = template

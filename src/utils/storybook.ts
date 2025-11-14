@@ -78,11 +78,27 @@ function setupResizeIndicator(element: HTMLElement): void {
   }
 }
 
-const disableInjectedCSS = (component: string = '') => {
-  const run = (component: string, element: Element) => {
+const disableInjectedCSS = (component: string | string[] = '') => {
+  const run = (component: string | string[], element: Element) => {
     // Development Output:
     const tag = element as HTMLLinkElement | HTMLStyleElement
     const viteId = tag.getAttribute('data-vite-dev-id')
+
+    if (Array.isArray(component)) {
+      for (const comp of component) {
+        if (viteId && viteId.includes(`/${comp}/`)) {
+          console.log('✅ Enable CSS file:', viteId)
+          tag.disabled = false
+        }
+      }
+
+      //  if (viteId && !viteId.includes(`/${comp}/`)) {
+      //     console.log('⚠️ Disabled CSS file:', viteId)
+      //     tag.disabled = true
+      //   }
+
+      return
+    }
 
     if (viteId && !viteId.includes(`/${component}/`)) {
       console.log('⚠️ Disabled CSS file:', viteId)
@@ -97,20 +113,20 @@ const disableInjectedCSS = (component: string = '') => {
     }
 
     // Production Output:
-    const rel = element.getAttribute('rel')
-    const href = element.getAttribute('href')
+    // const rel = element.getAttribute('rel')
+    // const href = element.getAttribute('href')
 
-    if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}`)) {
-      console.log('⚠️ Disabled CSS file:', href)
-      tag.disabled = true
+    // if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}`)) {
+    //   console.log('⚠️ Disabled CSS file:', href)
+    //   tag.disabled = true
 
-      return
-    } else if (href && href.includes(`/${component}/`)) {
-      console.log('✅ Enable CSS file:', href)
-      tag.disabled = false
+    //   return
+    // } else if (href && href.includes(`/${component}/`)) {
+    //   console.log('✅ Enable CSS file:', href)
+    //   tag.disabled = false
 
-      return
-    }
+    //   return
+    // }
   }
 
   const observer = new MutationObserver(mutations => {
