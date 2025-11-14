@@ -99,7 +99,7 @@ const disableInjectedCSS = (component: string | string[] = '') => {
     const rel = element.getAttribute('rel')
     const href = element.getAttribute('href')
 
-    if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}`)) {
+    if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}-`)) {
       console.log('⚠️ Disabled CSS file:', href)
       tag.disabled = true
 

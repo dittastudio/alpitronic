@@ -1,13 +1,14 @@
 import '../src/css/storybook.css'
 import type { Preview, StoryFn, StoryContext } from '@storybook/html-vite'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
-import { disableInjectedCSS } from '../src/utils/storybook'
+// import { disableInjectedCSS } from '../src/utils/storybook'
 
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => {
-    if (Array.isArray(context?.component) || typeof context?.component === 'string') {
-      disableInjectedCSS(context.component)
-    }
+    console.log('Storybook asset hack disabled in preview.ts decorator.')
+    // if (Array.isArray(context?.component) || typeof context?.component === 'string') {
+    //   disableInjectedCSS(context.component)
+    // }
 
     return Story({}, context)
   },
