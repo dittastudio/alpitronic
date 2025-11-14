@@ -21,6 +21,6 @@
 
 /* Hack because Storybook sucks. */
 .sb-show-main {
-  background-color: #111 !important;
+  background-color: #141414 !important;
   transition: none !important;
 }
