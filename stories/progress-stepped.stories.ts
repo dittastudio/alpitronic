@@ -45,15 +45,7 @@ export default {
   },
   argTypes: {
     steps: { control: 'array', description: 'Array of step labels' },
-    step: {
-      control: {
-        type: 'range',
-        min: 1,
-        max: 3,
-        step: 1,
-      },
-      description: 'Current progress step from 1 to 3',
-    },
+    step: { control: 'number', description: 'Current progress step' },
   },
   args: {
     steps: ['Initialising', 'Ready', 'Preparing'],
