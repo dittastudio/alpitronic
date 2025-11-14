@@ -43,15 +43,15 @@ export default {
         }
 
         if (args.rounded === 'large') {
-          btn.classList.remove('rounded-22')
+          btn.classList.remove('rounded-14')
           btn.classList.add('rounded-42')
         }
 
         if (args.stacked && args.reversed) {
           btn.classList.remove('flex-row-reverse')
-          btn.classList.add('flex-col')
           btn.classList.add('flex-col-reverse')
         } else if (args.reversed) {
+          btn.classList.remove('flex-col-reverse')
           btn.classList.add('flex-row-reverse')
         } else if (args.stacked) {
           btn.classList.add('flex-col')

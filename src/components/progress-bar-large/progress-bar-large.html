@@ -37,13 +37,12 @@
           justify-end
           bg-accent
           text-black
-          transition-colors
-          duration-200
-          ease-out
-          basis-[calc(var(--percentage)*1%)]x
           @portrait:h-auto
           @portrait:basis-[calc(var(--percentage)*1%)]
           @portrait:justify-start
+          transition-[color,flex-basis]
+          duration-[0.2s,var(--duration)]
+          ease-[var(--ease-out),var(--ease-inOutQuart)]
         ">
         <div
           class="
@@ -90,15 +89,16 @@
       >
         <div
           class="
-            basis-[calc(var(--limit)*1%)]
+            basis-[calc(var(--percentage)*1%)]
+            p-[min(10cqmin,30px)]
+            transition-[flex-basis]
+            duration-(--duration)
+            ease-inOutQuart
             @portrait:flex
             @portrait:flex-col
             @portrait:justify-start
             @portrait:w-full
-            @portrait:basis-[calc(var(--percentage)*1%)]
-            p-[min(10cqmin,30px)]
-          "
-        >
+          ">
           <div
             class="
               tracking-[-0.04em]
@@ -130,7 +130,6 @@
             text-white
             basis-[calc(100%-(var(--limit)*1%))]
             @portrait:text-[min(5cqb,36px)]
-            @portrait:basis-[calc(100%-(var(--limit)*1%))]
           "
         >
           <div
