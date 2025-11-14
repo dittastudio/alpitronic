@@ -59,7 +59,7 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
 
 const disableInjectedCSS = (component: string | string[] = '') => {
   const run = (component: string | string[], element: Element) => {
-    console.log('🔥 Checking component: ', component)
+    console.log('🔥 Checking component (development): ', component)
 
     // Development Output:
     const tag = element as HTMLLinkElement | HTMLStyleElement
@@ -94,20 +94,22 @@ const disableInjectedCSS = (component: string | string[] = '') => {
     }
 
     // Production Output:
-    // const rel = element.getAttribute('rel')
-    // const href = element.getAttribute('href')
+    console.log('🔥 Checking component (production): ', component)
 
-    // if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}`)) {
-    //   console.log('⚠️ Disabled CSS file:', href)
-    //   tag.disabled = true
+    const rel = element.getAttribute('rel')
+    const href = element.getAttribute('href')
 
-    //   return
-    // } else if (href && href.includes(`/${component}/`)) {
-    //   console.log('✅ Enable CSS file:', href)
-    //   tag.disabled = false
+    if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}`)) {
+      console.log('⚠️ Disabled CSS file:', href)
+      tag.disabled = true
 
-    //   return
-    // }
+      return
+    } else if (href && href.includes(`/${component}/`)) {
+      console.log('✅ Enable CSS file:', href)
+      tag.disabled = false
+
+      return
+    }
   }
 
   const observer = new MutationObserver(mutations => {
