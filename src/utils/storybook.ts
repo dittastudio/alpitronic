@@ -59,6 +59,8 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
 
 const disableInjectedCSS = (component: string | string[] = '') => {
   const run = (component: string | string[], element: Element) => {
+    console.log('🔥 Checking component: ', component)
+
     // Development Output:
     const tag = element as HTMLLinkElement | HTMLStyleElement
     const viteId = tag.getAttribute('data-vite-dev-id')
