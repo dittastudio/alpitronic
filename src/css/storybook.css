@@ -18,3 +18,9 @@
   max-width: 400px;
   height: auto;
 }
+
+/* Hack because Storybook sucks. */
+.sb-show-main {
+  background-color: #111 !important;
+  transition: none !important;
+}
