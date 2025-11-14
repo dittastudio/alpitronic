@@ -24,7 +24,7 @@ export default {
       }
     } else {
       wrapper = document.createElement('div')
-      wrapper.classList.add('mt-8', 'mx-8', 'pb-8')
+      wrapper.classList.add('sb-padded')
       wrapper.innerHTML = template
       wrappers.set(context.id, wrapper)
 

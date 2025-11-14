@@ -2,59 +2,103 @@
   data-js-progress
   class="
     progress-bar-large
-    relative
-    pb-8
+    @container
+    normalize
   "
 >
-  <div
-    data-js-resize-container
-    class="
-      normalize
-      @container-[size]
-      resize
-      overflow-auto
-      w-full
-      h-100
-    "
-  >
-    <div class="
-      grid
-      text-[min(35cqmin,160px)]
-      size-full
-      bg-black
-      rounded-14
-      overflow-hidden
-    ">
-      <!-- Progress bar -->
+  <div class="
+    grid
+    text-[min(35cqmin,160px)]
+    w-full
+    aspect-16/6
+    bg-black
+    rounded-14
+    overflow-hidden
+  ">
+    <!-- Progress bar -->
+    <div
+      class="
+        progress-bar-large__mask
+        col-span-full
+        row-span-full
+        z-1
+        flex
+        flex-col
+        justify-end
+      "
+    >
       <div
+        data-js-progress-bar
         class="
-          progress-bar-large__mask
-          col-span-full
-          row-span-full
-          z-1
+          size-full
+          p-[min(10cqmin,30px)]
           flex
           flex-col
           justify-end
+          bg-accent
+          text-black
+          transition-colors
+          duration-200
+          ease-out
+          basis-[calc(var(--percentage)*1%)]x
+          @portrait:h-auto
+          @portrait:basis-[calc(var(--percentage)*1%)]
+          @portrait:justify-start
+        ">
+        <div
+          class="
+            tracking-[-0.04em]
+            leading-none
+            flex
+            items-baseline
+            gap-2
+            -mx-[0.035em]
+            -my-[0.12em]
+          "
+        >
+          <span class="
+            progress-bar-large__number
+          "></span>
+          <small class="
+            text-[60%]
+            font-medium
+          ">%</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress bar lines -->
+    <div
+      class="
+        progress-bar-large__lines
+        col-span-full
+        row-span-full
+        flex
+        flex-col
+        justify-end
+      "
+    >
+      <div
+        class="
+          flex
+          items-end
+          justify-between
+          h-full
+          @portrait:flex-col-reverse
+          @portrait:items-start
         "
       >
         <div
-          data-js-progress-bar
           class="
-            size-full
-            p-[min(10cqmin,30px)]
-            flex
-            flex-col
-            justify-end
-            bg-accent
-            text-black
-            transition-colors
-            duration-200
-            ease-out
-            basis-[calc(var(--percentage)*1%)]x
-            @portrait:h-auto
-            @portrait:basis-[calc(var(--percentage)*1%)]
+            basis-[calc(var(--limit)*1%)]
+            @portrait:flex
+            @portrait:flex-col
             @portrait:justify-start
-          ">
+            @portrait:w-full
+            @portrait:basis-[calc(var(--percentage)*1%)]
+            p-[min(10cqmin,30px)]
+          "
+        >
           <div
             class="
               tracking-[-0.04em]
@@ -62,6 +106,7 @@
               flex
               items-baseline
               gap-2
+              text-white
               -mx-[0.035em]
               -my-[0.12em]
             "
@@ -75,122 +120,42 @@
             ">%</small>
           </div>
         </div>
-      </div>
 
-      <!-- Progress bar lines -->
-      <div
-        class="
-          progress-bar-large__lines
-          col-span-full
-          row-span-full
-          flex
-          flex-col
-          justify-end
-        "
-      >
         <div
           class="
             flex
             items-end
-            justify-between
-            h-full
-            @portrait:flex-col-reverse
-            @portrait:items-start
+            text-[min(3cqi,36px)]
+            font-medium
+            text-white
+            basis-[calc(100%-(var(--limit)*1%))]
+            @portrait:text-[min(5cqb,36px)]
+            @portrait:basis-[calc(100%-(var(--limit)*1%))]
           "
         >
           <div
             class="
-              basis-[calc(var(--limit)*1%)]
-              @portrait:flex
-              @portrait:flex-col
-              @portrait:justify-start
-              @portrait:w-full
-              @portrait:basis-[calc(var(--percentage)*1%)]
               p-[min(10cqmin,30px)]
             "
           >
             <div
+              data-js-progress-limit
               class="
-                tracking-[-0.04em]
-                leading-none
-                flex
-                items-baseline
-                gap-2
-                text-white
                 -mx-[0.035em]
-                -my-[0.12em]
+                -my-[0.37em]
+                transition-[opacity,scale]
+                duration-200
+                ease-out
               "
             >
               <span class="
-                progress-bar-large__number
-              "></span>
-              <small class="
-                text-[60%]
-                font-medium
-              ">%</small>
-            </div>
-          </div>
-
-          <div
-            class="
-              flex
-              items-end
-              text-[min(3cqi,36px)]
-              font-medium
-              text-white
-              basis-[calc(100%-(var(--limit)*1%))]
-              @portrait:text-[min(5cqb,36px)]
-              @portrait:basis-[calc(100%-(var(--limit)*1%))]
-            "
-          >
-            <div
-              class="
-                p-[min(10cqmin,30px)]
-              "
-            >
-              <div
-                data-js-progress-limit
-                class="
-                  -mx-[0.035em]
-                  -my-[0.37em]
-                  transition-[opacity,scale]
-                  duration-200
-                  ease-out
-                "
-              >
-                <span class="
-                  progress-bar-large__limit
-                "></span>%
-              </div>
+                progress-bar-large__limit
+              "></span>%
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div
-    data-js-resize-indicator
-    class="
-      absolute
-      text-grey-400
-      top-full
-      left-full
-      text-sm
-      -translate-x-full
-      translate-y-full
-      whitespace-nowrap
-      pointer-events-none
-    "
-  >
-    Resize here
-
-    <span class="
-      relative
-      -top-2.5
-      inline-block
-      -rotate-6
-    ">&#x2934;</span>
   </div>
 </div>
 

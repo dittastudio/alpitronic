@@ -12,9 +12,11 @@ export default {
   component: 'toast',
   render: (args: any) => {
     const wrapper = document.createElement('div')
-    wrapper.innerHTML = template
-    const element = wrapper.firstChild as HTMLElement
 
+    wrapper.classList.add('sb-centered')
+    wrapper.innerHTML = template
+
+    const element = wrapper.firstChild as HTMLElement
     const labelElement = element.querySelector('[data-js-toast-label]')
 
     if (labelElement) labelElement.textContent = args.label
@@ -27,7 +29,7 @@ export default {
       toastElement.classList.add(...themeClasses[args.theme as keyof typeof themeClasses])
     }
 
-    return element
+    return wrapper
   },
   argTypes: {
     label: {

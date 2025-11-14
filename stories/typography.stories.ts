@@ -4,17 +4,13 @@ import template from '@/components/typography/typography.html?raw'
 export default {
   title: 'Alpitronic/Typography',
   component: 'typography',
-  render: ({ label }: { label?: string }) => {
+  render: () => {
     const wrapper = document.createElement('div')
+
+    wrapper.classList.add('sb-padded')
     wrapper.innerHTML = template
 
-    return wrapper.firstChild
-  },
-  argTypes: {
-    label: { control: 'text' },
-  },
-  args: {
-    label: 'Hello World',
+    return wrapper
   },
 }
 

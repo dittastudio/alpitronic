@@ -3,14 +3,16 @@ import '@/components/navigation/navigation.css'
 import '@/components/button/button.css'
 import template from '@/components/navigation/navigation.html?raw'
 import buttonTemplate from '@/components/button/button.html?raw'
-import { makeDraggable } from '@/utils/draggable'
 
 export default {
   title: 'Alpitronic/Navigation',
   component: ['navigation', 'button'],
   render: (args: any) => {
     const wrapper = document.createElement('div')
+
+    wrapper.classList.add('sb-padded')
     wrapper.innerHTML = template
+
     const element = wrapper.firstChild as HTMLElement
 
     const buttonWrapper = document.createElement('div')
@@ -66,11 +68,9 @@ export default {
 
         navContent.appendChild(btn)
       })
-
-      makeDraggable(nav as HTMLElement, container)
     }
 
-    return element
+    return wrapper
   },
   argTypes: {
     button1Label: { control: 'text', table: { category: 'Button Labels' } },

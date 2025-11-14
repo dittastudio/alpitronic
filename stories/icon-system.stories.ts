@@ -20,14 +20,11 @@ export default {
   component: 'icon-system',
   render: ({ icon, color, size }: { icon?: string; color?: string; size?: number }) => {
     const wrapper = document.createElement('div')
+
+    wrapper.classList.add('sb-centered')
     wrapper.innerHTML = template
 
-    const main: HTMLElement | null = wrapper.querySelector('[data-main]')
-    const svgContainer: HTMLElement | null = wrapper.querySelector('[data-svg]')
-
-    if (!main || !svgContainer) {
-      return wrapper
-    }
+    const svgContainer: HTMLElement | null = wrapper.firstChild as HTMLElement
 
     if (color) {
       svgContainer.style.color = color
@@ -45,7 +42,7 @@ export default {
       }
     }
 
-    return main
+    return wrapper
   },
   argTypes: {
     color: {

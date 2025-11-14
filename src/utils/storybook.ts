@@ -57,27 +57,6 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
   return Math.round((min + randomStep * step) * 10) / 10
 }
 
-function setupResizeIndicator(element: HTMLElement): void {
-  const container = element.querySelector('[data-js-resize-container]')
-  const resizeIndicator = element.querySelector('[data-js-resize-indicator]')
-
-  if (container && resizeIndicator) {
-    const updateResizeIndicatorPosition = () => {
-      const { width, height } = container.getBoundingClientRect()
-      ;(resizeIndicator as HTMLElement).style.left = `${width}px`
-      ;(resizeIndicator as HTMLElement).style.top = `${height}px`
-    }
-
-    const resizeObserver = new ResizeObserver(updateResizeIndicatorPosition)
-    resizeObserver.observe(container)
-
-    // Initial position update
-    requestAnimationFrame(() => {
-      updateResizeIndicatorPosition()
-    })
-  }
-}
-
 const disableInjectedCSS = (component: string | string[] = '') => {
   const run = (component: string | string[], element: Element) => {
     // Development Output:
@@ -100,7 +79,7 @@ const disableInjectedCSS = (component: string | string[] = '') => {
       return
     }
 
-    if (viteId && !viteId.includes(`/${component}/`)) {
+    if (viteId && !viteId.includes(`/${component}/`) && !viteId.endsWith('storybook.css')) {
       console.log('⚠️ Disabled CSS file:', viteId)
       tag.disabled = true
 
@@ -148,4 +127,4 @@ const disableInjectedCSS = (component: string | string[] = '') => {
   })
 }
 
-export { PerlinNoise, randomRange, setupResizeIndicator, disableInjectedCSS }
+export { PerlinNoise, randomRange, disableInjectedCSS }

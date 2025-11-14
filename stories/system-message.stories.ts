@@ -14,6 +14,8 @@ export default {
     textDescription?: string
   }) => {
     const wrapper = document.createElement('div')
+
+    wrapper.classList.add('sb-padded')
     wrapper.innerHTML = template
 
     const main: HTMLElement | null = wrapper.querySelector('[data-main]')
@@ -46,7 +48,7 @@ export default {
       description.textContent = textDescription
     }
 
-    return wrapper.firstChild
+    return wrapper
   },
   argTypes: {
     type: { control: 'inline-radio', options: ['success', 'error'] },

@@ -2,104 +2,66 @@
   data-js-time-out
   class="
     time-out-loader
-    relative
+    @container
+    normalize
   "
 >
-  <div
-    data-js-resize-container
-    class="
-      normalize
-      @container-[size]
-      resize
-      overflow-auto
-      gap-3
-      size-12.5
-      bg-grey-900
-      rounded-14
-    "
-  >
-    <div class="
-      relative
-      size-full
-      aspect-square
-      max-h-full
-    ">
-      <svg
+  <div class="
+    relative
+    w-full
+    aspect-square
+  ">
+    <svg
+      class="
+        size-full
+        -rotate-90
+      "
+      width="50"
+      height="50"
+      viewBox="0 0 50 50"
+      fill="none"
+    >
+      <!-- grey background ring -->
+      <circle
         class="
-          size-full
-          -rotate-90
+          stroke-grey-400/60
         "
-        width="50"
-        height="50"
-        viewBox="0 0 50 50"
-        fill="none"
-      >
-        <!-- grey background ring -->
-        <circle
-          class="
-            stroke-grey-400/60
-          "
-          stroke-width="8"
-          cx="25"
-          cy="25"
-          r="21"
-        />
+        stroke-width="8"
+        cx="25"
+        cy="25"
+        r="21"
+      />
 
-        <!-- animated progress ring -->
-        <circle
-          class="
-            time-out-loader__ring
-            stroke-white
-          "
-          stroke-width="8"
-          stroke-linecap="round"
-          cx="25"
-          cy="25"
-          r="21"
-        />
-      </svg>
-
-      <div
+      <!-- animated progress ring -->
+      <circle
         class="
-          absolute
-          inset-0
-          flex
-          items-center
-          justify-center
-          text-grey-400
-          text-[38cqmin]
-          font-medium
-          tracking-[-0.04em]
-          leading-none
+          time-out-loader__ring
+          stroke-white
         "
-      >
-        <span data-js-time-out-number></span>
-      </div>
+        stroke-width="8"
+        stroke-linecap="round"
+        cx="25"
+        cy="25"
+        r="21"
+      />
+    </svg>
+
+    <div
+      class="
+        absolute
+        inset-0
+        flex
+        items-center
+        justify-center
+        text-grey-400
+        text-[38cqmin]
+        font-medium
+        tracking-[-0.04em]
+        leading-none
+      "
+    >
+      <span data-js-time-out-number></span>
     </div>
-  </div>
-
-  <div
-    data-js-resize-indicator
-    class="
-      absolute
-      text-grey-400
-      top-full
-      left-full
-      text-sm
-      -translate-x-full
-      translate-y-full
-      whitespace-nowrap
-      pointer-events-none
-    "
-  >
-    Resize here
-
-    <span class="
-      relative
-      -top-2.5
-      inline-block
-      -rotate-6
-    ">&#x2934;</span>
   </div>
 </div>
 

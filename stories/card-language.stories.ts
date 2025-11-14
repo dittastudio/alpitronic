@@ -21,6 +21,8 @@ export default {
     onClick?: () => void
   }) => {
     const wrapper = document.createElement('div')
+
+    wrapper.classList.add('sb-centered')
     wrapper.innerHTML = template
 
     const main: HTMLElement | null = wrapper.querySelector('[data-main]')
@@ -72,7 +74,7 @@ export default {
       main.addEventListener('click', onClick)
     }
 
-    return wrapper.firstChild
+    return wrapper
   },
   argTypes: {
     textPrimary: { control: 'text' },

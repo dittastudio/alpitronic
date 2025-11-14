@@ -17,6 +17,8 @@ export default {
   },
   render: ({ data = [], xLabel = [], yLabel = [] }: { data: number[]; xLabel?: string[]; yLabel?: string[] }) => {
     const wrapper = document.createElement('div')
+
+    wrapper.classList.add('sb-padded')
     wrapper.innerHTML = template
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +29,7 @@ export default {
       })
     })
 
-    return wrapper.firstChild
+    return wrapper
   },
   argTypes: {
     data: {

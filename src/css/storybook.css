@@ -1,2 +1,14 @@
 @import './app.css';
 @source "../../stories/*.stories.ts";
+
+@utility sb-centered {
+  display: grid;
+  place-items: center;
+  place-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+@utility sb-padded {
+  padding: 2rem;
+}

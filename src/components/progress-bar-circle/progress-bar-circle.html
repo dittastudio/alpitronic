@@ -2,124 +2,87 @@
   data-js-progress
   class="
     progress-bar-circle
+    @container
     relative
     normalize
   "
 >
-  <div
-    data-js-resize-container
-    class="
-      @container-[size]
-      resize
-      overflow-auto
-      gap-3
-      w-100
-      h-100
-      bg-grey-900
-      rounded-14
-    "
-  >
-    <div class="
-      relative
-      size-full
-      aspect-square
-      max-h-full
-    ">
-      <svg
+  <div class="
+    relative
+    size-full
+    aspect-square
+    max-h-full
+  ">
+    <svg
+      class="
+        size-full
+        -rotate-90
+      "
+      width="400"
+      height="400"
+      viewBox="0 0 400 400"
+      fill="none"
+    >
+      <!-- grey background ring -->
+      <circle
         class="
-          size-full
-          -rotate-90
+          stroke-black
         "
-        width="400"
-        height="400"
-        viewBox="0 0 400 400"
-        fill="none"
-      >
-        <!-- grey background ring -->
-        <circle
-          class="
-            stroke-black
-          "
-          stroke-width="29"
-          cx="200"
-          cy="200"
-          r="185"
-        />
+        stroke-width="29"
+        cx="200"
+        cy="200"
+        r="185"
+      />
 
-        <!-- animated progress ring -->
-        <circle
-          data-js-progress-bar
-          class="
-            progress-bar-circle__bar
-            stroke-(--color-accent)
-          "
-          stroke-width="29"
-          stroke-linecap="round"
-          cx="200"
-          cy="200"
-          r="185"
-        />
-
-        <circle
-          class="
-            progress-bar-circle__dot
-          " cx="385" cy="200" r="4" fill="white"
-        />
-      </svg>
-
-      <div
+      <!-- animated progress ring -->
+      <circle
+        data-js-progress-bar
         class="
-          absolute
-          inset-0
-          flex
-          items-center
-          justify-center
-          text-white
-          text-[min(40cqb,40cqi,160px)]
-          tracking-[-0.04em]
-          leading-none
+          progress-bar-circle__bar
+          stroke-(--color-accent)
         "
-      >
-        <div class="
-          relative
-          flex
-          items-baseline
-          gap-[0.1em]
-        ">
-          <span class="
-            progress-bar-circle__number
-          "></span>
-          <small class="
-            text-[60%]
-            font-medium
-          ">%</small>
-        </div>
+        stroke-width="29"
+        stroke-linecap="round"
+        cx="200"
+        cy="200"
+        r="185"
+      />
+
+      <circle
+        class="
+          progress-bar-circle__dot
+        " cx="385" cy="200" r="4" fill="white"
+      />
+    </svg>
+
+    <div
+      class="
+        absolute
+        inset-0
+        flex
+        items-center
+        justify-center
+        text-white
+        text-[min(40cqb,40cqi,160px)]
+        tracking-[-0.04em]
+        leading-none
+      "
+    >
+      <div class="
+        relative
+        flex
+        items-baseline
+        gap-[0.1em]
+      ">
+        <span class="
+          progress-bar-circle__number
+        "></span>
+        <small class="
+          text-[60%]
+          font-medium
+        ">%</small>
       </div>
     </div>
-  </div>
-
-  <div
-    data-js-resize-indicator
-    class="
-      absolute
-      text-grey-400
-      top-full
-      left-full
-      text-sm
-      -translate-x-full
-      translate-y-full
-      whitespace-nowrap
-      pointer-events-none
-    "
-  >
-    Resize here
-
-    <span class="
-      relative
-      -top-2.5
-      inline-block
-      -rotate-6
-    ">&#x2934;</span>
   </div>
 </div>
 

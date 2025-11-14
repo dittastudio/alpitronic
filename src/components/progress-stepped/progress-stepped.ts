@@ -36,7 +36,7 @@ class ProgressStepped {
 
     if (animate) {
       this.element.style.setProperty('--amount', `100%`)
-      await wait(1000)
+      await wait(500)
     }
 
     this.element.style.setProperty('--amount', `${amount}%`)

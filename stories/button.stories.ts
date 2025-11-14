@@ -26,6 +26,8 @@ export default {
     showLineGuide?: boolean
   }) => {
     const wrapper = document.createElement('div')
+
+    wrapper.classList.add('sb-centered')
     wrapper.innerHTML = template
 
     const btn: HTMLElement | null = wrapper.querySelector('button')
@@ -77,7 +79,7 @@ export default {
       btn.classList.remove('before:hidden')
     }
 
-    return wrapper.firstChild
+    return wrapper
   },
   argTypes: {
     label: { control: 'text' },

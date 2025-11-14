@@ -40,6 +40,7 @@ const preview: Preview = {
     },
   },
   parameters: {
+    layout: 'fullscreen',
     backgrounds: {
       default: 'dark',
       values: [
