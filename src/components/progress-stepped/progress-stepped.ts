@@ -29,7 +29,7 @@ class ProgressStepped {
     this.init()
   }
 
-  private async setAmount(animate: boolean = false): Promise<void> {
+  private async setAmount(animate?: boolean): Promise<void> {
     if (!this.element) return
 
     const amount = this.steps.length ? 100 - (this.step / this.steps.length) * 100 : 100
@@ -42,13 +42,13 @@ class ProgressStepped {
     this.element.style.setProperty('--amount', `${amount}%`)
   }
 
-  setStep(step = 1, animate: boolean): void {
+  setStep(step = 1, animate?: boolean): void {
     this.step = step
 
     this.setAmount(animate)
   }
 
-  setSteps(steps: string[], animate: boolean): void {
+  setSteps(steps: string[], animate?: boolean): void {
     if (!this.list) return
 
     this.list.innerHTML = ''
