@@ -1,26 +1,59 @@
 <div
+  data-js-progress
   class="
+    progress-stepped
     @container
-    bg-yellow
     normalize
   ">
-    <div class="
-      w-full
-    ">
-    <ul class="
-      flex
-      flex-col
-      justify-between
-      gap-2
-      text-22
-      text-white
-      font-medium
-      @lg:flex-row
-      bg-green
-    ">
-      <li>Initialising</li>
-      <li>Ready</li>
-      <li>Preparing</li>
+  <div class="
+    w-full
+    grid
+    grid-cols-[auto_1fr]
+    gap-5
+    @lg:grid-cols-1
+    @lg:grid-rows-[auto]
+  ">
+      <div class="
+        bg-grey-600
+        w-3
+        h-full
+        rounded-full
+        overflow-hidden
+        @lg:w-full
+        @lg:h-3
+        @lg:order-1
+      ">
+      <div
+        class="
+          bg-accent
+          w-3
+          h-full
+          rounded-full
+          -translate-y-(--amount)
+          transition-[translate]
+          duration-1000
+          ease-inOutQuart
+          @lg:w-full
+          @lg:h-3
+          @lg:translate-y-0
+          @lg:-translate-x-(--amount)
+        "
+      >
+      </div>
+    </div>
+
+    <ul
+      data-js-list
+      class="
+        flex
+        flex-col
+        justify-between
+        gap-2
+        text-22
+        text-white
+        font-medium
+        @lg:flex-row
+      ">
     </ul>
   </div>
 </div>

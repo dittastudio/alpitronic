@@ -1,16 +1,43 @@
-import type { StoryFn, StoryContext } from '@storybook/html'
+import type { StoryContext } from '@storybook/html'
 import '@/components/progress-stepped/progress-stepped.css'
 import template from '@/components/progress-stepped/progress-stepped.html?raw'
+import ProgressStepped from '@/components/progress-stepped/progress-stepped'
+
+const wrappers = new Map<string, HTMLDivElement>()
+const progresses = new Map<string, ProgressStepped>()
 
 export default {
   title: 'Alpitronic/Progress Stepped',
   component: 'progress-stepped',
-  render: (args: { step?: number }, context: StoryContext) => {
-    const { step = 0 } = args
+  render: (args: { steps?: string[]; step?: number }, context: StoryContext) => {
+    const { steps = [], step = 1 } = args
     const selectedColor = context.globals.accent ?? '#54e300'
 
-    const wrapper = document.createElement('div')
-    wrapper.innerHTML = template
+    let wrapper = wrappers.get(context.id)
+
+    if (wrapper) {
+      const savedProgress = progresses.get(context.id)
+
+      if (savedProgress) {
+        savedProgress.setSteps(steps)
+        savedProgress.setStep(step)
+      }
+    } else {
+      wrapper = document.createElement('div')
+      wrapper.classList.add('mt-8', 'mx-8', 'pb-8')
+      wrapper.innerHTML = template
+      wrappers.set(context.id, wrapper)
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        const progress = new ProgressStepped({
+          steps,
+          step,
+          selector: '[data-js-progress]',
+        })
+
+        progresses.set(context.id, progress)
+      })
+    }
 
     wrapper.style.setProperty('--color-accent', selectedColor)
 
@@ -19,13 +46,13 @@ export default {
   argTypes: {
     steps: { control: 'array', description: 'Array of step labels' },
     step: {
-      control: { type: 'range', min: 0, max: 2, step: 1 },
-      description: 'Current progress step from 0 to 2',
+      control: { type: 'range', min: 1, max: 3, step: 1 },
+      description: 'Current progress step from 1 to 3',
     },
   },
   args: {
     steps: ['Initialising', 'Ready', 'Preparing'],
-    step: 0,
+    step: 1,
   },
 }
 
