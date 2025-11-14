@@ -9,9 +9,10 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ['../public', '../src/assets'],
-  async viteFinal(config) {
+  viteFinal(config) {
     config.plugins = config.plugins || []
     config.plugins.push(tailwindcss())
+
     return config
   },
 }
