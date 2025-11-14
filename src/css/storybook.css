@@ -2,13 +2,19 @@
 @source "../../stories/*.stories.ts";
 
 @utility sb-centered {
-  display: grid;
-  place-items: center;
-  place-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100vh;
 }
 
 @utility sb-padded {
   padding: 2rem;
+}
+
+@utility sb-boxed {
+  width: 50%;
+  max-width: 400px;
+  height: auto;
 }

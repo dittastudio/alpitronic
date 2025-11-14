@@ -23,9 +23,14 @@ export default {
     const wrapper = document.createElement('div')
 
     wrapper.classList.add('sb-centered')
-    wrapper.innerHTML = template
 
-    const main: HTMLElement | null = wrapper.querySelector('[data-main]')
+    const inside = document.createElement('div')
+    inside.classList.add('sb-boxed')
+    wrapper.appendChild(inside)
+
+    inside.innerHTML = template
+
+    const main: HTMLElement | null = inside.querySelector('[data-main]')
 
     if (!main) {
       return wrapper

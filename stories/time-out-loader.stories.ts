@@ -1,33 +1,24 @@
-import type { StoryContext } from '@storybook/html'
 import '@/components/time-out-loader/time-out-loader.css'
 import template from '@/components/time-out-loader/time-out-loader.html?raw'
 import { initTimeOutLoader } from '@/components/time-out-loader/time-out-loader'
 
-const storyElements = new Map<string, HTMLElement>()
-const storyInitialized = new Map<string, boolean>()
-
 export default {
   title: 'Alpitronic/Time Out Loader',
   component: 'time-out-loader',
-  render: (args: any, context: StoryContext) => {
+  render: (args: any) => {
     const { seconds = 45 } = args
-    const storyId = context.id
-    let element = storyElements.get(storyId)
     const wrapper = document.createElement('div')
 
-    wrapper.classList.add('sb-padded')
-    wrapper.innerHTML = template
+    wrapper.classList.add('sb-centered')
 
-    if (!element) {
-      element = wrapper.firstChild as HTMLElement
-      storyElements.set(storyId, element)
+    const inside = document.createElement('div')
 
-      setTimeout(() => {
-        storyInitialized.set(storyId, true)
-      }, 100)
-    }
+    inside.classList.add('sb-boxed')
+    wrapper.appendChild(inside)
+    inside.innerHTML = template
 
-    // Reset and restart the timer on each render
+    const element = inside.firstChild as HTMLElement
+
     initTimeOutLoader(element, seconds)
 
     return wrapper

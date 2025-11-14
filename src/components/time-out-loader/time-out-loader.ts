@@ -28,4 +28,3 @@ export const initTimeOutLoader = (element: HTMLElement | null, seconds: number =
     numberElement.style.animation = ''
   }
 }
-

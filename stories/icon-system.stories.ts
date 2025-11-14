@@ -22,9 +22,14 @@ export default {
     const wrapper = document.createElement('div')
 
     wrapper.classList.add('sb-centered')
-    wrapper.innerHTML = template
 
-    const svgContainer: HTMLElement | null = wrapper.firstChild as HTMLElement
+    const inside = document.createElement('div')
+
+    inside.classList.add('sb-boxed')
+    wrapper.appendChild(inside)
+    inside.innerHTML = template
+
+    const svgContainer: HTMLElement | null = inside.firstChild as HTMLElement
 
     if (color) {
       svgContainer.style.color = color

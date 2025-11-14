@@ -25,8 +25,14 @@ export default {
       }
     } else {
       wrapper = document.createElement('div')
-      wrapper.classList.add('sb-padded')
-      wrapper.innerHTML = template
+      wrapper.classList.add('sb-centered')
+
+      const inside = document.createElement('div')
+
+      inside.classList.add('sb-boxed')
+      wrapper.appendChild(inside)
+      inside.innerHTML = template
+
       wrappers.set(context.id, wrapper)
 
       document.addEventListener('DOMContentLoaded', async () => {
