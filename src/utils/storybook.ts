@@ -68,9 +68,8 @@ const disableInjectedCSS = (component: string | string[] = '') => {
     const href = element.getAttribute('href')
 
     return (
-      (((dataViteDevId?.includes(`/${component}`) || href?.includes(`/${component}`)) &&
-        dataViteDevId?.endsWith(`.css`)) ||
-        href?.endsWith(`.css`)) ??
+      ((dataViteDevId?.includes(`/${component}`) || href?.includes(`/${component}`)) &&
+        (dataViteDevId?.endsWith(`.css`) || href?.endsWith(`.css`))) ??
       false
     )
   }
