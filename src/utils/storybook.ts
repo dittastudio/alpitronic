@@ -1,3 +1,5 @@
+import { wait } from '@/utils/helpers'
+
 class PerlinNoise {
   private permutation: number[]
 
@@ -58,67 +60,35 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
 }
 
 const disableInjectedCSS = (component: string | string[] = '') => {
-  const run = (component: string | string[], element: Element) => {
-    console.log('🔥 Checking component (development): ', component)
+  const head = document.head
+  let isMoving = false
 
-    // Development Output:
-    const tag = element as HTMLLinkElement | HTMLStyleElement
-    const viteId = tag.getAttribute('data-vite-dev-id')
-
-    if (Array.isArray(component)) {
-      for (const comp of component) {
-        if (viteId && viteId.includes(`/${comp}/`)) {
-          console.log('✅ Enable CSS file:', viteId)
-          tag.disabled = false
-        }
-      }
-
-      //  if (viteId && !viteId.includes(`/${comp}/`)) {
-      //     console.log('⚠️ Disabled CSS file:', viteId)
-      //     tag.disabled = true
-      //   }
-
-      return
-    }
-
-    if (viteId && !viteId.includes(`/${component}/`) && !viteId.endsWith('storybook.css')) {
-      console.log('⚠️ Disabled CSS file:', viteId)
-      tag.disabled = true
-
-      return
-    } else if (viteId && viteId.includes(`/${component}/`)) {
-      console.log('✅ Enable CSS file:', viteId)
-      tag.disabled = false
-
-      return
-    }
-
-    // Production Output:
-    console.log('🔥 Checking component (production): ', component)
-
-    const rel = element.getAttribute('rel')
+  const isComponentElement = (element: Element): boolean => {
+    const dataViteDevId = element.getAttribute('data-vite-dev-id')
     const href = element.getAttribute('href')
 
-    if ((rel === 'stylesheet' || rel === 'modulepreload') && href && !href.includes(`/${component}-`)) {
-      console.log('⚠️ Disabled CSS file:', href)
-      tag.disabled = true
-
-      return
-    } else if (href && href.includes(`/${component}/`)) {
-      console.log('✅ Enable CSS file:', href)
-      tag.disabled = false
-
-      return
-    }
+    return (dataViteDevId?.includes(`/${component}`) || href?.includes(`/${component}`)) ?? false
   }
 
-  const observer = new MutationObserver(mutations => {
-    for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          const element = node as Element
+  const observer = new MutationObserver(async mutations => {
+    if (isMoving) return
 
-          run(component, element)
+    const addedNodes = mutations.flatMap(mutation => Array.from(mutation.addedNodes))
+    const lastAdded = addedNodes[addedNodes.length - 1]
+
+    if (lastAdded?.nodeType === Node.ELEMENT_NODE) {
+      const element = lastAdded as Element
+      const isComponentCSS = isComponentElement(element)
+
+      if (!isComponentCSS) {
+        const componentElement = Array.from(head.querySelectorAll('link, style')).find(el => isComponentElement(el))
+
+        if (componentElement) {
+          isMoving = true
+          head.appendChild(componentElement)
+
+          await wait(1)
+          isMoving = false
         }
       }
     }
@@ -126,8 +96,13 @@ const disableInjectedCSS = (component: string | string[] = '') => {
 
   observer.observe(document.head, { childList: true })
 
-  document.head.querySelectorAll('link, style').forEach(element => {
-    run(component, element)
+  document.addEventListener('DOMContentLoaded', () => {
+    const elements = Array.from(document.head.querySelectorAll('link, style'))
+    const chosen = elements.filter(el => isComponentElement(el))
+
+    chosen.forEach(element => {
+      head.appendChild(element)
+    })
   })
 }
 

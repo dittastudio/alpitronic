@@ -19,7 +19,6 @@ export default {
     buttonWrapper.innerHTML = buttonTemplate
     const buttonElement = buttonWrapper.querySelector('[data-js-button]')
 
-    const container = element
     const nav = element.querySelector('[data-js-navigation]')
     const navContent = nav?.firstElementChild
 
