@@ -67,7 +67,12 @@ const disableInjectedCSS = (component: string | string[] = '') => {
     const dataViteDevId = element.getAttribute('data-vite-dev-id')
     const href = element.getAttribute('href')
 
-    return (dataViteDevId?.includes(`/${component}`) || href?.includes(`/${component}`)) ?? false
+    return (
+      (((dataViteDevId?.includes(`/${component}`) || href?.includes(`/${component}`)) &&
+        dataViteDevId?.endsWith(`.css`)) ||
+        href?.endsWith(`.css`)) ??
+      false
+    )
   }
 
   const observer = new MutationObserver(async mutations => {
