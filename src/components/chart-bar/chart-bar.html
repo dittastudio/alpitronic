@@ -1,7 +1,8 @@
-<figure data-js-chart class="
+<figure data-js-chart-bar class="
   normalize
-  size-full
-  min-h-82
+  relative
+  w-full
+  h-82
   bg-chart-x
   bg-black
   p-4
@@ -11,26 +12,24 @@
   rounded-14
   select-none
 ">
-  <div class="
-    relative
-  ">
-    <ol data-js-bars class="
-      flex
-      justify-between
-      items-end
-      size-full
-    "></ol>
-    <ol data-js-y-label class="
-      absolute
-      inset-0
-      grid
-      grid-cols-1
-      grid-rows-[auto]
-      text-white
-      text-18
-      pointer-events-none
-    "></ol>
-  </div>
+  <ol data-js-data class="
+    flex
+    justify-between
+    items-end
+    size-full
+  "></ol>
+
+  <ol data-js-y-label class="
+    absolute
+    inset-0
+    grid
+    grid-cols-1
+    grid-rows-[auto]
+    text-white
+    text-18
+    pointer-events-none
+    p-4
+  "></ol>
 
   <ol data-js-x-label class="
     flex

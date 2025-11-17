@@ -15,7 +15,7 @@ class ChartLine {
   private yLabelContainer: HTMLElement | null = null
 
   constructor(options: Options = {}) {
-    const { data = [], xLabel = [], yLabel = [], selector = '[data-js-chart]' } = options
+    const { data = [], xLabel = [], yLabel = [], selector = '[data-js-chart-line]' } = options
 
     this.data = data
     this.xLabel = xLabel
@@ -45,7 +45,7 @@ class ChartLine {
       const x = (index / (this.data.length - 1)) * 100
       const y = 100 - data * 100
 
-      points.push(`${x},${y}`)
+      points.push(`${x.toFixed(2)},${y.toFixed(2)}`)
     })
 
     // Draw the line.

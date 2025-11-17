@@ -15,7 +15,7 @@ class ChartBar {
   private yLabelContainer: HTMLElement | null = null
 
   constructor(options: Options = {}) {
-    const { data = [], xLabel = [], yLabel = [], selector = '[data-js-chart]' } = options
+    const { data = [], xLabel = [], yLabel = [], selector = '[data-js-chart-bar]' } = options
 
     this.data = data
     this.xLabel = xLabel
@@ -27,7 +27,7 @@ class ChartBar {
       return
     }
 
-    this.dataContainer = this.chart.querySelector('[data-js-bars]')
+    this.dataContainer = this.chart.querySelector('[data-js-data]')
     this.xLabelContainer = this.chart.querySelector('[data-js-x-label]')
     this.yLabelContainer = this.chart.querySelector('[data-js-y-label]')
 
