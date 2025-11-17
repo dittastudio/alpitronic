@@ -4,13 +4,13 @@ import { INITIAL_VIEWPORTS } from 'storybook/viewport'
 
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => {
-    const css = context.loaded?.css
+    const stylesheets = context.loaded?.stylesheets
     const story = Story({}, context)
 
-    if (css?.length) {
+    if (stylesheets?.length) {
       const container = document.createElement('div')
 
-      for (const sheet of css) {
+      for (const sheet of stylesheets) {
         const styleTag = document.createElement('style')
         styleTag.innerHTML = sheet.default
 
@@ -32,19 +32,19 @@ export const decorators = [
 
 export const loaders = [
   async (context: StoryContext) => {
-    const css: string[] = []
+    const stylesheets: string[] = []
 
     if (Array.isArray(context?.component)) {
       for (const comp of context.component) {
         const cssModule = await import(`../src/components/${comp}/${comp}.css?inline`)
-        css.push(cssModule)
+        stylesheets.push(cssModule)
       }
     } else if (typeof context?.component === 'string') {
       const cssModule = await import(`../src/components/${context.component}/${context.component}.css?inline`)
-      css.push(cssModule)
+      stylesheets.push(cssModule)
     }
 
-    return { css }
+    return { stylesheets }
   },
 ]
 
