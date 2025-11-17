@@ -26,13 +26,18 @@ export default {
 
     const error = main.querySelector('[data-error]')
     const success = main.querySelector('[data-success]')
+    const loading = main.querySelector('[data-loading]')
 
-    if (error && success) {
+    if (error && success && loading) {
       if (type === 'success') {
         error.classList.add('hidden')
         success.classList.remove('hidden')
-      } else {
+      } else if (type === 'error') {
         error.classList.remove('hidden')
+        success.classList.add('hidden')
+      } else {
+        loading.classList.remove('hidden')
+        error.classList.add('hidden')
         success.classList.add('hidden')
       }
     }
@@ -51,7 +56,7 @@ export default {
     return wrapper
   },
   argTypes: {
-    type: { control: 'inline-radio', options: ['success', 'error'] },
+    type: { control: 'inline-radio', options: ['success', 'error', 'loading'] },
   },
   args: {
     type: 'success',
