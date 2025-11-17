@@ -110,26 +110,29 @@
   font-feature-settings: 'ss01'; /* changes a character */
 }
 
-@utility bg-chart-x {
+@utility bg-lines-x {
   background-image: repeating-linear-gradient(
-    to top,
+    to bottom,
     rgba(255, 255, 255, 0.1) 0,
-    rgba(255, 255, 255, 0.1) 2px,
-    transparent 2px,
-    transparent 10px
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px,
+    transparent 10px /* transparent calc(100 / var(--limit) * 1%) */
+  );
+}
+
+@utility bg-lines-y {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px,
+    transparent 10px /* transparent calc(100 / var(--limit) * 1%) */
   );
 }
 
 @utility shadow-toast {
   box-shadow: 0 0 3px 0 rgba(255, 255, 255, 0.1) inset, 0 20px 60px 0 rgba(0, 0, 0, 0.54), 0 0 3px 0 rgba(0, 0, 0, 0.25);
 }
-
-/* @custom-variant dark (&:is(.dark *)); */
-/* @custom-variant @dark {
-  @media (prefers-color-scheme: dark) {
-    @slot;
-  }
-} */
 
 @custom-variant @landscape {
   @container (orientation: landscape) {
