@@ -1,7 +1,9 @@
 import { defineConfig, build as viteBuild, type Plugin, type ResolvedConfig } from 'vite'
 import { resolve, join } from 'node:path'
-import { readdirSync, statSync, existsSync, copyFileSync } from 'node:fs'
+import { readdirSync, statSync, existsSync, copyFileSync, readFileSync, writeFileSync } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
+import posthtml from 'posthtml'
+import htmlnano from 'htmlnano'
 
 type Result = {
   Component: string
@@ -17,6 +19,20 @@ const message = (src: string, dist: string) =>
   existsSync(src)
     ? `${existsSync(dist) ? `✅ ${bytesToKB(statSync(dist).size)}` : '⚠️  Not built to dist'}`
     : `❌ Not in src`
+
+async function minifyHtmlFile(srcPath: string, distPath: string) {
+  const html = readFileSync(srcPath, 'utf-8')
+  const result = await posthtml([
+    htmlnano({
+      collapseWhitespace: 'aggressive',
+      removeComments: 'all',
+      removeEmptyAttributes: true,
+      removeRedundantAttributes: true,
+      minifySvg: true,
+    }),
+  ]).process(html)
+  writeFileSync(distPath, result.html, 'utf-8')
+}
 
 function componentBuilderPlugin(): Plugin {
   let resolvedConfig: ResolvedConfig
@@ -99,18 +115,23 @@ function componentBuilderPlugin(): Plugin {
           COPIED: [] as string[] | string,
         }
 
-        filesToCopy.forEach(file => {
+        for (const file of filesToCopy) {
           const srcFile = join(srcComponentDir, file)
           const distFile = join(distComponentDir, file)
 
           if (existsSync(srcFile)) {
-            copyFileSync(srcFile, distFile)
+            // Minify HTML files, copy others normally
+            if (file.endsWith('.html')) {
+              await minifyHtmlFile(srcFile, distFile)
+            } else {
+              copyFileSync(srcFile, distFile)
+            }
 
             if (Array.isArray(currentResult.COPIED)) {
               currentResult.COPIED.push(file)
             }
           }
-        })
+        }
 
         currentResult = {
           ...currentResult,

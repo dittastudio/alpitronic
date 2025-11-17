@@ -24,6 +24,8 @@
     "cloc": "^2.11.0",
     "eslint": "^9.39.1",
     "eslint-plugin-better-tailwindcss": "^3.7.10",
+    "htmlnano": "^2.1.5",
+    "posthtml": "^0.16.7",
     "storybook": "^10.0.7",
     "tailwindcss": "^4.1.17",
     "vite": "^7.2.2"

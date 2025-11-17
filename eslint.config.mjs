@@ -4,6 +4,9 @@ import betterTailwind from 'eslint-plugin-better-tailwindcss';
 
 export default [
   {
+    ignores: ['**/*.state.js', '**/*.setup.js'],
+  },
+  {
     files: ['**/*.html'],
     plugins: {
       '@html-eslint': html,

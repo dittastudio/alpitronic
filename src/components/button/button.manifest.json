@@ -1,1 +1,13 @@
-{}
+{
+  "tagName": "a-button-new",
+  "html": ["button.html"],
+  "js": ["button.js"],
+  "css": ["button.css"],
+  "state": "button.state.js",
+  "setup": "button.setup.js",
+  "preview": "preview.png",
+  "props": {
+    "text": { "type": "text", "defaultValue": "Heading" },
+    "level": { "type": "select", "defaultValue": "1", "options": ["1", "2", "3", "4", "5", "6"] }
+  }
+}

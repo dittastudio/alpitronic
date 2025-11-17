@@ -1,0 +1,12 @@
+{
+  "tagName": "a-button-test",
+  "html": ["button-test.html"],
+  "js": ["button-test.js"],
+  "css": ["button-test.css"],
+  "state": "button-test.state.js",
+  "setup": "button-test.setup.js",
+  "preview": "preview.png",
+  "props": {
+    "text": { "type": "text", "defaultValue": "Click Me" }
+  }
+}
