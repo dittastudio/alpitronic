@@ -1,5 +1,4 @@
 import type { StoryContext } from '@storybook/html'
-import '@/components/progress-stepped/progress-stepped.css'
 import template from '@/components/progress-stepped/progress-stepped.html?raw'
 import ProgressStepped from '@/components/progress-stepped/progress-stepped'
 

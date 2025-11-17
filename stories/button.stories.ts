@@ -1,4 +1,3 @@
-import '@/components/button/button.css'
 import template from '@/components/button/button.html?raw'
 
 export default {

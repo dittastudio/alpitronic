@@ -1,4 +1,3 @@
-import '@/components/chart-line/chart-line.css'
 import template from '@/components/chart-line/chart-line.html?raw'
 import ChartLine from '@/components/chart-line/chart-line'
 import { PerlinNoise, randomRange } from '@/utils/storybook'

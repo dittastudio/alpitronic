@@ -1,4 +1,3 @@
-import '@/components/time-out-loader/time-out-loader.css'
 import template from '@/components/time-out-loader/time-out-loader.html?raw'
 import { initTimeOutLoader } from '@/components/time-out-loader/time-out-loader'
 

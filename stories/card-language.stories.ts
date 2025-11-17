@@ -1,5 +1,4 @@
 import { fn } from 'storybook/test'
-import '@/components/card-language/card-language.css'
 import template from '@/components/card-language/card-language.html?raw'
 
 export default {

@@ -1,4 +1,3 @@
-import '@/components/system-message/system-message.css'
 import template from '@/components/system-message/system-message.html?raw'
 
 export default {

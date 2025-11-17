@@ -1,5 +1,3 @@
-import { wait } from '@/utils/helpers'
-
 class PerlinNoise {
   private permutation: number[]
 
@@ -59,55 +57,4 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
   return Math.round((min + randomStep * step) * 10) / 10
 }
 
-const disableInjectedCSS = (component: string | string[] = '') => {
-  const head = document.head
-  let isMoving = false
-
-  const isComponentElement = (element: Element): boolean => {
-    const dataViteDevId = element.getAttribute('data-vite-dev-id')
-    const href = element.getAttribute('href')
-
-    return (
-      ((dataViteDevId?.includes(`/${component}`) || href?.includes(`/${component}`)) &&
-        (dataViteDevId?.endsWith(`.css`) || href?.endsWith(`.css`))) ??
-      false
-    )
-  }
-
-  const observer = new MutationObserver(async mutations => {
-    if (isMoving) return
-
-    const addedNodes = mutations.flatMap(mutation => Array.from(mutation.addedNodes))
-    const lastAdded = addedNodes[addedNodes.length - 1]
-
-    if (lastAdded?.nodeType === Node.ELEMENT_NODE) {
-      const element = lastAdded as Element
-      const isComponentCSS = isComponentElement(element)
-
-      if (!isComponentCSS) {
-        const componentElement = Array.from(head.querySelectorAll('link, style')).find(el => isComponentElement(el))
-
-        if (componentElement) {
-          isMoving = true
-          head.appendChild(componentElement)
-
-          await wait(1)
-          isMoving = false
-        }
-      }
-    }
-  })
-
-  observer.observe(document.head, { childList: true })
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const elements = Array.from(document.head.querySelectorAll('link, style'))
-    const chosen = elements.filter(el => isComponentElement(el))
-
-    chosen.forEach(element => {
-      head.appendChild(element)
-    })
-  })
-}
-
-export { PerlinNoise, randomRange, disableInjectedCSS }
+export { PerlinNoise, randomRange }

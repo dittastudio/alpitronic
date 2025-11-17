@@ -1,5 +1,4 @@
 import type { StoryContext } from '@storybook/html'
-import '@/components/progress-bar-circle/progress-bar-circle.css'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
 import ProgressBarCircle from '@/components/progress-bar-circle/progress-bar-circle'
 import { wait } from '@/utils/helpers'
