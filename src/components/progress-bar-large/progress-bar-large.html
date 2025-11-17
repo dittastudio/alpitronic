@@ -2,15 +2,16 @@
   data-js-progress
   class="
     progress-bar-large
-    @container
+    @container-[size]
     normalize
   "
 >
   <div class="
     grid
-    text-[min(35cqmin,160px)]
+    text-[min(35cqi,160px)]
     size-full
-    aspect-16/6
+    h-160
+    @xl:h-100
     bg-black
     rounded-14
     overflow-hidden
@@ -31,15 +32,15 @@
         data-js-progress-bar
         class="
           size-full
-          p-[min(10cqmin,30px)]
+          p-[min(10cqi,30px)]
           flex
           flex-col
           justify-end
           bg-accent
           text-black
-          @portrait:h-auto
-          @portrait:basis-[calc(var(--percentage)*1%)]
-          @portrait:justify-start
+          @max-xl:h-auto
+          @max-xl:basis-[calc(var(--percentage)*1%)]
+          @max-xl:justify-start
           transition-[color,flex-basis]
           duration-[0.2s,var(--duration)]
           ease-[var(--ease-out),var(--ease-inOutQuart)]
@@ -83,21 +84,21 @@
           items-end
           justify-between
           h-full
-          @portrait:flex-col-reverse
-          @portrait:items-start
+          @max-xl:flex-col-reverse
+          @max-xl:items-start
         "
       >
         <div
           class="
             basis-[calc(var(--percentage)*1%)]
-            p-[min(10cqmin,30px)]
+            p-[min(10cqi,30px)]
             transition-[flex-basis]
             duration-(--duration)
             ease-inOutQuart
-            @portrait:flex
-            @portrait:flex-col
-            @portrait:justify-start
-            @portrait:w-full
+            @max-xl:flex
+            @max-xl:flex-col
+            @max-xl:justify-start
+            @max-xl:w-full
           ">
           <div
             class="
@@ -129,12 +130,12 @@
             font-medium
             text-white
             basis-[calc(100%-(var(--limit)*1%))]
-            @portrait:text-[min(5cqb,36px)]
+            @max-xl:text-[min(10cqi,36px)]
           "
         >
           <div
             class="
-              p-[min(10cqmin,30px)]
+              p-[min(10cqi,30px)]
             "
           >
             <div
