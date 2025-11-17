@@ -1,0 +1,74 @@
+<figure
+  data-js-chart
+  class="
+    normalize
+    relative
+    size-full
+    aspect-16/6
+    bg-chart-x
+    bg-black
+    gap-4
+    rounded-14
+    select-none
+    overflow-hidden
+  "
+>
+  <div class="
+    absolute
+    inset-0
+  ">
+    <svg data-js-data viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="
+      size-full
+    ">
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color: var(--color-accent); stop-opacity: 0" />
+          <stop offset="100%" style="stop-color: var(--color-accent); stop-opacity: 0.5" />
+        </linearGradient>
+      </defs>
+
+      <polygon
+        points=""
+        fill="url(#gradient)"
+      />
+
+      <polyline
+        points=""
+        fill="none"
+        stroke="var(--color-accent)"
+        stroke-width="6"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+
+  <ol
+    data-js-y-label
+    class="
+      absolute
+      inset-0
+      grid
+      grid-cols-1
+      grid-rows-[auto]
+      text-white
+      text-18
+      pointer-events-none
+      p-4
+    "
+  ></ol>
+
+  <ol data-js-x-label class="
+    absolute
+    bottom-0
+    flex
+    justify-between
+    items-start
+    w-full
+    text-white
+    text-18
+    pointer-events-none
+    p-4
+  "></ol>
+</figure>
