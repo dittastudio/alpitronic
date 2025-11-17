@@ -10,7 +10,7 @@ class ChartBar {
   private xLabel: string[]
   private yLabel: string[]
   private chart: HTMLElement | null = null
-  private barsContainer: HTMLElement | null = null
+  private dataContainer: HTMLElement | null = null
   private xLabelContainer: HTMLElement | null = null
   private yLabelContainer: HTMLElement | null = null
 
@@ -27,14 +27,14 @@ class ChartBar {
       return
     }
 
-    this.barsContainer = this.chart.querySelector('[data-js-bars]')
+    this.dataContainer = this.chart.querySelector('[data-js-bars]')
     this.xLabelContainer = this.chart.querySelector('[data-js-x-label]')
     this.yLabelContainer = this.chart.querySelector('[data-js-y-label]')
 
     this.init()
   }
 
-  private drawBars(container: HTMLElement): void {
+  private drawData(container: HTMLElement): void {
     container.innerHTML = ''
 
     if (!Array.isArray(this.data) || !this.data.length) {
@@ -126,8 +126,8 @@ class ChartBar {
   }
 
   private init(): void {
-    if (this.barsContainer) {
-      this.drawBars(this.barsContainer)
+    if (this.dataContainer) {
+      this.drawData(this.dataContainer)
     }
 
     if (this.xLabelContainer) {
