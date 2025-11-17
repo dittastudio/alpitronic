@@ -34,7 +34,7 @@ class ChartLine {
     this.init()
   }
 
-  private drawBars(container: HTMLElement): void {
+  private drawData(container: HTMLElement): void {
     if (!container || !Array.isArray(this.data) || !this.data.length) {
       return
     }
@@ -120,7 +120,7 @@ class ChartLine {
 
   private init(): void {
     if (this.dataContainer) {
-      this.drawBars(this.dataContainer)
+      this.drawData(this.dataContainer)
     }
 
     if (this.xLabelContainer) {
