@@ -76,6 +76,7 @@
       transparent calc(100 / var(--limit) * 1%)
     );
     background-size: 100% calc(var(--limit) * 1%);
+    background-position: bottom;
   }
 }
 
