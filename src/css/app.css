@@ -78,6 +78,9 @@
   --text-48-fluid: clamp(22px, -30px + 16.25cqi, 48px);
   --text-48-fluid--line-height: 1;
 
+  --text-80-fluid: clamp(48px, 26.6667px + 6.6667cqi, 80px);
+  --text-80-fluid--line-height: 1;
+
   --spacing: 4px;
 
   --ease-inExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
@@ -86,6 +89,17 @@
   --ease-inQuart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
   --ease-outQuart: cubic-bezier(0.215, 0.61, 0.355, 1);
   --ease-inOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --animate-spin: spin 2s linear infinite;
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
 }
 
 @layer base {
