@@ -1,10 +1,6 @@
 import type { StoryContext } from '@storybook/html'
-import '@/components/progress-stepped/progress-stepped.css'
 import template from '@/components/progress-stepped/progress-stepped.html?raw'
 import ProgressStepped from '@/components/progress-stepped/progress-stepped'
-
-const wrappers = new Map<string, HTMLDivElement>()
-const progresses = new Map<string, ProgressStepped>()
 
 export default {
   title: 'Alpitronic/Progress Stepped',
@@ -13,31 +9,17 @@ export default {
     const { steps = [], step = 1 } = args
     const selectedColor = context.globals.accent ?? '#54e300'
 
-    let wrapper = wrappers.get(context.id)
+    const wrapper = document.createElement('div')
+    wrapper.classList.add('sb-padded')
+    wrapper.innerHTML = template
 
-    if (wrapper) {
-      const savedProgress = progresses.get(context.id)
-
-      if (savedProgress) {
-        savedProgress.setSteps(steps)
-        savedProgress.setStep(step)
-      }
-    } else {
-      wrapper = document.createElement('div')
-      wrapper.classList.add('sb-padded')
-      wrapper.innerHTML = template
-      wrappers.set(context.id, wrapper)
-
-      document.addEventListener('DOMContentLoaded', async () => {
-        const progress = new ProgressStepped({
-          steps,
-          step,
-          selector: '[data-js-progress]',
-        })
-
-        progresses.set(context.id, progress)
+    document.addEventListener('DOMContentLoaded', async () => {
+      new ProgressStepped({
+        steps,
+        step,
+        selector: '[data-js-progress]',
       })
-    }
+    })
 
     wrapper.style.setProperty('--color-accent', selectedColor)
 

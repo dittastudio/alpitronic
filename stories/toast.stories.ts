@@ -1,4 +1,3 @@
-import '@/components/toast/toast.css'
 import template from '@/components/toast/toast.html?raw'
 
 const themeClasses = {

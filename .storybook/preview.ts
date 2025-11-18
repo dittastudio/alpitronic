@@ -1,15 +1,50 @@
 import '../src/css/storybook.css'
 import type { Preview, StoryFn, StoryContext } from '@storybook/html-vite'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
-import { disableInjectedCSS } from '../src/utils/storybook'
 
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => {
-    if (Array.isArray(context?.component) || typeof context?.component === 'string') {
-      disableInjectedCSS(context.component)
+    const stylesheets = context.loaded?.stylesheets
+    const story = Story({}, context)
+
+    if (stylesheets?.length) {
+      const container = document.createElement('div')
+
+      for (const sheet of stylesheets) {
+        const styleTag = document.createElement('style')
+        styleTag.innerHTML = sheet.default
+
+        container.appendChild(styleTag)
+      }
+
+      if (typeof story === 'string') {
+        container.innerHTML += story
+      } else if (story instanceof HTMLElement) {
+        container.appendChild(story)
+      }
+
+      return container
     }
 
-    return Story({}, context)
+    return story
+  },
+]
+
+export const loaders = [
+  async (context: StoryContext) => {
+    const stylesheets: string[] = []
+
+    if (Array.isArray(context?.component)) {
+      for (const comp of context.component) {
+        const cssModule = await import(`../src/components/${comp}/${comp}.css?inline`)
+        stylesheets.push(cssModule)
+      }
+    } else if (typeof context?.component === 'string') {
+      const cssModule = await import(`../src/components/${context.component}/${context.component}.css?inline`)
+      stylesheets.push(cssModule)
+    }
+
+    return { stylesheets }
   },
 ]
 

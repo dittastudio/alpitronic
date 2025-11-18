@@ -1,5 +1,4 @@
 import type { StoryContext } from '@storybook/html'
-import '@/components/progress-bar-small/progress-bar-small.css'
 import template from '@/components/progress-bar-small/progress-bar-small.html?raw'
 import ProgressBarSmall from '@/components/progress-bar-small/progress-bar-small'
 import { wait } from '@/utils/helpers'

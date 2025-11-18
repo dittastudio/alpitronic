@@ -1,4 +1,3 @@
-import '@/components/typography/typography.css'
 import template from '@/components/typography/typography.html?raw'
 
 export default {

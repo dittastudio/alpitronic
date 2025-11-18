@@ -1,4 +1,3 @@
-import '@/components/icon-system/icon-system.css'
 import template from '@/components/icon-system/icon-system.html?raw'
 
 const iconModules = (import.meta as any).glob('@/assets/icon-system/*.svg', {

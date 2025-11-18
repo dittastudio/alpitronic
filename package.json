@@ -16,14 +16,14 @@
   "devDependencies": {
     "@html-eslint/eslint-plugin": "^0.48.0",
     "@html-eslint/parser": "^0.48.0",
-    "@storybook/addon-docs": "^10.0.7",
-    "@storybook/html-vite": "^10.0.7",
+    "@storybook/addon-docs": "^10.0.8",
+    "@storybook/html-vite": "^10.0.8",
     "@tailwindcss/vite": "^4.1.17",
     "@types/node": "^24.10.1",
     "cloc": "^2.11.0",
     "eslint": "^9.39.1",
     "eslint-plugin-better-tailwindcss": "^3.7.10",
-    "storybook": "^10.0.7",
+    "storybook": "^10.0.8",
     "tailwindcss": "^4.1.17",
     "vite": "^7.2.2"
   }

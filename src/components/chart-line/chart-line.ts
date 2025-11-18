@@ -5,7 +5,7 @@ interface Options {
   selector?: string
 }
 
-class ChartBar {
+class ChartLine {
   private data: number[]
   private xLabel: string[]
   private yLabel: string[]
@@ -15,7 +15,7 @@ class ChartBar {
   private yLabelContainer: HTMLElement | null = null
 
   constructor(options: Options = {}) {
-    const { data = [], xLabel = [], yLabel = [], selector = '[data-js-chart-bar]' } = options
+    const { data = [], xLabel = [], yLabel = [], selector = '[data-js-chart-line]' } = options
 
     this.data = data
     this.xLabel = xLabel
@@ -35,40 +35,33 @@ class ChartBar {
   }
 
   private drawData(container: HTMLElement): void {
-    container.innerHTML = ''
-
-    if (!Array.isArray(this.data) || !this.data.length) {
+    if (!container || !Array.isArray(this.data) || !this.data.length) {
       return
     }
 
-    const items: { element: HTMLElement; height: number }[] = []
+    const points: string[] = []
 
     this.data.forEach((data, index) => {
-      const value = data * container.clientHeight
-      const bar = document.createElement('li')
-      const width = 100 / this.data.length / 2
-      const height = (value / container.clientHeight) * 100
-      const colour = height <= 25 ? 'bg-danger' : 'bg-success'
+      const x = (index / (this.data.length - 1)) * 100
+      const y = 100 - data * 100
 
-      bar.className = `${colour} rounded-4 transition-[height] duration-700 ease-out`
-      bar.style.width = `${width}%`
-      bar.style.height = '0%'
-      bar.style.transitionDelay = `${index * 30}ms`
-
-      const content = document.createElement('span')
-      content.textContent = `${Math.round(height)}%`
-      content.className = 'sr-only'
-
-      bar.appendChild(content)
-      container.appendChild(bar)
-      items.push({ element: bar, height })
+      points.push(`${x.toFixed(2)},${y.toFixed(2)}`)
     })
 
-    requestAnimationFrame(() => {
-      items.forEach(({ element, height }) => {
-        element.style.height = `${height}%`
-      })
-    })
+    // Draw the line.
+    const svgPolyLine = container.querySelector('polyline')
+
+    if (svgPolyLine) {
+      svgPolyLine.setAttribute('points', points.join(' '))
+    }
+
+    // Draw the area.
+    const svgPolygon = container.querySelector('polygon')
+
+    if (svgPolygon) {
+      points.push(`100,100`, `0,100`)
+      svgPolygon.setAttribute('points', points.join(' '))
+    }
   }
 
   private drawXLabel(container: HTMLElement): void {
@@ -140,4 +133,4 @@ class ChartBar {
   }
 }
 
-export default ChartBar
+export default ChartLine

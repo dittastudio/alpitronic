@@ -1,12 +1,12 @@
-import template from '@/components/chart-bar/chart-bar.html?raw'
-import ChartBar from '@/components/chart-bar/chart-bar'
+import template from '@/components/chart-line/chart-line.html?raw'
+import ChartLine from '@/components/chart-line/chart-line'
 import { PerlinNoise, randomRange } from '@/utils/storybook'
 
 const perlin = new PerlinNoise(50)
 
 export default {
-  title: 'Alpitronic/Chart Bar',
-  component: 'chart-bar',
+  title: 'Alpitronic/Chart Line',
+  component: 'chart-line',
   parameters: {
     docs: {
       description: {
@@ -21,7 +21,7 @@ export default {
     wrapper.innerHTML = template
 
     document.addEventListener('DOMContentLoaded', () => {
-      new ChartBar({
+      new ChartLine({
         data,
         xLabel,
         yLabel,
