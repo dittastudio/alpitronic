@@ -78,6 +78,9 @@
   --text-48-fluid: clamp(22px, -30px + 16.25cqi, 48px);
   --text-48-fluid--line-height: 1;
 
+  --text-80-fluid: clamp(48px, 26.6667px + 6.6667cqi, 80px);
+  --text-80-fluid--line-height: 1;
+
   --spacing: 4px;
 
   --ease-inExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
