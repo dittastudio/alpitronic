@@ -62,6 +62,7 @@ const makeResizable = (element: HTMLElement) => {
   const minHeight = 20
 
   let isResizing = false
+  let isDragging = false
   let currentHandle: string | null = null
   let startX = 0
   let startY = 0
@@ -97,47 +98,74 @@ const makeResizable = (element: HTMLElement) => {
     })
   })
 
+  element.addEventListener('mousedown', (e: MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('sb-resize-handle')) {
+      return
+    }
+
+    e.preventDefault()
+
+    isDragging = true
+    startX = e.clientX
+    startY = e.clientY
+    startLeft = element.offsetLeft
+    startTop = element.offsetTop
+
+    document.body.style.cursor = 'move'
+  })
+
   document.addEventListener('mousemove', (e: MouseEvent) => {
-    if (!isResizing || !currentHandle) return
+    if (isResizing && currentHandle) {
+      const deltaX = e.clientX - startX
+      const deltaY = e.clientY - startY
 
-    const deltaX = e.clientX - startX
-    const deltaY = e.clientY - startY
+      let newWidth = startWidth
+      let newHeight = startHeight
+      let newLeft = startLeft
+      let newTop = startTop
 
-    let newWidth = startWidth
-    let newHeight = startHeight
-    let newLeft = startLeft
-    let newTop = startTop
+      if (currentHandle.includes('e')) {
+        newWidth = Math.max(minWidth, startWidth + deltaX)
+      }
 
-    if (currentHandle.includes('e')) {
-      newWidth = Math.max(minWidth, startWidth + deltaX)
+      if (currentHandle.includes('w')) {
+        newWidth = Math.max(minWidth, startWidth - deltaX)
+        newLeft = startLeft + (startWidth - newWidth)
+      }
+
+      if (currentHandle.includes('s')) {
+        newHeight = Math.max(minHeight, startHeight + deltaY)
+      }
+
+      if (currentHandle.includes('n')) {
+        newHeight = Math.max(minHeight, startHeight - deltaY)
+        newTop = startTop + (startHeight - newHeight)
+      }
+
+      element.style.width = `${newWidth}px`
+      element.style.height = `${newHeight}px`
+      element.style.left = `${newLeft}px`
+      element.style.top = `${newTop}px`
+
+      info.textContent = `${newWidth} x ${newHeight}`
+    } else if (isDragging) {
+      const deltaX = e.clientX - startX
+      const deltaY = e.clientY - startY
+
+      element.style.left = `${startLeft + deltaX}px`
+      element.style.top = `${startTop + deltaY}px`
     }
-
-    if (currentHandle.includes('w')) {
-      newWidth = Math.max(minWidth, startWidth - deltaX)
-      newLeft = startLeft + (startWidth - newWidth)
-    }
-
-    if (currentHandle.includes('s')) {
-      newHeight = Math.max(minHeight, startHeight + deltaY)
-    }
-
-    if (currentHandle.includes('n')) {
-      newHeight = Math.max(minHeight, startHeight - deltaY)
-      newTop = startTop + (startHeight - newHeight)
-    }
-
-    element.style.width = `${newWidth}px`
-    element.style.height = `${newHeight}px`
-    element.style.left = `${newLeft}px`
-    element.style.top = `${newTop}px`
-
-    info.textContent = `${newWidth} x ${newHeight}`
   })
 
   document.addEventListener('mouseup', () => {
     if (isResizing) {
       isResizing = false
       currentHandle = null
+      document.body.style.cursor = ''
+    }
+
+    if (isDragging) {
+      isDragging = false
       document.body.style.cursor = ''
     }
   })
