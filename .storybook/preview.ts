@@ -2,6 +2,24 @@ import '../src/css/storybook.css'
 import type { Preview, StoryFn, StoryContext } from '@storybook/html-vite'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
 
+export const loaders = [
+  async (context: StoryContext) => {
+    const stylesheets: string[] = []
+
+    if (Array.isArray(context?.component)) {
+      for (const comp of context.component) {
+        const cssModule = await import(`../src/components/${comp}/${comp}.css?inline`)
+        stylesheets.push(cssModule)
+      }
+    } else if (typeof context?.component === 'string') {
+      const cssModule = await import(`../src/components/${context.component}/${context.component}.css?inline`)
+      stylesheets.push(cssModule)
+    }
+
+    return { stylesheets }
+  },
+]
+
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => {
     const stylesheets = context.loaded?.stylesheets
@@ -27,24 +45,6 @@ export const decorators = [
     }
 
     return story
-  },
-]
-
-export const loaders = [
-  async (context: StoryContext) => {
-    const stylesheets: string[] = []
-
-    if (Array.isArray(context?.component)) {
-      for (const comp of context.component) {
-        const cssModule = await import(`../src/components/${comp}/${comp}.css?inline`)
-        stylesheets.push(cssModule)
-      }
-    } else if (typeof context?.component === 'string') {
-      const cssModule = await import(`../src/components/${context.component}/${context.component}.css?inline`)
-      stylesheets.push(cssModule)
-    }
-
-    return { stylesheets }
   },
 ]
 
