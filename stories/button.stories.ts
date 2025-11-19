@@ -1,3 +1,4 @@
+import { makeResizable } from '@/utils/storybook'
 import template from '@/components/button/button.html?raw'
 
 export default {
@@ -5,7 +6,6 @@ export default {
   component: 'button',
   render: ({
     label,
-    fullWidth,
     rounded,
     backgroundColor,
     textColor,
@@ -15,7 +15,6 @@ export default {
     showLineGuide,
   }: {
     label?: string
-    fullWidth?: boolean
     rounded?: 'small' | 'large'
     backgroundColor?: string
     textColor?: string
@@ -26,7 +25,7 @@ export default {
   }) => {
     const wrapper = document.createElement('div')
 
-    wrapper.classList.add('sb-centered')
+    wrapper.classList.add('sb-resize-container')
     wrapper.innerHTML = template
 
     const btn: HTMLElement | null = wrapper.querySelector('button')
@@ -39,10 +38,6 @@ export default {
 
     if (btnLabel && label) {
       btnLabel.textContent = label
-    }
-
-    if (fullWidth) {
-      btn.classList.add('w-full')
     }
 
     if (backgroundColor) {
@@ -78,13 +73,12 @@ export default {
       btn.classList.remove('before:hidden')
     }
 
-    return wrapper
+    return makeResizable(wrapper)
   },
   argTypes: {
     label: { control: 'text' },
     textColor: { control: 'color' },
     backgroundColor: { control: 'color' },
-    fullWidth: { control: 'boolean' },
     rounded: {
       control: { type: 'inline-radio' },
       options: ['small', 'large'],
@@ -96,7 +90,6 @@ export default {
   },
   args: {
     label: 'Hello World',
-    fullWidth: false,
     rounded: 'small',
     icon: true,
     reversed: false,

@@ -57,4 +57,100 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
   return Math.round((min + randomStep * step) * 10) / 10
 }
 
-export { PerlinNoise, randomRange }
+const makeResizable = (element: HTMLElement) => {
+  const minWidth = 20
+  const minHeight = 20
+
+  let isResizing = false
+  let currentHandle: string | null = null
+  let startX = 0
+  let startY = 0
+  let startWidth = 0
+  let startHeight = 0
+  let startLeft = 0
+  let startTop = 0
+
+  const handles = ['nw', 'ne', 'sw', 'se']
+
+  handles.forEach(position => {
+    const handle = document.createElement('div')
+
+    handle.className = `sb-resize-handle sb-resize-handle-${position}`
+    handle.dataset.position = position
+
+    element.appendChild(handle)
+
+    handle.addEventListener('mousedown', (e: MouseEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      isResizing = true
+      currentHandle = position
+      startX = e.clientX
+      startY = e.clientY
+      startWidth = element.offsetWidth
+      startHeight = element.offsetHeight
+      startLeft = element.offsetLeft
+      startTop = element.offsetTop
+
+      document.body.style.cursor = getComputedStyle(handle).cursor
+    })
+  })
+
+  document.addEventListener('mousemove', (e: MouseEvent) => {
+    if (!isResizing || !currentHandle) return
+
+    const deltaX = e.clientX - startX
+    const deltaY = e.clientY - startY
+
+    let newWidth = startWidth
+    let newHeight = startHeight
+    let newLeft = startLeft
+    let newTop = startTop
+
+    if (currentHandle.includes('e')) {
+      newWidth = Math.max(minWidth, startWidth + deltaX)
+    }
+
+    if (currentHandle.includes('w')) {
+      newWidth = Math.max(minWidth, startWidth - deltaX)
+      newLeft = startLeft + (startWidth - newWidth)
+    }
+
+    if (currentHandle.includes('s')) {
+      newHeight = Math.max(minHeight, startHeight + deltaY)
+    }
+
+    if (currentHandle.includes('n')) {
+      newHeight = Math.max(minHeight, startHeight - deltaY)
+      newTop = startTop + (startHeight - newHeight)
+    }
+
+    element.style.width = `${newWidth}px`
+    element.style.height = `${newHeight}px`
+    element.style.left = `${newLeft}px`
+    element.style.top = `${newTop}px`
+
+    info.textContent = `${newWidth} x ${newHeight}`
+  })
+
+  document.addEventListener('mouseup', () => {
+    if (isResizing) {
+      isResizing = false
+      currentHandle = null
+      document.body.style.cursor = ''
+    }
+  })
+
+  const info = document.createElement('div')
+  info.className = 'sb-resize-info'
+
+  setTimeout(() => {
+    info.textContent = `${element.offsetWidth} x ${element.offsetHeight}`
+    element.appendChild(info)
+  }, 0)
+
+  return element
+}
+
+export { PerlinNoise, randomRange, makeResizable }
