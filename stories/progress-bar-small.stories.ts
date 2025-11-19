@@ -3,44 +3,27 @@ import template from '@/components/progress-bar-small/progress-bar-small.html?ra
 import ProgressBarSmall from '@/components/progress-bar-small/progress-bar-small'
 import { wait } from '@/utils/helpers'
 
-const wrappers = new Map<string, HTMLDivElement>()
-const progresses = new Map<string, ProgressBarSmall>()
-
 export default {
   title: 'Alpitronic/Progress Bar Small',
   component: 'progress-bar-small',
   render: (args: { percentage?: number; limit?: number }, context: StoryContext) => {
     const { percentage = 56, limit = 80 } = args
     const selectedColor = context.globals.accent ?? '#54e300'
+    const wrapper = document.createElement('div')
 
-    let wrapper = wrappers.get(context.id)
+    wrapper.classList.add('sb-padded')
+    wrapper.innerHTML = template
 
-    if (wrapper) {
-      const savedProgress = progresses.get(context.id)
-
-      if (savedProgress) {
-        savedProgress.setProgress({ percentage })
-        savedProgress.setLimit(limit)
-      }
-    } else {
-      wrapper = document.createElement('div')
-      wrapper.classList.add('sb-padded')
-      wrapper.innerHTML = template
-      wrappers.set(context.id, wrapper)
-
-      document.addEventListener('DOMContentLoaded', async () => {
-        const progress = new ProgressBarSmall({
-          percentage: 0,
-          limit: limit,
-          selector: '[data-js-progress]',
-        })
-
-        progresses.set(context.id, progress)
-
-        await wait(250)
-        await progress.setProgress({ percentage, animate: true })
+    document.addEventListener('DOMContentLoaded', async () => {
+      const progress = new ProgressBarSmall({
+        percentage: 0,
+        limit: limit,
+        selector: '[data-js-progress]',
       })
-    }
+
+      await wait(250)
+      await progress.setProgress({ percentage, animate: true })
+    })
 
     wrapper.style.setProperty('--color-accent', selectedColor)
 

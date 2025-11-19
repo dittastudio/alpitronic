@@ -3,50 +3,32 @@ import template from '@/components/progress-bar-circle/progress-bar-circle.html?
 import ProgressBarCircle from '@/components/progress-bar-circle/progress-bar-circle'
 import { wait } from '@/utils/helpers'
 
-const wrappers = new Map<string, HTMLDivElement>()
-const progresses = new Map<string, ProgressBarCircle>()
-
 export default {
   title: 'Alpitronic/Progress Bar Circle',
   component: 'progress-bar-circle',
   render: (args: { percentage?: number; accentColor?: string; limit?: number }, context: StoryContext) => {
     const { percentage = 56, limit = 80 } = args
     const selectedColor = context.globals.accent ?? '#54e300'
+    const wrapper = document.createElement('div')
 
-    let wrapper = wrappers.get(context.id)
+    wrapper.classList.add('sb-centered')
 
-    if (wrapper) {
-      const savedProgress = progresses.get(context.id)
+    const inside = document.createElement('div')
 
-      if (savedProgress) {
-        savedProgress.setProgress({ percentage })
-        savedProgress.setLimit(limit)
-      }
-    } else {
-      wrapper = document.createElement('div')
-      wrapper.classList.add('sb-centered')
+    inside.classList.add('sb-boxed')
+    wrapper.appendChild(inside)
+    inside.innerHTML = template
 
-      const inside = document.createElement('div')
-
-      inside.classList.add('sb-boxed')
-      wrapper.appendChild(inside)
-      inside.innerHTML = template
-
-      wrappers.set(context.id, wrapper)
-
-      document.addEventListener('DOMContentLoaded', async () => {
-        const progress = new ProgressBarCircle({
-          percentage: 0,
-          limit: limit,
-          selector: '[data-js-progress]',
-        })
-
-        progresses.set(context.id, progress)
-
-        await wait(250)
-        await progress.setProgress({ percentage, animate: true })
+    document.addEventListener('DOMContentLoaded', async () => {
+      const progress = new ProgressBarCircle({
+        percentage: 0,
+        limit: limit,
+        selector: '[data-js-progress]',
       })
-    }
+
+      await wait(250)
+      await progress.setProgress({ percentage, animate: true })
+    })
 
     wrapper.style.setProperty('--color-accent', selectedColor)
 
