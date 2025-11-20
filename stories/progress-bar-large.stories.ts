@@ -2,6 +2,7 @@ import type { StoryContext } from '@storybook/html'
 import template from '@/components/progress-bar-large/progress-bar-large.html?raw'
 import ProgressBarLarge from '@/components/progress-bar-large/progress-bar-large'
 import { wait } from '@/utils/helpers'
+import { makeResizable } from '@/utils/storybook'
 
 export default {
   title: 'Alpitronic/Progress Bar Large',
@@ -11,7 +12,7 @@ export default {
     const selectedColor = context.globals.accent ?? '#54e300'
     const wrapper = document.createElement('div')
 
-    wrapper.classList.add('sb-padded')
+    wrapper.classList.add('sb-resize-container')
     wrapper.innerHTML = template
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -27,7 +28,7 @@ export default {
 
     wrapper.style.setProperty('--color-accent', selectedColor)
 
-    return wrapper
+    return makeResizable(wrapper, { width: 1200, height: 300 })
   },
   argTypes: {
     percentage: {

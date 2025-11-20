@@ -150,16 +150,12 @@
 
 @custom-variant @landscape {
   @container (orientation: landscape) {
-    && {
-      @slot;
-    }
+    @slot;
   }
 }
 
 @custom-variant @portrait {
   @container (orientation: portrait) {
-    && {
-      @slot;
-    }
+    @slot;
   }
 }

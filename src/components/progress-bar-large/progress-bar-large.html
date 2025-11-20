@@ -4,14 +4,13 @@
     progress-bar-large
     @container-[size]
     normalize
+    size-full
   "
 >
   <div class="
     grid
-    text-[min(35cqi,160px)]
+    text-[min(60cqb,45cqi,160px)]
     size-full
-    h-160
-    @xl:h-100
     bg-black
     rounded-14
     overflow-hidden
@@ -38,9 +37,9 @@
           justify-end
           bg-accent
           text-black
-          @max-xl:h-auto
-          @max-xl:basis-[calc(var(--percentage)*1%)]
-          @max-xl:justify-start
+          @portrait:h-auto
+          @portrait:basis-[calc(var(--percentage)*1%)]
+          @portrait:justify-start
           transition-[color,flex-basis]
           duration-[0.2s,var(--duration)]
           ease-[var(--ease-out),var(--ease-inOutQuart)]
@@ -51,7 +50,7 @@
             leading-none
             flex
             items-baseline
-            gap-2
+            gap-[0.1em]
             -mx-[0.035em]
             -my-[0.12em]
           "
@@ -84,8 +83,8 @@
           items-end
           justify-between
           h-full
-          @max-xl:flex-col-reverse
-          @max-xl:items-start
+          @portrait:flex-col-reverse
+          @portrait:items-start
         "
       >
         <div
@@ -95,10 +94,10 @@
             transition-[flex-basis]
             duration-(--duration)
             ease-inOutQuart
-            @max-xl:flex
-            @max-xl:flex-col
-            @max-xl:justify-start
-            @max-xl:w-full
+            @portrait:flex
+            @portrait:flex-col
+            @portrait:justify-start
+            @portrait:w-full
           ">
           <div
             class="
@@ -126,11 +125,11 @@
           class="
             flex
             items-end
-            text-[min(3cqi,36px)]
+            text-[min(30cqb,3cqi,36px)]
             font-medium
             text-white
             basis-[calc(100%-(var(--limit)*1%))]
-            @max-xl:text-[min(10cqi,36px)]
+            @portrait:text-[min(6cqb,15cqi,36px)]
           "
         >
           <div

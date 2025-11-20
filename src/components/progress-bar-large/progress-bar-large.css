@@ -42,7 +42,7 @@
 .progress-bar-large__mask {
   clip-path: polygon(0 0, var(--percentage-unit) 0, var(--percentage-unit) 100%, 0 100%);
 
-  @container (width < 36rem) {
+  @container (orientation: portrait) {
     clip-path: polygon(
       0 calc(100% - var(--percentage-unit)),
       100% calc(100% - var(--percentage-unit)),
@@ -67,7 +67,7 @@
   background-size: calc(var(--limit) * 1%) 100%;
   background-repeat: no-repeat;
 
-  @container (width < 36rem) {
+  @container (orientation: portrait) {
     background-image: repeating-linear-gradient(
       to bottom,
       var(--line-color) 0%,
