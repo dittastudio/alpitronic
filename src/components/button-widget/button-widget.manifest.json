@@ -1,0 +1,12 @@
+{
+  "tagName": "a-button-widget",
+  "html": ["button-widget.html"],
+  "js": ["button-widget.js"],
+  "css": ["button-widget.css"],
+  "state": "button-widget.state.js",
+  "setup": "button-widget.setup.js",
+  "preview": "preview.png",
+  "props": {
+    "text": { "type": "text", "defaultValue": "Button" }
+  }
+}

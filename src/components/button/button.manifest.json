@@ -1,1 +1,17 @@
-{}
+{
+  "tagName": "a-mxm-button",
+  "html": ["button.html"],
+  "js": ["button.js"],
+  "css": ["button.css"],
+  "state": "button.state.js",
+  "setup": "button.setup.js",
+  "preview": "preview.png",
+  "props": {
+    "box": {
+      "x": { "type": "text", "defaultValue": "0px" },
+      "y": { "type": "text", "defaultValue": "0px" },
+      "width": { "type": "text", "defaultValue": "512px" },
+      "height": { "type": "text", "defaultValue": "512px" }
+    }
+  }
+}

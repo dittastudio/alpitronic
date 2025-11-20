@@ -1,5 +1,6 @@
 import template from '@/components/time-out-loader/time-out-loader.html?raw'
 import { initTimeOutLoader } from '@/components/time-out-loader/time-out-loader'
+import { makeResizable } from '@/utils/storybook'
 
 export default {
   title: 'Alpitronic/Time Out Loader',
@@ -8,19 +9,14 @@ export default {
     const { seconds = 45 } = args
     const wrapper = document.createElement('div')
 
-    wrapper.classList.add('sb-centered')
+    wrapper.classList.add('sb-resize-container')
+    wrapper.innerHTML = template
 
-    const inside = document.createElement('div')
-
-    inside.classList.add('sb-boxed')
-    wrapper.appendChild(inside)
-    inside.innerHTML = template
-
-    const element = inside.firstChild as HTMLElement
+    const element = wrapper.firstChild as HTMLElement
 
     initTimeOutLoader(element, seconds)
 
-    return wrapper
+    return makeResizable(wrapper, { width: 400, height: 400 })
   },
   argTypes: {
     seconds: {

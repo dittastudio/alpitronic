@@ -71,12 +71,14 @@ class Progress {
     this.element.style.setProperty('--percentage', `${percentage}`)
 
     if (animate) {
-      // animateNumbers will assign this.percentage when done animating.
-      //this.percentage = percentage
       this.element.style.setProperty('--duration', `${duration}ms`)
 
       await wait(duration)
       this.element.style.setProperty('--duration', `0ms`)
+
+      // REVISIT THIS LOGIC. NEED TO UPDATE PERCENTAGE CONTINUOUSLY DURING ANIMATION FOR ACCURATE STATE.
+      this.percentage = percentage
+      this.limitCheck()
     } else {
       this.percentage = percentage
     }
