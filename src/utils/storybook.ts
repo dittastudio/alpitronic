@@ -57,7 +57,15 @@ function randomRange(min: number, max: number, step: number = 0.1): number {
   return Math.round((min + randomStep * step) * 10) / 10
 }
 
-const makeResizable = (element: HTMLElement) => {
+const makeResizable = (element: HTMLElement, size: { width?: number; height?: number } = {}) => {
+  if (typeof size.width === 'number') {
+    element.style.width = `${size.width}px`
+  }
+
+  if (typeof size.height === 'number') {
+    element.style.height = `${size.height}px`
+  }
+
   const minWidth = 20
   const minHeight = 20
 

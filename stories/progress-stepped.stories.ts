@@ -1,6 +1,7 @@
 import type { StoryContext } from '@storybook/html'
 import template from '@/components/progress-stepped/progress-stepped.html?raw'
 import ProgressStepped from '@/components/progress-stepped/progress-stepped'
+import { makeResizable } from '@/utils/storybook'
 
 export default {
   title: 'Alpitronic/Progress Stepped',
@@ -8,9 +9,9 @@ export default {
   render: (args: { steps?: string[]; step?: number }, context: StoryContext) => {
     const { steps = [], step = 1 } = args
     const selectedColor = context.globals.accent ?? '#54e300'
-
     const wrapper = document.createElement('div')
-    wrapper.classList.add('sb-padded')
+
+    wrapper.classList.add('sb-resize-container')
     wrapper.innerHTML = template
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -23,7 +24,7 @@ export default {
 
     wrapper.style.setProperty('--color-accent', selectedColor)
 
-    return wrapper
+    return makeResizable(wrapper, { width: 660, height: 60 })
   },
   argTypes: {
     steps: { control: 'array', description: 'Array of step labels' },

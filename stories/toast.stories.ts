@@ -1,4 +1,5 @@
 import template from '@/components/toast/toast.html?raw'
+import { makeResizable } from '@/utils/storybook'
 
 const themeClasses = {
   dark: ['bg-grey-800', 'text-white'],
@@ -12,23 +13,23 @@ export default {
   render: (args: any) => {
     const wrapper = document.createElement('div')
 
-    wrapper.classList.add('sb-centered')
+    wrapper.classList.add('sb-resize-container')
     wrapper.innerHTML = template
 
     const element = wrapper.firstChild as HTMLElement
-    const labelElement = element.querySelector('[data-js-toast-label]')
+    const label = element.querySelector('[data-js-toast-label]')
 
-    if (labelElement) labelElement.textContent = args.label
-
-    const toastElement = element.querySelector('[data-js-toast]')
-
-    if (toastElement) {
-      const allThemeClasses = Object.values(themeClasses).flat()
-      toastElement.classList.remove(...allThemeClasses)
-      toastElement.classList.add(...themeClasses[args.theme as keyof typeof themeClasses])
+    if (label) {
+      label.textContent = args.label
     }
 
-    return wrapper
+    if (element) {
+      const allThemeClasses = Object.values(themeClasses).flat()
+      element.classList.remove(...allThemeClasses)
+      element.classList.add(...themeClasses[args.theme as keyof typeof themeClasses])
+    }
+
+    return makeResizable(wrapper, { width: 300, height: 66 })
   },
   argTypes: {
     label: {

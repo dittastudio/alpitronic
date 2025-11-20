@@ -1,6 +1,7 @@
 import type { StoryContext } from '@storybook/html'
 import template from '@/components/progress-bar-circle/progress-bar-circle.html?raw'
 import ProgressBarCircle from '@/components/progress-bar-circle/progress-bar-circle'
+import { makeResizable } from '@/utils/storybook'
 import { wait } from '@/utils/helpers'
 
 export default {
@@ -11,13 +12,8 @@ export default {
     const selectedColor = context.globals.accent ?? '#54e300'
     const wrapper = document.createElement('div')
 
-    wrapper.classList.add('sb-centered')
-
-    const inside = document.createElement('div')
-
-    inside.classList.add('sb-boxed')
-    wrapper.appendChild(inside)
-    inside.innerHTML = template
+    wrapper.classList.add('sb-resize-container')
+    wrapper.innerHTML = template
 
     document.addEventListener('DOMContentLoaded', async () => {
       const progress = new ProgressBarCircle({
@@ -32,7 +28,7 @@ export default {
 
     wrapper.style.setProperty('--color-accent', selectedColor)
 
-    return wrapper
+    return makeResizable(wrapper, { width: 400, height: 400 })
   },
   argTypes: {
     percentage: {

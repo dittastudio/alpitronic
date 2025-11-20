@@ -1,4 +1,4 @@
-import { fn } from 'storybook/test'
+import { makeResizable } from '@/utils/storybook'
 import template from '@/components/card-language/card-language.html?raw'
 
 export default {
@@ -10,26 +10,19 @@ export default {
     textSecondary,
     isActive,
     fullWidth,
-    onClick = () => {},
   }: {
     flag?: string
     textPrimary?: string
     textSecondary?: string
     isActive?: boolean
     fullWidth?: boolean
-    onClick?: () => void
   }) => {
     const wrapper = document.createElement('div')
 
-    wrapper.classList.add('sb-centered')
+    wrapper.classList.add('sb-resize-container')
+    wrapper.innerHTML = template
 
-    const inside = document.createElement('div')
-    inside.classList.add('sb-boxed')
-    wrapper.appendChild(inside)
-
-    inside.innerHTML = template
-
-    const main: HTMLElement | null = inside.querySelector('[data-main]')
+    const main: HTMLElement | null = wrapper.querySelector('[data-main]')
 
     if (!main) {
       return wrapper
@@ -74,11 +67,7 @@ export default {
       main.classList.add('card-language--no-flag')
     }
 
-    if (typeof onClick === 'function') {
-      main.addEventListener('click', onClick)
-    }
-
-    return wrapper
+    return makeResizable(wrapper, { width: 350, height: 220 })
   },
   argTypes: {
     textPrimary: { control: 'text' },
@@ -370,7 +359,6 @@ export default {
     textSecondary: 'Italian',
     isActive: false,
     fullWidth: false,
-    onClick: fn(),
   },
 }
 
