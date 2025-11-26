@@ -7,7 +7,7 @@ interface Widget {
 
 declare const widget: Widget
 
-const content = widget.shadowRoot.querySelector('[data-js-button-content]')
+const content = widget.shadowRoot.querySelector('[data-mxm-button-content]')
 
 if (content) {
   content.textContent = widget.props.text

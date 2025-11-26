@@ -1,0 +1,11 @@
+@import '@/css/widgets.css';
+@source "./mxm-icon-system.html";
+@source "./mxm-icon-system.ts";
+
+.mxm-icon-system {
+  @apply block
+    size-full
+    [&_svg]:block
+    [&_svg]:size-[inherit]
+    [&_svg]:fill-current;
+}
