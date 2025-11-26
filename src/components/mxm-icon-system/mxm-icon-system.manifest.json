@@ -8,7 +8,7 @@
   "preview": "preview.png",
   "props": {
     "icon": {
-      "type": "select-icon",
+      "type": "select",
       "defaultValue": "1",
       "options": [
         "1-solid",
