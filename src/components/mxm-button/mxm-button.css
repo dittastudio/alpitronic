@@ -1,0 +1,30 @@
+@import '@/css/widgets.css';
+@source "./mxm-button.html";
+@source "./mxm-button.ts";
+
+.mxm-button {
+  @apply normalize
+    relative
+    flex
+    justify-center
+    items-center
+    gap-3
+    border-none
+    px-6
+    py-4
+    size-full
+    min-h-18
+    text-white
+    bg-grey-900
+    rounded-14;
+}
+
+.mxm-button__content {
+  @apply text-22
+    font-sans
+    font-medium;
+}
+
+.mxm-button__icon {
+  @apply shrink-0;
+}

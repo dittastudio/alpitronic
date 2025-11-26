@@ -1,5 +1,5 @@
 {
-  "tagName": "a-mxm-button",
+  "tagName": "mxm-button",
   "html": ["button.html"],
   "js": ["button.js"],
   "css": ["button.css"],

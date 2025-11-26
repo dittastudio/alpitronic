@@ -12,7 +12,6 @@ export default {
     icon,
     reversed,
     stacked,
-    showLineGuide,
   }: {
     label?: string
     rounded?: 'small' | 'large'
@@ -21,7 +20,6 @@ export default {
     icon?: boolean
     reversed?: boolean
     stacked?: boolean
-    showLineGuide?: boolean
   }) => {
     const wrapper = document.createElement('div')
 
@@ -69,10 +67,6 @@ export default {
       svg.classList.remove('hidden')
     }
 
-    if (showLineGuide) {
-      btn.classList.remove('before:hidden')
-    }
-
     return makeResizable(wrapper)
   },
   argTypes: {
@@ -86,7 +80,6 @@ export default {
     icon: { control: 'boolean' },
     reversed: { control: 'boolean' },
     stacked: { control: 'boolean' },
-    showLineGuide: { control: 'boolean' },
   },
   args: {
     label: 'Hello World',
@@ -94,7 +87,6 @@ export default {
     icon: true,
     reversed: false,
     stacked: false,
-    showLineGuide: false,
   },
 }
 
