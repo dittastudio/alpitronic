@@ -21,7 +21,7 @@
     "lib": ["ESNext", "dom", "dom.iterable", "webworker"],
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "types": [],
+    "types": ["vite/client"],
     "moduleResolution": "Bundler",
     "useDefineForClassFields": true,
     "noImplicitThis": true,

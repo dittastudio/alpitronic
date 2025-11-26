@@ -1,4 +1,4 @@
-import template from '@/components/icon-system/icon-system.html?raw'
+import template from '@/components/mxm-icon-system/mxm-icon-system.html?raw'
 
 const iconModules = import.meta.glob('@/assets/icon-system/*.svg', {
   import: 'default',
@@ -15,8 +15,8 @@ const iconNames = Object.keys(iconModules)
   .sort()
 
 export default {
-  title: 'Alpitronic/Icon System',
-  component: 'icon-system',
+  title: 'Alpitronic/Mxm Icon System',
+  component: 'mxm-icon-system',
   render: ({ icon, color }: { icon?: string; color?: string }) => {
     const wrapper = document.createElement('div')
 
@@ -28,19 +28,19 @@ export default {
     wrapper.appendChild(inside)
     inside.innerHTML = template
 
-    const svgContainer: HTMLElement | null = inside.firstChild as HTMLElement
+    const svgContainer = inside.querySelector('[data-mxm-icon-system]') as HTMLElement | null
 
-    if (color) {
-      svgContainer.style.color = color
-    }
+    if (svgContainer) {
+      if (color) {
+        svgContainer.style.color = color
+      }
 
-    if (icon) {
-      const iconPath = Object.keys(iconModules).find(path => path.includes(`/${icon}.svg`))
+      if (icon) {
+        const iconPath = Object.keys(iconModules).find(path => path.includes(`/${icon}.svg`))
 
-      if (iconPath) {
-        const svgContent = iconModules[iconPath]
+        if (iconPath) {
+          const svgContent = iconModules[iconPath] as string
 
-        if (svgContainer) {
           svgContainer.innerHTML = svgContent
         }
       }
