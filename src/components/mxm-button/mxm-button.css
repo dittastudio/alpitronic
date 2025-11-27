@@ -3,8 +3,7 @@
 @source "./mxm-button.ts";
 
 .mxm-button {
-  @apply normalize
-    relative
+  @apply relative
     flex
     justify-center
     items-center
@@ -14,17 +13,24 @@
     py-4
     size-full
     min-h-18
+    font-sans
     text-white
+    text-22
     bg-grey-900
     rounded-14;
 }
 
 .mxm-button__content {
-  @apply text-22
-    font-sans
-    font-medium;
+  @apply font-medium;
 }
 
 .mxm-button__icon {
   @apply shrink-0;
+
+  width: calc(28 / 22 * 1em);
+  height: calc(28 / 22 * 1em);
+}
+
+.mxm-button__icon--hidden {
+  @apply hidden;
 }
