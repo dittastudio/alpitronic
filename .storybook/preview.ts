@@ -9,7 +9,8 @@ const inputUser = window.prompt('Username:')
 const inputPwd = window.prompt('Password:')
 
 if (inputUser !== USER || inputPwd !== PWD) {
-  document.body.innerHTML = '<h1>Access Denied</h1>'
+  console.log('window.document.body', window.document.body)
+  window.document.body.innerHTML = '<h1>Access Denied</h1>'
   throw new Error('Invalid credentials.')
 }
 
