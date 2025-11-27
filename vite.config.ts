@@ -1,6 +1,8 @@
 import { defineConfig, build as viteBuild, type Plugin, type ResolvedConfig } from 'vite'
-import { resolve, join } from 'node:path'
-import { readdirSync, statSync, existsSync, copyFileSync } from 'node:fs'
+import { resolve, join, dirname, extname } from 'node:path'
+import { createRequire } from 'node:module'
+import { readdirSync, statSync, existsSync, copyFileSync, writeFileSync, readFileSync } from 'node:fs'
+import ts from 'typescript'
 import tailwindcss from '@tailwindcss/vite'
 
 type Result = {
@@ -17,6 +19,105 @@ const message = (src: string, dist: string) =>
   existsSync(src)
     ? `${existsSync(dist) ? `✅ ${bytesToKB(statSync(dist).size)}` : '⚠️  Not built to dist'}`
     : `❌ Not in src`
+
+const nodeRequire = createRequire(import.meta.url)
+const aliasMap: Record<string, string> = {
+  '@@': resolve(__dirname, '.'),
+  '@': resolve(__dirname, 'src'),
+}
+
+const resolveAliasImport = (specifier: string) => {
+  for (const [alias, target] of Object.entries(aliasMap)) {
+    if (specifier === alias) {
+      return target
+    }
+    if (specifier.startsWith(`${alias}/`)) {
+      return join(target, specifier.slice(alias.length + 1))
+    }
+  }
+
+  return specifier
+}
+
+const moduleCache = new Map<string, unknown>()
+
+const resolveModulePath = (basePath: string): string => {
+  if (existsSync(basePath) && statSync(basePath).isFile()) {
+    return basePath
+  }
+
+  const extensions = ['.ts', '.tsx', '.js', '.json']
+
+  for (const ext of extensions) {
+    const candidate = `${basePath}${ext}`
+    if (existsSync(candidate) && statSync(candidate).isFile()) {
+      return candidate
+    }
+  }
+
+  for (const ext of extensions) {
+    const indexCandidate = join(basePath, `index${ext}`)
+    if (existsSync(indexCandidate) && statSync(indexCandidate).isFile()) {
+      return indexCandidate
+    }
+  }
+
+  throw new Error(`Unable to resolve module path: ${basePath}`)
+}
+
+const createLocalRequire = (parentPath: string) => (specifier: string) => loadSpecifier(specifier, parentPath)
+
+const loadFileModule = (filePath: string) => {
+  if (moduleCache.has(filePath)) {
+    return moduleCache.get(filePath)
+  }
+
+  const ext = extname(filePath)
+  let exports: unknown
+
+  if (ext === '.ts' || ext === '.tsx') {
+    const source = readFileSync(filePath, 'utf-8')
+    const { outputText } = ts.transpileModule(source, {
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        moduleResolution: ts.ModuleResolutionKind.NodeNext,
+        target: ts.ScriptTarget.ES2020,
+        esModuleInterop: true,
+      },
+      fileName: filePath,
+    })
+
+    const module = { exports: {} as Record<string, unknown> }
+    const runner = new Function('require', 'module', 'exports', outputText)
+    runner(createLocalRequire(filePath), module, module.exports)
+
+    exports = module.exports.default ?? module.exports
+  } else {
+    exports = nodeRequire(filePath)
+  }
+
+  moduleCache.set(filePath, exports)
+  return exports
+}
+
+const loadSpecifier = (specifier: string, parentPath?: string) => {
+  const resolvedSpecifier = resolveAliasImport(specifier)
+  const isRelative = resolvedSpecifier.startsWith('.') || resolvedSpecifier.startsWith('/')
+
+  if (isRelative) {
+    const baseDir = parentPath ? dirname(parentPath) : __dirname
+    const absolutePath = resolvedSpecifier.startsWith('/') ? resolvedSpecifier : resolve(baseDir, resolvedSpecifier)
+    const modulePath = resolveModulePath(absolutePath)
+    return loadFileModule(modulePath)
+  }
+
+  return nodeRequire(resolvedSpecifier)
+}
+
+const compileManifest = (manifestPath: string) => {
+  const resolvedPath = resolveModulePath(manifestPath)
+  return loadFileModule(resolvedPath)
+}
 
 function componentBuilderPlugin(): Plugin {
   let resolvedConfig: ResolvedConfig
@@ -83,13 +184,15 @@ function componentBuilderPlugin(): Plugin {
         const distJsPath = join(distComponentDir, `${component}.js`)
         const distCssPath = join(distComponentDir, `${component}.css`)
 
-        const filesToCopy = [
-          `${component}.html`,
-          `${component}.manifest.json`,
-          `${component}.setup.js`,
-          `${component}.state.js`,
-          'preview.png',
-        ]
+        const filesToCopy = [`${component}.html`, `${component}.setup.js`, `${component}.state.js`, 'preview.png']
+
+        const manifestTsPath = join(srcComponentDir, `${component}.manifest.ts`)
+        const manifestJsonPath = join(distComponentDir, `${component}.manifest.json`)
+
+        if (existsSync(manifestTsPath)) {
+          const manifestObject = compileManifest(manifestTsPath)
+          writeFileSync(manifestJsonPath, JSON.stringify(manifestObject, null, 2))
+        }
 
         let currentResult = {
           Component: component,
