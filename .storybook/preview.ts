@@ -2,18 +2,6 @@ import '../src/css/storybook.css'
 import type { Preview, StoryFn, StoryContext } from '@storybook/html-vite'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
 
-const USER = 'mxm'
-const PWD = 'FishAndChips@UK!'
-
-const inputUser = window.prompt('Username:')
-const inputPwd = window.prompt('Password:')
-
-if (inputUser !== USER || inputPwd !== PWD) {
-  console.log('window.document.body', window.document.body)
-  window.document.body.innerHTML = '<h1>Access Denied</h1>'
-  throw new Error('Invalid credentials.')
-}
-
 export const loaders = [
   async (context: StoryContext) => {
     const stylesheets: string[] = []
