@@ -12,7 +12,7 @@ const manifest: ManifestSchema = {
   props: {
     icon: {
       type: 'select',
-      defaultValue: '1',
+      defaultValue: 'globe',
       options: ICON_TYPES,
     },
     box: {

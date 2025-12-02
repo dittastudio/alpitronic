@@ -44,7 +44,4 @@ const ICON_TYPES = [
   'warning',
 ] as const
 
-type IconType = (typeof ICON_TYPES)[number]
-export type { IconType }
-
 export { ICON_TYPES }

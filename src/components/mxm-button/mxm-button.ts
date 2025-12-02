@@ -32,8 +32,11 @@ if (icon && widget.props.icon && widget.props.icon !== 'None') {
       height: '28px',
     },
   })
-} else if (icon && iconComponent) {
+} else if (icon && widget.props.icon === 'None') {
   icon.classList.add('mxm-button__icon--hidden')
-  iconComponent.remove()
-  iconComponent = null
+
+  if (iconComponent) {
+    iconComponent.remove()
+    iconComponent = null
+  }
 }

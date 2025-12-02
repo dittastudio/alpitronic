@@ -1,0 +1,17 @@
+@import '@/css/widgets.css';
+@source "./mxm-navigation.html";
+@source "./mxm-navigation.ts";
+
+.mxm-navigation {
+  @apply w-full
+    p-3.5
+    rounded-22
+    bg-black;
+}
+
+.mxm-navigation__buttons {
+  @apply w-full
+    grid
+    grid-cols-4
+    gap-3.5;
+}
