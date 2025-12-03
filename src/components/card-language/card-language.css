@@ -1,3 +1,49 @@
 @import '@/css/app.css';
 @source "./card-language.html";
 @source "./card-language.ts";
+
+:host {
+  @apply normalize;
+}
+
+.card-language {
+  @apply flex
+    flex-col
+    justify-between
+    items-start
+    gap-3
+    border-none
+    rounded-14
+    px-8
+    py-7
+    size-full
+    bg-black
+    text-white
+    outline-2
+    outline-transparent
+    transition-[outline-color]
+    duration-300
+    ease-out
+    hover:outline-white
+    focus:outline-white;
+}
+
+.card-language__flag {
+  @apply block
+    w-12
+    h-9;
+}
+
+.card-language__content {
+  @apply flex
+    flex-col
+    items-start
+    justify-start
+    text-22
+    mt-auto;
+}
+
+.card-language__name {
+  @apply block
+    text-white;
+}
