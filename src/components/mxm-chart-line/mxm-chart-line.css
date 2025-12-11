@@ -1,0 +1,49 @@
+@import '@/css/widgets.css';
+@source "./mxm-chart-line.html";
+@source "./mxm-chart-line.ts";
+
+.chart-line {
+  @apply relative
+    w-full
+    h-82
+    bg-lines-x
+    bg-black
+    gap-4
+    rounded-14
+    select-none
+    overflow-hidden;
+}
+
+.chart-line__container {
+  @apply absolute
+    inset-0;
+}
+
+.chart-line__graphic {
+  @apply size-full;
+}
+
+.chart-line__y-label {
+  @apply absolute
+    inset-0
+    grid
+    grid-cols-1
+    grid-rows-[auto]
+    text-white
+    text-18
+    pointer-events-none
+    p-4;
+}
+
+.chart-line__x-label {
+  @apply absolute
+    bottom-0
+    flex
+    justify-between
+    items-start
+    w-full
+    text-white
+    text-18
+    pointer-events-none
+    p-4;
+}
